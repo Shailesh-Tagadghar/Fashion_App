@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "572226647997",
+    "project_id": "ecommerce-9cd8e",
+    "storage_bucket": "ecommerce-9cd8e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572226647997:android:e8fc0d63c8766f344e04d4",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiGiq69z3RzuERLLNTLpKq5_9dKwApi-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572226647997:android:1b970168520b99b94e04d4",
+        "android_client_info": {
+          "package_name": "com.example.fashion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiGiq69z3RzuERLLNTLpKq5_9dKwApi-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572226647997:android:24bb2511aeb1b9d74e04d4",
+        "android_client_info": {
+          "package_name": "com.mycompany.ecommerceshailesh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiGiq69z3RzuERLLNTLpKq5_9dKwApi-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
