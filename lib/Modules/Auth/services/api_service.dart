@@ -467,36 +467,6 @@ class ApiService {
       //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImM3X01ZWnhFUVV5ZjlaMGtKMUtveGM6QVBBOTFiR2RMSllfYUNPbzBXUHB2enB3dUpEU0VYZEJYWlAwaFBGa1J1SmxBblU0WjUyRVpuZHJCdXVaSDNIRDhBSDFwNlJkWEhndkMtbl9UOGFudVhJWGp3b3BrcnlyTmY1bTZ0cWNjZGp5TDBEb2paTGNZUG4yYnZ2Y3UxTjM4R0g3aUJEY0ZVMnYiLCJpYXQiOjE3MjczNDY4NDV9.94ZjNC--OUtuSFFKoD6xSsCdH6AcaVR4JkzbFZ_zC_s'
     };
 
-    // try {
-    //   var request = http.Request('GET', Uri.parse(url));
-    //   request.headers.addAll(headers);
-
-    //   http.StreamedResponse response = await request.send();
-
-    //   final responseBody = await response.stream.bytesToString();
-    //   print('Response Status: ${response.statusCode}');
-    //   print('Response Body: $responseBody'); // Log the response body
-
-    //   if (response.statusCode == 200) {
-    //     final data = jsonDecode(responseBody);
-    //     if (data is Map && data.containsKey('data')) {
-    //       List<dynamic> carts = data['data'];
-    //       return carts.map((cart) => cart as Map<String, dynamic>).toList();
-    //     } else {
-    //       throw Exception('Unexpected response format');
-    //     }
-    //   } else {
-    //     throw Exception('Failed to fetch Carts: ${response.reasonPhrase}');
-    //   }
-    // } catch (e) {
-    //   print('Error fetching Carts: $e');
-    //   Get.snackbar("Error", "Failed to fetch Carts: $e",
-    //       snackPosition: SnackPosition.BOTTOM,
-    //       backgroundColor: Colors.red,
-    //       colorText: Colors.white);
-    //   throw Exception('Failed to fetch Carts');
-    // }
-
     try {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
