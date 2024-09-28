@@ -9,7 +9,10 @@ class DataContoller extends GetxController {
   // final cartsItems = <String, dynamic>{}.obs;
 
   final cartsItems = {}.obs;
-
+  final total = 0.0.obs;
+  final subtotal = 0.0.obs;
+  final discount = 0.0.obs;
+  final deliveryFee = 0.0.obs;
   final isLoading = true.obs;
 
   @override
@@ -81,4 +84,25 @@ class DataContoller extends GetxController {
       isLoading.value = false;
     }
   }
+
+  // Future<void> _fetchCarts() async {
+  //   try {
+  //     final carts = await ApiService.fetchCarts();
+  //     print('Fetched Carts in Controller: $carts');
+
+  //     // Assign cart data to cartsItems
+  //     cartsItems.value = carts['data']; // Assign the cart data
+
+  //     // Fetch totals from the API response
+  //     total.value = carts['total'].toDouble();
+  //     subtotal.value = carts['subtotal'].toDouble();
+  //     discount.value = carts['discount'].toDouble();
+  //     deliveryFee.value = carts['deliveryfee'].toDouble();
+
+  //     isLoading.value = false;
+  //   } catch (e) {
+  //     print('Error fetching Carts in controller: $e');
+  //     isLoading.value = false;
+  //   }
+  // }
 }
