@@ -454,8 +454,8 @@ class ApiService {
     }
   }
 
-//fetch Products
-  static Future<List<Map<String, dynamic>>> fetchCarts() async {
+//fetch Carts
+  static Future<Map<String, dynamic>> fetchCarts() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
     final token = GetStorage()
@@ -478,16 +478,16 @@ class ApiService {
         final responseBody = await response.stream.bytesToString();
         // print('Category Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
-        print('Cart Data : $data');
+        print('Cart Data API Service : $data');
 
         // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
-          List<dynamic> carts = data['data'];
+          Map<String, dynamic> carts = data['data'];
           // Get.snackbar("Success", "Coupons fetched successfully",
           //     snackPosition: SnackPosition.BOTTOM,
           //     backgroundColor: Colors.green,
           //     colorText: Colors.white);
-          return carts.map((carts) => carts as Map<String, dynamic>).toList();
+          return carts;
         } else {
           Get.snackbar("Error", "Unexpected response format",
               snackPosition: SnackPosition.BOTTOM,
@@ -497,10 +497,11 @@ class ApiService {
         }
       } else {
         print('Error response: ${response.reasonPhrase}');
-        throw Exception('Failed to fetch Carts: ${response.statusCode}');
+        throw Exception(
+            'Failed to fetch Carts API Service: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching Carts: $e');
+      print('Error fetching Carts in API Service: $e');
       Get.snackbar("Error", "Failed to fetch Carts: $e",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,

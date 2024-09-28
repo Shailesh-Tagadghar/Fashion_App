@@ -2,6 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/Widget/cart_item_widget.dart';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
@@ -17,14 +18,16 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartData = Get.arguments ?? {};
-    final String productName = cartData['name'] ?? 'Unknown Product';
-    final double productPrice = cartData['price'] ?? 0.0;
-    final String productSize = cartData['size'] ?? 'N/A';
-    final String productImage =
-        cartData['image'] ?? AssetConstant.pd1; // Fallback image
+    final DataContoller dataContoller = Get.find<DataContoller>();
 
-    print('cart data from arguments : $cartData');
+    // final cartData = Get.arguments ?? {};
+    // final String productName = cartData['name'] ?? 'Unknown Product';
+    // final double productPrice = cartData['price'] ?? 0.0;
+    // final String productSize = cartData['size'] ?? 'N/A';
+    // final String productImage =
+    //     cartData['image'] ?? AssetConstant.pd1; // Fallback image
+
+    // print('cart data from arguments : $cartData');
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
       appBar: AppBar(
@@ -64,58 +67,80 @@ class Cart extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(
-          left: 3.w,
-          right: 3.w,
-          bottom: 2.h,
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  CartItemWidget(
-                    image: productImage,
-                    title: productName,
-                    size: productSize,
-                    price: productPrice.toString(),
-                  ),
-                  SizedBox(height: 1.5.h),
-                  Divider(
-                    height: 1.h,
-                    color: ColorConstants.lightGrayColor,
-                    thickness: 1,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 10.h,
-              ),
-              child: CustomButton(
-                label: StringConstants.checkout,
-                btnColor: ColorConstants.rich,
-                labelColor: ColorConstants.whiteColor,
-                isSelected: true,
-                action: () {
-                  showCheckout(context);
-                },
-                height: 6.h,
+      body: Obx(
+        () {
+          if (dataContoller.isLoading.value) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (dataContoller.cartsItems.isEmpty) {
+            return const Center(
+              child: CustomText(
+                text: 'No cart data available',
                 fontSize: 14,
                 weight: FontWeight.w500,
-                width: 85.w,
               ),
+            );
+          }
+          final carts = dataContoller.cartsItems;
+          final products = carts['product'] ?? [];
+          return Padding(
+            padding: EdgeInsets.only(
+              left: 3.w,
+              right: 3.w,
+              bottom: 2.h,
             ),
-          ],
-        ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index]['product_id'] ?? {};
+                      final size = products[index]['size'] ?? 'N/A';
+                      final productName = product['name'] ?? 'Unknown Product';
+                      final productPrice = product['price'] ?? 0;
+                      final productImage = product['image']?.isNotEmpty == true
+                          ? product['image'][0]
+                          : AssetConstant.pd1; // Fallback image
+
+                      return CartItemWidget(
+                        image: productImage,
+                        title: productName,
+                        size: size,
+                        price: productPrice.toString(),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 10.h,
+                  ),
+                  child: CustomButton(
+                    label: StringConstants.checkout,
+                    btnColor: ColorConstants.rich,
+                    labelColor: ColorConstants.whiteColor,
+                    isSelected: true,
+                    action: () {
+                      showCheckout(context);
+                    },
+                    height: 6.h,
+                    fontSize: 14,
+                    weight: FontWeight.w500,
+                    width: 85.w,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
   void showCheckout(BuildContext context) {
     final homeController = Get.find<HomeController>();
+
     showModalBottomSheet(
       context: context,
       backgroundColor: ColorConstants.whiteColor,
