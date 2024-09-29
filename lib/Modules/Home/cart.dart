@@ -70,7 +70,7 @@ class Cart extends StatelessWidget {
       body: Obx(
         () {
           if (dataContoller.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (dataContoller.cartsItems.isEmpty) {
             return const Center(
@@ -140,7 +140,13 @@ class Cart extends StatelessWidget {
 
   void showCheckout(BuildContext context) {
     final homeController = Get.find<HomeController>();
+    final DataContoller dataController = Get.find<DataContoller>();
 
+    // // Extract total, subtotal, discount, and delivery fee from cartsItems
+    // final total = dataController.cartsItems['total'] ?? 0;
+    // final subtotal = dataController.cartsItems['subtotal'] ?? 0;
+    // final discount = dataController.cartsItems['discount'] ?? 0;
+    // final deliveryFee = dataController.cartsItems['deliveryfee'] ?? 0;
     showModalBottomSheet(
       context: context,
       backgroundColor: ColorConstants.whiteColor,
@@ -225,17 +231,21 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 2.h,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
+                        const CustomText(
                           text: StringConstants.subtotal,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text: '\$${StringConstants.subtotalprice}',
+                          // text: '\$${StringConstants.subtotalprice}',
+                          text:
+                              '\$${dataController.subtotal.value.toStringAsFixed(2)}',
+                          // '\$${dataController.subtotal.value.toStringAsFixed(2)}',
+
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
@@ -245,17 +255,19 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 1.h,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
+                        const CustomText(
                           text: StringConstants.delivery,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text: '\$${StringConstants.deliveryfee}',
+                          // text: '\$${StringConstants.deliveryfee}',
+                          text:
+                              '\$${dataController.deliveryFee.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
@@ -265,17 +277,20 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 1.h,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
+                        const CustomText(
                           text: StringConstants.discount,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text: '-\$${StringConstants.discountcharge}',
+                          // text: '-\$${StringConstants.discountcharge}',
+                          // text: '-\$$discount',
+                          text:
+                              '-\$${dataController.discount.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
@@ -295,17 +310,20 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 1.h,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
+                        const CustomText(
                           text: StringConstants.total,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text: '\$${StringConstants.totalcost}',
+                          // text: '\$${StringConstants.totalcost}',
+                          // text: '\$$total',
+                          text:
+                              '\$${dataController.total.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,

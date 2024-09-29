@@ -7,8 +7,8 @@ class DataContoller extends GetxController {
   final salesCategoryItems = <Map<String, dynamic>>[].obs;
   final productsItems = <Map<String, dynamic>>[].obs;
   // final cartsItems = <String, dynamic>{}.obs;
-
   final cartsItems = {}.obs;
+  final checkoutItems = {}.obs;
   final total = 0.0.obs;
   final subtotal = 0.0.obs;
   final discount = 0.0.obs;
@@ -23,6 +23,7 @@ class DataContoller extends GetxController {
     _fetchSalesCategory();
     _fetchProducts();
     _fetchCarts();
+    _fetchCheckout();
   }
 
   Future<void> _fetchCarousal() async {
@@ -85,24 +86,24 @@ class DataContoller extends GetxController {
     }
   }
 
-  // Future<void> _fetchCarts() async {
-  //   try {
-  //     final carts = await ApiService.fetchCarts();
-  //     print('Fetched Carts in Controller: $carts');
+  Future<void> _fetchCheckout() async {
+    try {
+      final checkout = await ApiService.fetchCheckout();
+      print('Fetched Checkout in Controller: $checkout');
 
-  //     // Assign cart data to cartsItems
-  //     cartsItems.value = carts['data']; // Assign the cart data
+      // Assign cart data to cartsItems
+      checkoutItems.value = checkout['data']; // Assign the cart data
 
-  //     // Fetch totals from the API response
-  //     total.value = carts['total'].toDouble();
-  //     subtotal.value = carts['subtotal'].toDouble();
-  //     discount.value = carts['discount'].toDouble();
-  //     deliveryFee.value = carts['deliveryfee'].toDouble();
+      // Fetch totals from the API response
+      total.value = checkout['total'].toDouble();
+      subtotal.value = checkout['subtotal'].toDouble();
+      discount.value = checkout['discount'].toDouble();
+      deliveryFee.value = checkout['deliveryfee'].toDouble();
 
-  //     isLoading.value = false;
-  //   } catch (e) {
-  //     print('Error fetching Carts in controller: $e');
-  //     isLoading.value = false;
-  //   }
-  // }
+      isLoading.value = false;
+    } catch (e) {
+      print('Error fetching Checkout in controller: $e');
+      isLoading.value = false;
+    }
+  }
 }

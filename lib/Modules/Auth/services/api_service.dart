@@ -483,11 +483,72 @@ class ApiService {
         // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
           Map<String, dynamic> carts = data['data'];
+
           // Get.snackbar("Success", "Coupons fetched successfully",
           //     snackPosition: SnackPosition.BOTTOM,
           //     backgroundColor: Colors.green,
           //     colorText: Colors.white);
           return carts;
+        } else {
+          Get.snackbar("Error", "Unexpected response format",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          throw Exception('Unexpected response format');
+        }
+      } else {
+        print('Error response: ${response.reasonPhrase}');
+        throw Exception(
+            'Failed to fetch Carts API Service: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching Carts in API Service: $e');
+      Get.snackbar("Error", "Failed to fetch Carts: $e",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      throw Exception('Failed to Carts');
+    }
+  }
+
+//fetch checkout
+  static Future<Map<String, dynamic>> fetchCheckout() async {
+    const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
+
+    final token = GetStorage()
+        .read('token'); // Adjust if your token storage key is different
+    print('Bearer Token : $token');
+    final headers = {
+      'Authorization': 'Bearer $token',
+      // 'Authorization':
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImM3X01ZWnhFUVV5ZjlaMGtKMUtveGM6QVBBOTFiR2RMSllfYUNPbzBXUHB2enB3dUpEU0VYZEJYWlAwaFBGa1J1SmxBblU0WjUyRVpuZHJCdXVaSDNIRDhBSDFwNlJkWEhndkMtbl9UOGFudVhJWGp3b3BrcnlyTmY1bTZ0cWNjZGp5TDBEb2paTGNZUG4yYnZ2Y3UxTjM4R0g3aUJEY0ZVMnYiLCJpYXQiOjE3MjczNDY4NDV9.94ZjNC--OUtuSFFKoD6xSsCdH6AcaVR4JkzbFZ_zC_s'
+    };
+
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      request.headers.addAll(headers);
+
+      // Send the request and await the response
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        // print('Category Response body: $responseBody'); // Log the response body
+        final data = jsonDecode(responseBody);
+        print('Cart Data API Service : $data');
+
+        // Check if data is a Map and contains the 'coupons' key
+        if (data is Map && data.containsKey('data')) {
+          // Map<String, dynamic> carts = data['data'];
+          final Map<String, dynamic> data =
+              jsonDecode(responseBody).cast<String, dynamic>();
+
+          // Get.snackbar("Success", "Coupons fetched successfully",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.green,
+          //     colorText: Colors.white);
+          // return carts;
+          return data;
         } else {
           Get.snackbar("Error", "Unexpected response format",
               snackPosition: SnackPosition.BOTTOM,
