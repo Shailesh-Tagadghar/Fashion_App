@@ -1,4 +1,3 @@
-
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
@@ -20,7 +19,7 @@ class Productdetails extends StatelessWidget {
   Widget build(BuildContext context) {
     // Fetching product data from Get.arguments
     final productData = Get.arguments ?? {};
-
+    final String productId = productData['_id'] ?? 'ID';
     final String productName = productData['name'] ?? 'Name';
     final String productDescription =
         productData['description'] ?? 'Description';
@@ -457,6 +456,7 @@ class Productdetails extends StatelessWidget {
                 action: () {
                   homeController.selectedIndex.value = 1;
                   final cartData = {
+                    '_id': productId,
                     'name': productName,
                     'price': productPrice,
                     'size': homeController.selectedProductSize.value,

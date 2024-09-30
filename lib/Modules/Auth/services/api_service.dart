@@ -454,7 +454,43 @@ class ApiService {
     }
   }
 
-//fetch Carts
+  // add to cart
+  // Future<void> addToCart(String productId, String size) async {
+  Future<void> addToCart(String cartData) async {
+    // Retrieve the bearer token from GetStorage
+    final token = GetStorage()
+        .read('token'); // 'token' is the key where you store the Bearer token
+    print('Bearer Token : $token');
+
+    // Set up the headers with the retrieved token
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+
+    // Create the request body with productId and size passed from the product detail screen
+    // var body = json.encode({"product_id": productId, "size": size});
+    var body = json.encode(cartData);
+
+    // Send the POST request
+    var request = http.Request(
+        'POST', Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addcart}'));
+    request.body = body;
+    request.headers.addAll(headers);
+
+    // Send the request and get the response
+    http.StreamedResponse response = await request.send();
+
+    // Check for response status and print the result
+    if (response.statusCode == 200) {
+      String responseData = await response.stream.bytesToString();
+      print('add to cart data : $responseData');
+    } else {
+      print('Error: ${response.reasonPhrase}');
+    }
+  }
+
+  //fetch Carts
   static Future<Map<String, dynamic>> fetchCarts() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
@@ -511,7 +547,7 @@ class ApiService {
     }
   }
 
-//fetch checkout
+  //fetch checkout
   static Future<Map<String, dynamic>> fetchCheckout() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
