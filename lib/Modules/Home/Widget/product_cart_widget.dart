@@ -1,11 +1,13 @@
-
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductCartWidget extends StatelessWidget {
+  final HomeController homeController = Get.put(HomeController());
   final String? id;
   final String name;
   final int price;
@@ -18,7 +20,7 @@ class ProductCartWidget extends StatelessWidget {
   final String? category_id;
   final String? gender;
 
-  const ProductCartWidget({
+  ProductCartWidget({
     super.key,
     this.id,
     required this.name,
@@ -56,24 +58,52 @@ class ProductCartWidget extends StatelessWidget {
                   height: 19.h,
                 ),
               ),
-              Container(
-                width: 8.6.w,
-                height: 4.4.h,
-                margin: const EdgeInsets.only(right: 8, top: 8),
-                decoration: BoxDecoration(
-                  color: ColorConstants.whiteColor.withOpacity(0.5),
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  padding: const EdgeInsets.all(1),
-                  iconSize: 22,
-                  icon: const Icon(
-                    Icons.favorite_outline_outlined,
-                    color: ColorConstants.primary,
+              // Container(
+              //   width: 8.6.w,
+              //   height: 4.4.h,
+              //   margin: const EdgeInsets.only(right: 8, top: 8),
+              //   decoration: BoxDecoration(
+              //     color: ColorConstants.whiteColor.withOpacity(0.5),
+              //     shape: BoxShape.circle,
+              //   ),
+              //   child: IconButton(
+              //     padding: const EdgeInsets.all(1),
+              //     iconSize: 22,
+              //     icon: const Icon(
+              //       Icons.favorite_outline_outlined,
+              //       color: ColorConstants.primary,
+              //     ),
+              //     onPressed: () {},
+              //   ),
+              // ),
+              // Animated Like Button
+              Obx(() {
+                return GestureDetector(
+                  onTap: () {
+                    // Ensure both id and category_id are passed
+                    if (id != null && category_id != null) {
+                      homeController.toggleLike(id!, category_id!);
+                    } else {
+                      print("Product or Category ID is missing");
+                    }
+                  },
+                  child: AnimatedScale(
+                    scale: homeController.likedProducts[id]?.value ?? false
+                        ? 1.2
+                        : 1.0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(
+                      homeController.likedProducts[id]?.value ?? false
+                          ? Icons.favorite
+                          : Icons.favorite_outline_outlined,
+                      color: homeController.likedProducts[id]?.value ?? false
+                          ? Colors.brown
+                          : ColorConstants.primary,
+                      size: 22,
+                    ),
                   ),
-                  onPressed: () {},
-                ),
-              ),
+                );
+              }),
             ],
           ),
           SizedBox(

@@ -15,6 +15,9 @@ class DataContoller extends GetxController {
   final deliveryFee = 0.0.obs;
   final isLoading = true.obs;
 
+  // Like/Unlike feature
+  final likedItems = <String>{}.obs;
+
   @override
   void onInit() {
     super.onInit();

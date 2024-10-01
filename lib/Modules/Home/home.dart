@@ -383,12 +383,19 @@ class Home extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         final item = dataContoller.productsItems[index];
+                        // Extract the category ID from the map
+                        final categoryId = (item['category_id'] != null &&
+                                item['category_id'] is Map)
+                            ? item['category_id'][
+                                '_id'] // Extract the _id from the category_id map
+                            : null;
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(AppRoutes.productDetailsScreen,
                                 arguments: item);
                           },
                           child: ProductCartWidget(
+                            id: item['_id'],
                             name: item['name'],
                             price: item['price'],
                             rating: item['rating'],
@@ -397,6 +404,7 @@ class Home extends StatelessWidget {
                                 ? item['image']
                                     [0] // Use the first image from the list
                                 : AssetConstant.pd3, // Fallback image
+                            category_id: categoryId,
                           ),
                         );
                       },

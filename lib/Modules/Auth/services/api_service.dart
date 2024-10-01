@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:fashion/Modules/Home/Model/wishlist_model.dart';
+import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class ApiService {
+  final HomeController homeController = Get.put(HomeController());
   // Register a user
   static Future<void> registerUser(
       Map<String, dynamic> registrationData) async {
@@ -605,6 +608,93 @@ class ApiService {
           backgroundColor: Colors.red,
           colorText: Colors.white);
       throw Exception('Failed to Carts');
+    }
+  }
+
+  //wishlist like product
+  static Future<void> likeProduct(String productId, String categoryId) async {
+    // const token =
+    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1NzZhYzcwMzhmN2ExY2M1N2I1MTE0NiIsImlhdCI6MTcwMjI3NjY0MX0.fmHtUARR-nHkar5UsibOFVcT5AgEDiWTSkq39sC6GQg';
+
+    final token = GetStorage()
+        .read('token'); // Adjust if your token storage key is different
+    print('Bearer Token : $token');
+
+    final data = {
+      "product_id": productId,
+      "category_id": categoryId,
+    };
+
+    print('Sending data: $data'); // Debugging the data being sent
+
+    try {
+      final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavourite}'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          "Content-Type": "application/json"
+        },
+        body: json.encode(data),
+      );
+
+      print('Response: ${response.body}'); // Log the response body
+      print('Status code: ${response.statusCode}'); // Log the status code
+
+      if (response.statusCode == 200) {
+        print("Product liked successfully");
+      } else {
+        print("Failed to like product");
+      }
+    } catch (e) {
+      print("Error liking product: $e");
+    }
+  }
+
+//fetch fvt product
+  Future<void> fetchFavouriteProduct() async {
+    const String url = '${ApiConstants.baseUrl}${ApiConstants.getFavorite}';
+    // final token =
+    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1NzZhYzcwMzhmN2ExY2M1N2I1MTE0NiIsImlhdCI6MTcwMjI3NjY0MX0.fmHtUARR-nHkar5UsibOFVcT5AgEDiWTSkq39sC6GQg';
+
+    final token = GetStorage()
+        .read('token'); // Adjust if your token storage key is different
+    print('Bearer Token : $token');
+
+    final headers = {
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = jsonDecode(response.body);
+        print('Fetched Favorite Products: $data');
+
+        if (data.containsKey('data')) {
+          WishlistModel wishlistModel = WishlistModel.fromJson(data);
+          homeController.favouriteProducts.assignAll(wishlistModel.data ?? []);
+          print("Favourite Through Model = $homeController.favouriteProducts");
+          homeController.isFetchingFavouriteProduct.value = false;
+        } else {
+          Get.snackbar("Error", "Unexpected response format",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          throw Exception('Unexpected response format');
+        }
+      } else {
+        print('Error response: ${response.reasonPhrase}');
+        throw Exception(
+            'Failed to fetch favorite products: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching favorite products: $e');
+      Get.snackbar("Error", "Failed to fetch favorite products: $e",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      throw Exception('Failed to fetch favorite products');
     }
   }
 }
