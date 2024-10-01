@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Auth/controllers/auth_controller.dart';
 import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Home/Widget/profile_widget.dart';
 import 'package:fashion/Routes/app_routes.dart';
@@ -24,6 +25,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final ValidationController validationController =
       Get.put(ValidationController());
+
+  final AuthController authController = Get.put(AuthController());
 
   final TextEditingController nameController = TextEditingController();
   Map<String, dynamic>? dataStorage;
@@ -360,6 +363,7 @@ class _ProfileState extends State<Profile> {
                       onPressed: () {
                         // Get.offAllNamed(AppRoutes.signInScreen);
                         _logout();
+                        // authController.logoutUser();
                       },
                     ),
                   ),
@@ -377,12 +381,12 @@ class _ProfileState extends State<Profile> {
 
   void _logout() async {
     try {
-      await FirebaseAuth.instance.signOut();
-      final storage = GetStorage();
-      storage.remove('user_data');
+      GetStorage().remove('user_data');
+      GetStorage().remove('token');
+      GetStorage().write('isLoggedIn', false); // Set login status to false
+      // Navigate to the login screen
       Get.offAllNamed(AppRoutes.signInScreen);
     } catch (e) {
-      // Handle any errors here
       print("Error signing out: $e");
     }
   }

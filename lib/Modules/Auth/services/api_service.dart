@@ -120,6 +120,7 @@ class ApiService {
         final storage = GetStorage();
         storage.write('user_data', data);
         storage.write('token', data['token']); // Store token
+        storage.write('isLoggedIn', true);
         print('Data after Login : $data');
       } else {
         print('Server returned an error: ${response.statusCode}');
@@ -500,7 +501,7 @@ class ApiService {
     final headers = {
       'Authorization': 'Bearer $token',
       // 'Authorization':
-      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImM3X01ZWnhFUVV5ZjlaMGtKMUtveGM6QVBBOTFiR2RMSllfYUNPbzBXUHB2enB3dUpEU0VYZEJYWlAwaFBGa1J1SmxBblU0WjUyRVpuZHJCdXVaSDNIRDhBSDFwNlJkWEhndkMtbl9UOGFudVhJWGp3b3BrcnlyTmY1bTZ0cWNjZGp5TDBEb2paTGNZUG4yYnZ2Y3UxTjM4R0g3aUJEY0ZVMnYiLCJpYXQiOjE3MjczNDY4NDV9.94ZjNC--OUtuSFFKoD6xSsCdH6AcaVR4JkzbFZ_zC_s'
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1ODU0YWIwZjBmYWE3ZTJjZmY2NzYzMCIsImlhdCI6MTcwNDE3MDU1MH0.97dXImRYVRbZuLXeh1hDube2d4vSvIb_WZLtEB0Ju_4'
     };
 
     try {
@@ -557,7 +558,7 @@ class ApiService {
     final headers = {
       'Authorization': 'Bearer $token',
       // 'Authorization':
-      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImM3X01ZWnhFUVV5ZjlaMGtKMUtveGM6QVBBOTFiR2RMSllfYUNPbzBXUHB2enB3dUpEU0VYZEJYWlAwaFBGa1J1SmxBblU0WjUyRVpuZHJCdXVaSDNIRDhBSDFwNlJkWEhndkMtbl9UOGFudVhJWGp3b3BrcnlyTmY1bTZ0cWNjZGp5TDBEb2paTGNZUG4yYnZ2Y3UxTjM4R0g3aUJEY0ZVMnYiLCJpYXQiOjE3MjczNDY4NDV9.94ZjNC--OUtuSFFKoD6xSsCdH6AcaVR4JkzbFZ_zC_s'
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1ODU0YWIwZjBmYWE3ZTJjZmY2NzYzMCIsImlhdCI6MTcwNDE3MDU1MH0.97dXImRYVRbZuLXeh1hDube2d4vSvIb_WZLtEB0Ju_4'
     };
 
     try {

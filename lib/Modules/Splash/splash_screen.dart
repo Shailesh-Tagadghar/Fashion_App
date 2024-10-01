@@ -16,14 +16,13 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLoggedIn = GetStorage().read('isLoggedIn') ?? false;
     Timer(const Duration(seconds: 3), () {
       showLogo.value = false;
       showLottie.value = true;
 
       Timer(const Duration(seconds: 3), () {
-        final storage = GetStorage();
-        final userData = storage.read('user_data');
-        if (userData != null) {
+        if (isLoggedIn) {
           Get.offAllNamed(AppRoutes.navbarScreen);
         } else {
           Get.offAllNamed(AppRoutes.signInScreen);
