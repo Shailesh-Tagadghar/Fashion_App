@@ -1,12 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:fashion/Modules/Auth/services/api_service.dart';
-import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   @override
@@ -105,91 +100,6 @@ class HomeController extends GetxController {
     selectedCategoryIndex.value = index;
   }
 
-  RxBool isLoadingCategory = true.obs;
-  RxString selectedCategoryId = "".obs;
-  RxString selectedCategoryIdDashboard = "".obs;
-  RxBool showAllImages = false.obs;
-
-  void selectCategoryId(String category) {
-    if (selectedCategoryId.value == category) {
-      selectedCategoryId.value = "";
-    } else {
-      selectedCategoryId.value = category;
-    }
-  }
-
-  void selectCategoryIdDashboard(String category) {
-    if (selectedCategoryIdDashboard.value == category) {
-      selectedCategoryIdDashboard.value = "";
-    } else {
-      selectedCategoryIdDashboard.value = category;
-    }
-  }
-
-  RxMap<String, RxBool> likedProducts = <String, RxBool>{}.obs;
-
-  void toggleLike(String productId, String categoryId) {
-    // Initialize the like state if not already present
-    if (!likedProducts.containsKey(productId)) {
-      likedProducts[productId] = false.obs; // Default value is unliked (false)
-    }
-
-    // Toggle the like state
-    likedProducts[productId]?.value =
-        !(likedProducts[productId]?.value ?? false);
-
-    // Perform the API call based on the new like state
-    if (likedProducts[productId]?.value ?? false) {
-      ApiService.likeProduct(
-          productId, categoryId); // If true, like the product
-    } else {
-      unlikeProduct(productId, categoryId); // If false, unlike the product
-    }
-  }
-
-  //wishlist unlike product
-  Future<void> unlikeProduct(String productId, String categoryId) async {
-    favouriteProducts
-        .removeWhere((product) => product.productId?.sId == productId);
-    // const token =
-    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1NzZhYzcwMzhmN2ExY2M1N2I1MTE0NiIsImlhdCI6MTcwMjI3NjY0MX0.fmHtUARR-nHkar5UsibOFVcT5AgEDiWTSkq39sC6GQg';
-
-    final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
-    print('Bearer Token : $token');
-
-    final data = {
-      "product_id": productId,
-      "category_id": categoryId,
-    };
-
-    try {
-      final response = await http.post(
-        Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.addFavourite}'), // Same API URL
-        headers: {
-          'Authorization': 'Bearer $token',
-          "Content-Type": "application/json",
-        },
-        body: json.encode(data),
-      );
-
-      print('Response: ${response.body}'); // Log the response body
-      print('Status code: ${response.statusCode}'); // Log the status code
-      if (response.statusCode == 200) {
-        print("Product unliked successfully");
-      } else {
-        print("Failed to unlike product");
-      }
-    } catch (e) {
-      print("Error unliking product: $e");
-    }
-  }
-
-  List favouriteProducts = [].obs; // RxList to hold the favourite products
-
-  RxBool isFetchingFavouriteProduct = true.obs;
-
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////
 
@@ -204,19 +114,19 @@ class HomeController extends GetxController {
   ///////////////////////////////////////////////////////////////////////////////////
 
   // WishList Category List
-  // RxList<String> categoryWishlist =
-  //     ["All", "Jacket", "Shirt", "Pant", "T-Shirt", "Specs"].obs;
+  RxList<String> cartegoryWishlist =
+      ["All", "Jacket", "Shirt", "Pant", "T-Shirt", "Specs"].obs;
 
-  // RxString selectedCategoryName = "".obs;
-  // RxBool showAllImages = false.obs;
+  RxString selectedCategoryName = "".obs;
+  RxBool showAllImages = false.obs;
 
-  // void selectCategory(String category) {
-  //   if (selectedCategoryName.value == category) {
-  //     selectedCategoryName.value = "";
-  //   } else {
-  //     selectedCategoryName.value = category;
-  //   }
-  // }
+  void selectCategory(String category) {
+    if (selectedCategoryName.value == category) {
+      selectedCategoryName.value = "";
+    } else {
+      selectedCategoryName.value = category;
+    }
+  }
 
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////
