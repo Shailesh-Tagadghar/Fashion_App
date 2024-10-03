@@ -1,10 +1,7 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
-import 'package:fashion/Modules/Auth/services/api_service.dart';
-import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class FavProduct extends StatelessWidget {
