@@ -383,12 +383,14 @@ class Home extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         final item = dataContoller.productsItems[index];
+
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(AppRoutes.productDetailsScreen,
                                 arguments: item);
                           },
                           child: ProductCartWidget(
+                            id: item['_id'],
                             name: item['name'],
                             price: item['price'],
                             rating: item['rating'],
@@ -397,6 +399,7 @@ class Home extends StatelessWidget {
                                 ? item['image']
                                     [0] // Use the first image from the list
                                 : AssetConstant.pd3, // Fallback image
+                            category_idObj: item['category_id'],
                           ),
                         );
                       },

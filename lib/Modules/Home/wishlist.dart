@@ -1,5 +1,8 @@
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Home/Widget/fav_product.dart';
+import 'package:fashion/Modules/Home/Widget/product_cart_widget.dart';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
@@ -13,6 +16,7 @@ class Wishlist extends StatelessWidget {
   Wishlist({super.key});
 
   final HomeController controller = Get.put(HomeController());
+  final DataContoller dataContoller = Get.put(DataContoller());
 
   @override
   Widget build(BuildContext context) {
@@ -89,107 +93,129 @@ class Wishlist extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget listproductItems() {
-  return Expanded(
-    child: Padding(
-      padding: EdgeInsets.only(left: 4.w, right: 4.w),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.77,
+  Widget listproductItems() {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(left: 4.w, right: 4.w),
+        child: Obx(
+          () {
+            if (dataContoller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (dataContoller.favoriteProducts.isEmpty) {
+              return const Center(
+                child: Text('No favorite products yet'),
+              );
+            }
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.77,
+              ),
+              // itemCount: 8,
+              itemCount: dataContoller.favoriteProducts.length,
+              itemBuilder: (context, index) {
+                var product = dataContoller.favoriteProducts[index];
+                return FavProduct(
+                  product: product, // Pass the product data to ProductWidget
+                  isFavorite: true, // Indicate this product is in the favorites
+                  onFavoriteToggle: () {
+                    // controller.removeFromFavorites(
+                    //     product); // Logic for removing from favorites
+                  },
+                );
+
+                // return Container(
+                //   padding: const EdgeInsetsDirectional.all(8),
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(12),
+                //     color: ColorConstants.whiteColor,
+                //   ),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Stack(
+                //         alignment: Alignment.topRight,
+                //         children: [
+                //           ClipRRect(
+                //             borderRadius: BorderRadius.circular(12),
+                //             child: Image(
+                //               height: 19.h,
+                //               fit: BoxFit.cover,
+                //               width: double.infinity,
+                //               image: const AssetImage(AssetConstant.pd3),
+                //             ),
+                //           ),
+                //           Container(
+                //             width: 8.6.w,
+                //             height: 4.4.h,
+                //             margin: const EdgeInsets.only(right: 8, top: 8),
+                //             decoration: BoxDecoration(
+                //               color: ColorConstants.whiteColor.withOpacity(0.5),
+                //               shape: BoxShape.circle,
+                //             ),
+                //             child: IconButton(
+                //               padding: const EdgeInsets.all(1),
+                //               iconSize: 22,
+                //               icon: const Icon(
+                //                 Icons.favorite_outline_outlined,
+                //                 color: ColorConstants.primary,
+                //               ),
+                //               onPressed: () {},
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //       SizedBox(
+                //         height: 0.8.h,
+                //       ),
+                //       Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           const CustomText(
+                //             text: StringConstants.productname,
+                //             fontSize: 12,
+                //             weight: FontWeight.w400,
+                //             color: ColorConstants.blackColor,
+                //           ),
+                //           Row(
+                //             children: [
+                //               Icon(
+                //                 Icons.star,
+                //                 color: Colors.amber[500],
+                //                 size: 19,
+                //               ),
+                //               SizedBox(
+                //                 width: 0.5.w,
+                //               ),
+                //               const CustomText(
+                //                 text: StringConstants.rating,
+                //                 fontSize: 12,
+                //                 weight: FontWeight.w400,
+                //                 color: ColorConstants.greyColor,
+                //               ),
+                //             ],
+                //           )
+                //         ],
+                //       ),
+                //       SizedBox(
+                //         height: 0.4.h,
+                //       ),
+                //       const CustomText(
+                //         text: '\$${StringConstants.productprice}',
+                //         fontSize: 12,
+                //         weight: FontWeight.w500,
+                //         color: ColorConstants.blackColor,
+                //       )
+                //     ],
+                //   ),
+                // );
+              },
+            );
+          },
         ),
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          // final item = foodItems[index];
-          return Container(
-            padding: const EdgeInsetsDirectional.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: ColorConstants.whiteColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image(
-                        height: 19.h,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        image: const AssetImage(AssetConstant.pd3),
-                      ),
-                    ),
-                    Container(
-                      width: 8.6.w,
-                      height: 4.4.h,
-                      margin: const EdgeInsets.only(right: 8, top: 8),
-                      decoration: BoxDecoration(
-                        color: ColorConstants.whiteColor.withOpacity(0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        padding: const EdgeInsets.all(1),
-                        iconSize: 22,
-                        icon: const Icon(
-                          Icons.favorite_outline_outlined,
-                          color: ColorConstants.primary,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 0.8.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CustomText(
-                      text: StringConstants.productname,
-                      fontSize: 12,
-                      weight: FontWeight.w400,
-                      color: ColorConstants.blackColor,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star,
-                          color: Colors.amber[500],
-                          size: 19,
-                        ),
-                        SizedBox(
-                          width: 0.5.w,
-                        ),
-                        const CustomText(
-                          text: StringConstants.rating,
-                          fontSize: 12,
-                          weight: FontWeight.w400,
-                          color: ColorConstants.greyColor,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 0.4.h,
-                ),
-                const CustomText(
-                  text: '\$${StringConstants.productprice}',
-                  fontSize: 12,
-                  weight: FontWeight.w500,
-                  color: ColorConstants.blackColor,
-                )
-              ],
-            ),
-          );
-        },
       ),
-    ),
-  );
+    );
+  }
 }

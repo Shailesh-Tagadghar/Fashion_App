@@ -15,6 +15,9 @@ class DataContoller extends GetxController {
   final deliveryFee = 0.0.obs;
   final isLoading = true.obs;
 
+  RxBool isFavorited = false.obs; // Favorite state
+  var favoriteProducts = <dynamic>[].obs; // List to hold favorite products
+
   @override
   void onInit() {
     super.onInit();
@@ -24,6 +27,7 @@ class DataContoller extends GetxController {
     _fetchProducts();
     _fetchCarts();
     _fetchCheckout();
+    _fetchFavorites();
   }
 
   Future<void> _fetchCarousal() async {
@@ -103,6 +107,23 @@ class DataContoller extends GetxController {
       isLoading.value = false;
     } catch (e) {
       print('Error fetching Checkout in controller: $e');
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> _fetchFavorites() async {
+    isLoading.value = true;
+    try {
+      final favorites = await ApiService.fetchFavorites();
+      if (favorites != null && favorites.isNotEmpty) {
+        favoriteProducts.assignAll(favorites);
+      } else {
+        favoriteProducts.clear();
+        print("Favorites are null in controller");
+      }
+    } catch (e) {
+      print("Error fetching favorites in controller: $e");
+    } finally {
       isLoading.value = false;
     }
   }

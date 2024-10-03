@@ -7,42 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-class ProductCartWidget extends StatelessWidget {
-  final String id;
-  final String name;
-  final int price;
-  final double rating;
-  final String? description;
-  final String? sizechart;
-  final String? colorchart;
-  final String image;
-  final String? salecategory_id;
-  final String? category_id;
-  final String? gender;
+class FavProduct extends StatelessWidget {
+  final dynamic product; // Pass the product data
+  final bool isFavorite; // To show the favorite icon
+  final VoidCallback onFavoriteToggle; // Function to toggle favorite
 
-  ProductCartWidget({
+  const FavProduct({
     super.key,
-    required this.id,
-    required this.name,
-    required this.price,
-    required this.rating,
-    this.description,
-    this.sizechart,
-    this.colorchart,
-    required this.image,
-    this.salecategory_id,
-    required Map<String, dynamic>?
-        category_idObj, // updated to accept category object
-    this.gender,
-  }) : category_id = category_idObj != null
-            ? category_idObj['_id']
-            : null; // extract category ID
+    required this.product,
+    required this.isFavorite,
+    required this.onFavoriteToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // bool isFavorited = false;
-    final DataContoller dataContoller = Get.put(DataContoller());
-
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
@@ -58,7 +36,7 @@ class ProductCartWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  '${ApiConstants.imageBaseUrl}$image',
+                  '${ApiConstants.imageBaseUrl}${product['product_id']['image'][0]}',
                   fit: BoxFit.fill,
                   width: 100.w,
                   height: 19.h,
@@ -76,40 +54,13 @@ class ProductCartWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(1),
                   iconSize: 22,
                   icon: Icon(
-                    // Icons.favorite_outline_outlined,
-                    // color: ColorConstants.primary,
-                    dataContoller.isFavorited.value
+                    isFavorite
                         ? Icons.favorite
                         : Icons.favorite_outline_outlined,
-                    color: dataContoller.isFavorited.value
-                        ? ColorConstants.primary
-                        : ColorConstants.primary.withOpacity(0.5),
+                    color: ColorConstants.primary,
                   ),
                   onPressed: () async {
-                    if (category_id != null) {
-                      try {
-                        await ApiService.addToFavorite(
-                          id,
-                          category_id!,
-                          context,
-                        );
-                        print("Item added to favorites");
-                      } catch (e) {
-                        print("Error adding to favorites: $e");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Error: Unable to add to favorites."),
-                          ),
-                        );
-                      }
-                    } else {
-                      print("category_id is null, cannot add to favorites.");
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Error: Category ID is null."),
-                        ),
-                      );
-                    }
+                    onFavoriteToggle;
                   },
                 ),
               ),
@@ -119,7 +70,7 @@ class ProductCartWidget extends StatelessWidget {
             height: 0.8.h,
           ),
           CustomText(
-            text: name,
+            text: product['product_id']['name'],
             fontSize: 11,
             weight: FontWeight.w400,
             color: ColorConstants.blackColor,
@@ -131,7 +82,8 @@ class ProductCartWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                text: '\$${price.toString()}',
+                text: '\$${product['product_id']['price'].toString()}',
+                // text: '\$${product['price'].toString()}',
                 fontSize: 12,
                 weight: FontWeight.w500,
                 color: ColorConstants.blackColor,
@@ -148,7 +100,8 @@ class ProductCartWidget extends StatelessWidget {
                     width: 0.5.w,
                   ),
                   CustomText(
-                    text: rating.toString(),
+                    // text: product['rating'].toString(),
+                    text: product['product_id']['rating'].toString(),
                     fontSize: 10,
                     weight: FontWeight.w400,
                     color: ColorConstants.greyColor,

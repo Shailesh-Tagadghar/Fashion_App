@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class ApiService {
+  final DataContoller dataContoller = Get.find<DataContoller>();
   // Register a user
   static Future<void> registerUser(
       Map<String, dynamic> registrationData) async {
@@ -605,6 +607,101 @@ class ApiService {
           backgroundColor: Colors.red,
           colorText: Colors.white);
       throw Exception('Failed to Carts');
+    }
+  }
+
+  //Add to favourite
+  static Future<void> addToFavorite(
+      String productId, String categoryId, BuildContext context) async {
+    const String url = '${ApiConstants.baseUrl}${ApiConstants.addFavorite}';
+
+    final token = GetStorage().read('token');
+    print('Bearer Token : $token');
+
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    // Create the request body
+    final body = json.encode({
+      "product_id": productId,
+      "category_id": categoryId,
+    });
+
+    try {
+      // Send the POST request to the server
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: body,
+      );
+
+      // Handle the response
+      if (response.statusCode == 200) {
+        DataContoller().isFavorited.value = true; // Update favorite state
+        print('Item added to favorites in api service: ${response.body}');
+
+        // Show success snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Product added to favorites in api service'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        print('Failed to add product in api service: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                'Failed to add product to favorites in api service: ${response.reasonPhrase}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      // Catch any exceptions and show a snackbar
+      print('Error adding product to favorites in api service: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  // get favourite
+
+  static Future<List<dynamic>?> fetchFavorites() async {
+    const String url = '${ApiConstants.baseUrl}${ApiConstants.getFavorite}';
+
+    try {
+      final token = GetStorage()
+          .read('token'); // Adjust if your token storage key is different
+      print('Bearer Token : $token');
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          // 'Authorization':
+          //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1ODU0YWIwZjBmYWE3ZTJjZmY2NzYzMCIsImlhdCI6MTcwNDE3MDU1MH0.97dXImRYVRbZuLXeh1hDube2d4vSvIb_WZLtEB0Ju_4'
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return data['data']; // Ensure you're accessing the correct key
+      } else {
+        print(
+            'Error response fetching favorites in API Service: ${response.statusCode}');
+        throw Exception('Failed to load favorites in API Service');
+      }
+    } catch (e) {
+      print('Error fetching favorites in API Service: $e');
+      throw Exception('Error fetching favorites in API Service: $e');
     }
   }
 }

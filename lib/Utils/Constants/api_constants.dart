@@ -7,9 +7,6 @@ class ApiConstants {
   static const String editProfile = "user/editprofile";
   static const String forgetPassword = "user/forgotpassword";
 
-  // Favourite Api endpoints
-  static const String addFavourite = "favourite/addfavourite";
-
   // Cards Api endpoints
   static const String createCard = "cards/createcard";
   static const String updateCard = "cards/updatecard";
