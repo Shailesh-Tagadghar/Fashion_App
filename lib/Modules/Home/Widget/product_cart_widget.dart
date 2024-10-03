@@ -42,6 +42,7 @@ class ProductCartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // bool isFavorited = false;
     final DataContoller dataContoller = Get.put(DataContoller());
+    bool isFavorited = dataContoller.isFavorited.value;
 
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
@@ -91,22 +92,26 @@ class ProductCartWidget extends StatelessWidget {
                         await ApiService.addToFavorite(
                           id,
                           category_id!,
+                          isFavorited,
                           context,
                         );
-                        print("Item added to favorites");
+                        print("Item added to favorites in product widget");
                       } catch (e) {
                         print("Error adding to favorites: $e");
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("Error: Unable to add to favorites."),
+                            content: Text(
+                                "Error: Unable to add to favorites in product widget."),
                           ),
                         );
                       }
                     } else {
-                      print("category_id is null, cannot add to favorites.");
+                      print(
+                          "category_id is null, cannot add to favorites. in product widget");
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Error: Category ID is null."),
+                          content: Text(
+                              "Error: Category ID is null in product widget."),
                         ),
                       );
                     }

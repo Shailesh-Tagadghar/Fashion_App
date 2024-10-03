@@ -611,8 +611,8 @@ class ApiService {
   }
 
   //Add to favourite
-  static Future<void> addToFavorite(
-      String productId, String categoryId, BuildContext context) async {
+  static Future<void> addToFavorite(String productId, String categoryId,
+      bool isFavorited, BuildContext context) async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.addFavorite}';
 
     final token = GetStorage().read('token');
@@ -639,29 +639,41 @@ class ApiService {
 
       // Handle the response
       if (response.statusCode == 200) {
-        DataContoller().isFavorited.value = true; // Update favorite state
-        print('Item added to favorites in api service: ${response.body}');
-
-        // Show success snackbar
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Product added to favorites in api service'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        if (isFavorited) {
+          // If the item is already favorited, we assume the action is to remove
+          DataContoller().isFavorited.value = false;
+          print('Item removed from favorites in API Service: ${response.body}');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Product removed from favorites in API Service'),
+              backgroundColor: Colors.orange,
+            ),
+          );
+        } else {
+          // Otherwise, add to favorites
+          DataContoller().isFavorited.value = true;
+          print('Item added to favorites in API Service: ${response.body}');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Product added to favorites in API Service'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
       } else {
-        print('Failed to add product in api service: ${response.body}');
+        print(
+            'Failed to update favorite status in API Service: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-                'Failed to add product to favorites in api service: ${response.reasonPhrase}'),
+                'Failed to update favorite status in API Service: ${response.reasonPhrase}'),
             backgroundColor: Colors.red,
           ),
         );
       }
     } catch (e) {
       // Catch any exceptions and show a snackbar
-      print('Error adding product to favorites in api service: $e');
+      print('Error updating favorite status in API Service: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error: $e'),
@@ -672,7 +684,6 @@ class ApiService {
   }
 
   // get favourite
-
   static Future<List<dynamic>?> fetchFavorites() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getFavorite}';
 
