@@ -707,7 +707,7 @@ class ApiService {
         return data['data']; // Ensure you're accessing the correct key
       } else {
         print(
-            'Error response fetching favorites in API Service: ${response.statusCode}');
+            'Error response fetching favorites in API Service: ${response.statusCode}, Body: ${response.body}');
         throw Exception('Failed to load favorites in API Service');
       }
     } catch (e) {

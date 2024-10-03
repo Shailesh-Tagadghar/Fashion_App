@@ -16,7 +16,8 @@ class ProductCartWidget extends StatelessWidget {
   final String? sizechart;
   final String? colorchart;
   final String image;
-  final String? salecategory_id;
+  // final String? salecategory_id;
+  // final String? category_id;
   final String? category_id;
   final String? gender;
 
@@ -30,7 +31,7 @@ class ProductCartWidget extends StatelessWidget {
     this.sizechart,
     this.colorchart,
     required this.image,
-    this.salecategory_id,
+    // this.salecategory_id,
     required Map<String, dynamic>?
         category_idObj, // updated to accept category object
     this.gender,
@@ -73,49 +74,43 @@ class ProductCartWidget extends StatelessWidget {
                   color: ColorConstants.whiteColor.withOpacity(0.5),
                   shape: BoxShape.circle,
                 ),
-                child: IconButton(
-                  padding: const EdgeInsets.all(1),
-                  iconSize: 22,
-                  icon: Icon(
-                    // Icons.favorite_outline_outlined,
-                    // color: ColorConstants.primary,
-                    dataContoller.isFavorited.value
-                        ? Icons.favorite
-                        : Icons.favorite_outline_outlined,
-                    color: dataContoller.isFavorited.value
-                        ? ColorConstants.primary
-                        : ColorConstants.primary.withOpacity(0.5),
-                  ),
-                  onPressed: () async {
-                    if (category_id != null) {
-                      try {
-                        await ApiService.addToFavorite(
-                          id,
-                          category_id!,
-                          isFavorited,
-                          context,
-                        );
-                        print("Item added to favorites in product widget");
-                      } catch (e) {
-                        print("Error adding to favorites: $e");
+                child: Obx(
+                  () => IconButton(
+                    padding: const EdgeInsets.all(1),
+                    iconSize: 22,
+                    icon: Icon(
+                      dataContoller.isFavorited.value
+                          ? Icons.favorite
+                          : Icons.favorite_outline_outlined,
+                      color: dataContoller.isFavorited.value
+                          ? ColorConstants.primary
+                          : ColorConstants.primary.withOpacity(0.5),
+                    ),
+                    onPressed: () async {
+                      if (category_id != null) {
+                        try {
+                          await ApiService.addToFavorite(
+                              id, category_id!, isFavorited, context);
+                          print("Item added to favorites in product widget");
+                        } catch (e) {
+                          print("Error adding to favorites: $e");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text("Error: Unable to add to favorites."),
+                            ),
+                          );
+                        }
+                      } else {
+                        print("category_id is null, cannot add to favorites.");
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text(
-                                "Error: Unable to add to favorites in product widget."),
+                            content: Text("Error: Category ID is null."),
                           ),
                         );
                       }
-                    } else {
-                      print(
-                          "category_id is null, cannot add to favorites. in product widget");
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                              "Error: Category ID is null in product widget."),
-                        ),
-                      );
-                    }
-                  },
+                    },
+                  ),
                 ),
               ),
             ],

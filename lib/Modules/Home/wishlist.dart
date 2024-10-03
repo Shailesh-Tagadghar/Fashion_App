@@ -114,101 +114,19 @@ class Wishlist extends StatelessWidget {
               // itemCount: 8,
               itemCount: dataContoller.favoriteProducts.length,
               itemBuilder: (context, index) {
+                if (dataContoller.favoriteProducts[index] == null) {
+                  return const Center(
+                      child: Text('Product data is unavailable'));
+                }
                 var product = dataContoller.favoriteProducts[index];
+
                 return FavProduct(
                   product: product, // Pass the product data to ProductWidget
-                  isFavorite: true, // Indicate this product is in the favorites
+                  isFavorite: dataContoller.favoriteProducts.contains(product),
                   onFavoriteToggle: () {
-                    // controller.removeFromFavorites(
-                    //     product); // Logic for removing from favorites
+                    dataContoller.toggleFavoriteProduct(product);
                   },
                 );
-
-                // return Container(
-                //   padding: const EdgeInsetsDirectional.all(8),
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(12),
-                //     color: ColorConstants.whiteColor,
-                //   ),
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Stack(
-                //         alignment: Alignment.topRight,
-                //         children: [
-                //           ClipRRect(
-                //             borderRadius: BorderRadius.circular(12),
-                //             child: Image(
-                //               height: 19.h,
-                //               fit: BoxFit.cover,
-                //               width: double.infinity,
-                //               image: const AssetImage(AssetConstant.pd3),
-                //             ),
-                //           ),
-                //           Container(
-                //             width: 8.6.w,
-                //             height: 4.4.h,
-                //             margin: const EdgeInsets.only(right: 8, top: 8),
-                //             decoration: BoxDecoration(
-                //               color: ColorConstants.whiteColor.withOpacity(0.5),
-                //               shape: BoxShape.circle,
-                //             ),
-                //             child: IconButton(
-                //               padding: const EdgeInsets.all(1),
-                //               iconSize: 22,
-                //               icon: const Icon(
-                //                 Icons.favorite_outline_outlined,
-                //                 color: ColorConstants.primary,
-                //               ),
-                //               onPressed: () {},
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(
-                //         height: 0.8.h,
-                //       ),
-                //       Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         children: [
-                //           const CustomText(
-                //             text: StringConstants.productname,
-                //             fontSize: 12,
-                //             weight: FontWeight.w400,
-                //             color: ColorConstants.blackColor,
-                //           ),
-                //           Row(
-                //             children: [
-                //               Icon(
-                //                 Icons.star,
-                //                 color: Colors.amber[500],
-                //                 size: 19,
-                //               ),
-                //               SizedBox(
-                //                 width: 0.5.w,
-                //               ),
-                //               const CustomText(
-                //                 text: StringConstants.rating,
-                //                 fontSize: 12,
-                //                 weight: FontWeight.w400,
-                //                 color: ColorConstants.greyColor,
-                //               ),
-                //             ],
-                //           )
-                //         ],
-                //       ),
-                //       SizedBox(
-                //         height: 0.4.h,
-                //       ),
-                //       const CustomText(
-                //         text: '\$${StringConstants.productprice}',
-                //         fontSize: 12,
-                //         weight: FontWeight.w500,
-                //         color: ColorConstants.blackColor,
-                //       )
-                //     ],
-                //   ),
-                // );
               },
             );
           },

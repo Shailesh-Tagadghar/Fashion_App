@@ -394,12 +394,10 @@ class Home extends StatelessWidget {
                             name: item['name'],
                             price: item['price'],
                             rating: item['rating'],
-                            image: (item['image'] is List &&
-                                    (item['image'] as List).isNotEmpty)
-                                ? item['image']
-                                    [0] // Use the first image from the list
-                                : AssetConstant.pd3, // Fallback image
+                            image: item['image'][0] ??
+                                AssetConstant.pd3, // Fallback image
                             category_idObj: item['category_id'],
+                            // category_id: item['category_id']['_id'],
                           ),
                         );
                       },

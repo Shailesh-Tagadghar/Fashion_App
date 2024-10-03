@@ -127,4 +127,27 @@ class DataContoller extends GetxController {
       isLoading.value = false;
     }
   }
+
+  void toggleFavoriteProduct(dynamic product) {
+    if (favoriteProducts.contains(product)) {
+      favoriteProducts.remove(product); // Remove if already in the list
+    } else {
+      favoriteProducts.add(product); // Add to the list
+    }
+    update(); // Update the UI
+  }
+  //   if (product != null) {
+  //     try {
+  //       await ApiService.addToFavorite(
+  //           productId, product['category_id'], isFavorited, context);
+  //       if (isFavorited) {
+  //         favoriteProducts.remove(product);
+  //       } else {
+  //         favoriteProducts.add(product);
+  //       }
+  //     } catch (e) {
+  //       print("Error toggling favorite status: $e");
+  //     }
+  //   }
+  // }
 }

@@ -57,7 +57,7 @@ class FavProduct extends StatelessWidget {
                     color: ColorConstants.primary,
                   ),
                   onPressed: () async {
-                    onFavoriteToggle;
+                    onFavoriteToggle();
                   },
                 ),
               ),
