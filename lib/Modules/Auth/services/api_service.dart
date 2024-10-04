@@ -456,38 +456,39 @@ class ApiService {
   }
 
   // add to cart
-  // Future<void> addToCart(String productId, String size) async {
-  Future<void> addToCart(String cartData) async {
-    // Retrieve the bearer token from GetStorage
+  Future<void> addToCart(String productId, String size) async {
     final token = GetStorage()
-        .read('token'); // 'token' is the key where you store the Bearer token
+        .read('token'); // Adjust if your token storage key is different
     print('Bearer Token : $token');
 
-    // Set up the headers with the retrieved token
     var headers = {
+      // 'Authorization':
+      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImR1bW15X2ZjbV90b2tlbiIsImlhdCI6MTcyODAzNzk5NX0.EJMrJwV8-rslUmAWHbF3c_WGwW1ks-sM_qIZxwtGSks',
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
     };
 
-    // Create the request body with productId and size passed from the product detail screen
-    // var body = json.encode({"product_id": productId, "size": size});
-    var body = json.encode(cartData);
+    var body = json.encode({"product_id": productId, "size": size});
 
-    // Send the POST request
-    var request = http.Request(
-        'POST', Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addcart}'));
-    request.body = body;
-    request.headers.addAll(headers);
+    var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addcart}');
 
-    // Send the request and get the response
-    http.StreamedResponse response = await request.send();
+    try {
+      var response = await http.post(url, headers: headers, body: body);
+      print("Response Status in api service: ${response.statusCode}");
+      print("Response Body in api service: ${response.body}");
 
-    // Check for response status and print the result
-    if (response.statusCode == 200) {
-      String responseData = await response.stream.bytesToString();
-      print('add to cart data : $responseData');
-    } else {
-      print('Error: ${response.reasonPhrase}');
+      if (response.statusCode == 200) {
+        // Parse response or handle success
+        print("Product added to cart successfully.");
+      } else {
+        final Map<String, dynamic> errorResponse = json.decode(response.body);
+        String errorMessage =
+            errorResponse['message'] ?? 'Something went wrong';
+        print("Failed to add product to cart in api service: $errorMessage");
+        print("Failed to add product to cart in api service: ${response.body}");
+      }
+    } catch (e) {
+      print("Error adding product to cart in api service: $e");
     }
   }
 

@@ -106,4 +106,6 @@ class DataContoller extends GetxController {
       isLoading.value = false;
     }
   }
+
+  
 }

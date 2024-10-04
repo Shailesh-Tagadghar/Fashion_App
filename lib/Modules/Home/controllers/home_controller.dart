@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,8 @@ class HomeController extends GetxController {
     pageController.dispose();
     super.onClose();
   }
+
+  ApiService apiService = ApiService();
 
   //for navbar selection
   var selectedIndex = 0.obs;
@@ -135,6 +138,8 @@ class HomeController extends GetxController {
 
   var selectedProductColor = ''.obs;
   var selectedProductSize = ''.obs;
+  var currentImage = ''.obs;
+  var selectedProduct = ''.obs;
 
   void selectColor(String color) {
     selectedProductColor.value = color; // Update the selected color
@@ -144,15 +149,32 @@ class HomeController extends GetxController {
     selectedProductSize.value = size; // Update the selected size
   }
 
-  var currentImage = ''.obs;
-  var selectedProduct = ''.obs;
-
   void selectProduct(String productId) {
     selectedProduct.value = productId;
   }
 
   void updateImage(String imagePath) {
     currentImage.value = imagePath;
+  }
+
+  // void addProductToCart(String productId, String size) {
+  //   apiService.addToCart(productId, size).then((_) {
+  //     // Optional: Add any state updates or feedback here
+  //   });
+  // }
+
+  Future<void> addProductToCart(String productId, String size) async {
+    if (selectedProductSize.isEmpty) {
+      Get.snackbar('Error', 'Please select a size.');
+      return;
+    }
+
+    if (selectedProductColor.isEmpty) {
+      Get.snackbar('Error', 'Please select a color.');
+      return;
+    }
+
+    await apiService.addToCart(productId, selectedProductSize.value);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
