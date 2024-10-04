@@ -1,8 +1,7 @@
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
-import 'package:fashion/Modules/Home/Widget/product_cart_widget.dart';
-import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
+import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ class Wishlist extends StatelessWidget {
   Wishlist({super.key});
 
   final HomeController controller = Get.put(HomeController());
-  final DataContoller dataContoller = Get.put(DataContoller());
 
   @override
   Widget build(BuildContext context) {
@@ -91,88 +89,107 @@ class Wishlist extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget listproductItems() {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.only(left: 4.w, right: 4.w),
-        child: Obx(
-          () {
-            if (dataContoller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (dataContoller.favoriteProducts.isEmpty) {
-              return const Center(
-                child: Text('No favorite products yet'),
-              );
-            }
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.77,
-              ),
-              // itemCount: 8,
-              itemCount: dataContoller.favoriteProducts.length,
-              itemBuilder: (context, index) {
-                var product = dataContoller.favoriteProducts[index];
-                print('product data after like in wishlist : $product');
-
-                // return FavProduct(
-                //   product: product,
-                //   isFavorite: true,
-                //   onFavoriteToggle: () {
-                //     dataContoller.removeFromFavorite(product['_id']);
-                //   },
-                // );
-
-                // Accessing properties correctly
-                final productId = product['product_id']['_id'] as String? ?? '';
-                final productName =
-                    product['product_id']['name'] as String? ?? '';
-                final productPrice =
-                    product['product_id']['price'] as int? ?? 0;
-                final productRating =
-                    product['product_id']['rating'] as double? ?? 0.0;
-                final productImage =
-                    (product['product_id']['image'] as List<dynamic>? ?? [])
-                        .cast<String>();
-                final productCategoryId =
-                    product['category_id']['_id'] as String? ?? '';
-                final productDescription =
-                    product['product_id']['description'] as String? ?? '';
-                final productSizeChart =
-                    product['product_id']['sizechart'] as List<dynamic>? ?? [];
-                final productColorChart =
-                    product['product_id']['colorchart'] as List<dynamic>? ?? [];
-
-                // Convert to appropriate types
-                List<String> sizeChartList =
-                    productSizeChart.map((item) => item.toString()).toList();
-                List<int> colorChartList = productColorChart.map((item) {
-                  // Convert hex string to int
-                  if (item is String) {
-                    return int.parse(item.replaceFirst('0x', ''), radix: 16);
-                  }
-                  return 0; // Fallback in case of unexpected data type
-                }).toList();
-                return ProductCartWidget(
-                  id: productId,
-                  name: productName,
-                  price: productPrice,
-                  rating: productRating,
-                  image: productImage.isNotEmpty ? productImage[0] : '',
-                  category_idObj: {
-                    '_id': productCategoryId,
-                  },
-                  description: productDescription,
-                  sizechart: sizeChartList, // Converted List<String>
-                  colorchart: colorChartList, // Converted List<int>
-                );
-              },
-            );
-          },
+Widget listproductItems() {
+  return Expanded(
+    child: Padding(
+      padding: EdgeInsets.only(left: 4.w, right: 4.w),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.77,
         ),
+        itemCount: 8,
+        itemBuilder: (context, index) {
+          // final item = foodItems[index];
+          return Container(
+            padding: const EdgeInsetsDirectional.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: ColorConstants.whiteColor,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image(
+                        height: 19.h,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        image: const AssetImage(AssetConstant.pd3),
+                      ),
+                    ),
+                    Container(
+                      width: 8.6.w,
+                      height: 4.4.h,
+                      margin: const EdgeInsets.only(right: 8, top: 8),
+                      decoration: BoxDecoration(
+                        color: ColorConstants.whiteColor.withOpacity(0.5),
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        padding: const EdgeInsets.all(1),
+                        iconSize: 22,
+                        icon: const Icon(
+                          Icons.favorite_outline_outlined,
+                          color: ColorConstants.primary,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 0.8.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CustomText(
+                      text: StringConstants.productname,
+                      fontSize: 12,
+                      weight: FontWeight.w400,
+                      color: ColorConstants.blackColor,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.amber[500],
+                          size: 19,
+                        ),
+                        SizedBox(
+                          width: 0.5.w,
+                        ),
+                        const CustomText(
+                          text: StringConstants.rating,
+                          fontSize: 12,
+                          weight: FontWeight.w400,
+                          color: ColorConstants.greyColor,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 0.4.h,
+                ),
+                const CustomText(
+                  text: '\$${StringConstants.productprice}',
+                  fontSize: 12,
+                  weight: FontWeight.w500,
+                  color: ColorConstants.blackColor,
+                )
+              ],
+            ),
+          );
+        },
       ),
-    );
-  }
+    ),
+  );
 }

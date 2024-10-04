@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class ApiService {
-  final DataContoller dataContoller = Get.find<DataContoller>();
   // Register a user
   static Future<void> registerUser(
       Map<String, dynamic> registrationData) async {
@@ -607,112 +605,6 @@ class ApiService {
           backgroundColor: Colors.red,
           colorText: Colors.white);
       throw Exception('Failed to Carts');
-    }
-  }
-
-  //Add to favourite
-  static Future<void> addToFavorite(String productId, String categoryId,
-      bool isFavorited, BuildContext context) async {
-    const String url = '${ApiConstants.baseUrl}${ApiConstants.addFavorite}';
-
-    final token = GetStorage().read('token');
-    print('Bearer Token : $token');
-
-    final headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    };
-
-    // Create the request body
-    final body = json.encode({
-      "product_id": productId,
-      "category_id": categoryId,
-    });
-
-    try {
-      // Send the POST request to the server
-      final response = await http.post(
-        Uri.parse(url),
-        headers: headers,
-        body: body,
-      );
-
-      // Handle the response
-      if (response.statusCode == 200) {
-        if (isFavorited) {
-          Get.find<DataContoller>().addToFavorite({
-            'product_id': productId,
-            'category_id': categoryId,
-          });
-          print('Item removed from favorites in API Service: ${response.body}');
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Product removed from favorites in API Service'),
-              backgroundColor: Colors.orange,
-            ),
-          );
-        } else {
-          Get.find<DataContoller>().addToFavorite({
-            'product_id': productId,
-            'category_id': categoryId,
-          });
-          print('Item added to favorites in API Service: ${response.body}');
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Product added to favorites in API Service'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
-      } else {
-        print(
-            'Failed to update favorite status in API Service: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-                'Failed to update favorite status in API Service: ${response.reasonPhrase}'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } catch (e) {
-      // Catch any exceptions and show a snackbar
-      print('Error updating favorite status in API Service: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
-
-  // get favourite
-  static Future<List<dynamic>?> fetchFavorites() async {
-    const String url = '${ApiConstants.baseUrl}${ApiConstants.getFavorite}';
-
-    final token = GetStorage().read('token');
-
-    try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        return data['data'];
-      } else {
-        print(
-            'Error fetching favorites in API Service: ${response.statusCode}, Body: ${response.body}');
-        throw Exception('Failed to load favorites in API Service');
-      }
-    } catch (e) {
-      print('Error fetching favorites in API Service: $e');
-      throw Exception('Error fetching favorites in API Service: $e');
     }
   }
 }

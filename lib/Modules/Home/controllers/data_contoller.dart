@@ -15,10 +15,6 @@ class DataContoller extends GetxController {
   final deliveryFee = 0.0.obs;
   final isLoading = true.obs;
 
-  var isFavorited = false.obs; // Favorite state
-  var favoriteProducts =
-      <Map<String, dynamic>>[].obs; // List to hold favorite products
-
   @override
   void onInit() {
     super.onInit();
@@ -28,7 +24,6 @@ class DataContoller extends GetxController {
     _fetchProducts();
     _fetchCarts();
     _fetchCheckout();
-    _fetchFavorites();
   }
 
   Future<void> _fetchCarousal() async {
@@ -110,37 +105,5 @@ class DataContoller extends GetxController {
       print('Error fetching Checkout in controller: $e');
       isLoading.value = false;
     }
-  }
-
-  Future<void> _fetchFavorites() async {
-    isLoading.value = true;
-    try {
-      var favorites = await ApiService.fetchFavorites();
-
-      // Check if favorites is not null
-      if (favorites != null) {
-        favoriteProducts.value = favorites
-            .map((product) => product as Map<String, dynamic>)
-            .toList();
-      } else {
-        favoriteProducts.clear(); // If no favorites found, clear the list
-      }
-    } catch (e) {
-      print("Error fetching favorite products in controller: $e");
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  void addToFavorite(Map<String, dynamic> product) {
-    favoriteProducts.add(product);
-    isFavorited.value = true;
-    update();
-  }
-
-  void removeFromFavorite(Map<String, dynamic> product) {
-    favoriteProducts.remove(product);
-    isFavorited.value = false;
-    update();
   }
 }

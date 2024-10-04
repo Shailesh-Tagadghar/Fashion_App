@@ -1,31 +1,25 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
-import 'package:fashion/Modules/Auth/services/api_service.dart';
-import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductCartWidget extends StatelessWidget {
-  final String id;
+  final String? id;
   final String name;
   final int price;
   final double rating;
   final String? description;
-  // final String? sizechart;
-  // final String? colorchart;
-  final List<int>? colorchart;
-  final List<String>? sizechart;
+  final String? sizechart;
+  final String? colorchart;
   final String image;
-  // final String? salecategory_id;
-  // final String? category_id;
+  final String? salecategory_id;
   final String? category_id;
   final String? gender;
 
-  ProductCartWidget({
+  const ProductCartWidget({
     super.key,
-    required this.id,
+    this.id,
     required this.name,
     required this.price,
     required this.rating,
@@ -33,21 +27,13 @@ class ProductCartWidget extends StatelessWidget {
     this.sizechart,
     this.colorchart,
     required this.image,
-    // this.salecategory_id,
-    required Map<String, dynamic>?
-        category_idObj, // updated to accept category object
+    this.salecategory_id,
+    this.category_id,
     this.gender,
-  }) : category_id = category_idObj != null
-            ? category_idObj['_id']
-            : null; // extract category ID
+  });
 
   @override
   Widget build(BuildContext context) {
-    // bool isFavorited = false;
-    final DataContoller dataContoller = Get.put(DataContoller());
-    bool isFavorited = dataContoller.favoriteProducts
-        .any((product) => product['product_id'] == id);
-
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
@@ -80,27 +66,11 @@ class ProductCartWidget extends StatelessWidget {
                 child: IconButton(
                   padding: const EdgeInsets.all(1),
                   iconSize: 22,
-                  icon: Icon(
-                    isFavorited
-                        ? Icons.favorite
-                        : Icons.favorite_outline_outlined,
-                    color: isFavorited
-                        ? ColorConstants.primary
-                        : ColorConstants.primary.withOpacity(0.5),
+                  icon: const Icon(
+                    Icons.favorite_outline_outlined,
+                    color: ColorConstants.primary,
                   ),
-                  onPressed: () async {
-                    if (category_id != null) {
-                      await ApiService.addToFavorite(
-                          id, category_id!, isFavorited, context);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                              "Error: Category ID is null in product cart."),
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: () {},
                 ),
               ),
             ],

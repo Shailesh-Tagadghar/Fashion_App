@@ -19,10 +19,16 @@ class FavProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Ensure product and its fields are valid
+    if (product == null || product['product_id'] == null) {
+      return const SizedBox(); // Return empty widget if data is invalid
+    }
+
     final imageUrl = product['product_id']['image'];
     final safeImageUrl = (imageUrl is List && imageUrl.isNotEmpty)
         ? '${ApiConstants.imageBaseUrl}${imageUrl[0]}'
         : AssetConstant.pd3; // Replace with a valid URL
+
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
