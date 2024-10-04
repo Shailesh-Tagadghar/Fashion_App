@@ -13,8 +13,10 @@ class ProductCartWidget extends StatelessWidget {
   final int price;
   final double rating;
   final String? description;
-  final String? sizechart;
-  final String? colorchart;
+  // final String? sizechart;
+  // final String? colorchart;
+  final List<int>? colorchart;
+  final List<String>? sizechart;
   final String image;
   // final String? salecategory_id;
   // final String? category_id;
@@ -43,7 +45,8 @@ class ProductCartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // bool isFavorited = false;
     final DataContoller dataContoller = Get.put(DataContoller());
-    bool isFavorited = dataContoller.favoriteProducts.contains(id);
+    bool isFavorited = dataContoller.favoriteProducts
+        .any((product) => product['product_id'] == id);
 
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
@@ -87,19 +90,8 @@ class ProductCartWidget extends StatelessWidget {
                   ),
                   onPressed: () async {
                     if (category_id != null) {
-                      try {
-                        await ApiService.addToFavorite(
-                            id, category_id!, isFavorited, context);
-                      } catch (e) {
-                        print(
-                            "Error toggling favorite status in product cart: $e");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                                "Error: Unable to update favorite status in product cart."),
-                          ),
-                        );
-                      }
+                      await ApiService.addToFavorite(
+                          id, category_id!, isFavorited, context);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

@@ -640,7 +640,10 @@ class ApiService {
       // Handle the response
       if (response.statusCode == 200) {
         if (isFavorited) {
-          Get.find<DataContoller>().removeFromFavorite(productId);
+          Get.find<DataContoller>().addToFavorite({
+            'product_id': productId,
+            'category_id': categoryId,
+          });
           print('Item removed from favorites in API Service: ${response.body}');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(

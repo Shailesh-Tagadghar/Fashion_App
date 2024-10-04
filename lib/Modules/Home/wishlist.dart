@@ -1,6 +1,6 @@
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
-import 'package:fashion/Modules/Home/Widget/fav_product.dart';
+import 'package:fashion/Modules/Home/Widget/product_cart_widget.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
@@ -115,13 +115,58 @@ class Wishlist extends StatelessWidget {
               itemCount: dataContoller.favoriteProducts.length,
               itemBuilder: (context, index) {
                 var product = dataContoller.favoriteProducts[index];
+                print('product data after like in wishlist : $product');
 
-                return FavProduct(
-                  product: product,
-                  isFavorite: true,
-                  onFavoriteToggle: () {
-                    dataContoller.removeFromFavorite(product['_id']);
+                // return FavProduct(
+                //   product: product,
+                //   isFavorite: true,
+                //   onFavoriteToggle: () {
+                //     dataContoller.removeFromFavorite(product['_id']);
+                //   },
+                // );
+
+                // Accessing properties correctly
+                final productId = product['product_id']['_id'] as String? ?? '';
+                final productName =
+                    product['product_id']['name'] as String? ?? '';
+                final productPrice =
+                    product['product_id']['price'] as int? ?? 0;
+                final productRating =
+                    product['product_id']['rating'] as double? ?? 0.0;
+                final productImage =
+                    (product['product_id']['image'] as List<dynamic>? ?? [])
+                        .cast<String>();
+                final productCategoryId =
+                    product['category_id']['_id'] as String? ?? '';
+                final productDescription =
+                    product['product_id']['description'] as String? ?? '';
+                final productSizeChart =
+                    product['product_id']['sizechart'] as List<dynamic>? ?? [];
+                final productColorChart =
+                    product['product_id']['colorchart'] as List<dynamic>? ?? [];
+
+                // Convert to appropriate types
+                List<String> sizeChartList =
+                    productSizeChart.map((item) => item.toString()).toList();
+                List<int> colorChartList = productColorChart.map((item) {
+                  // Convert hex string to int
+                  if (item is String) {
+                    return int.parse(item.replaceFirst('0x', ''), radix: 16);
+                  }
+                  return 0; // Fallback in case of unexpected data type
+                }).toList();
+                return ProductCartWidget(
+                  id: productId,
+                  name: productName,
+                  price: productPrice,
+                  rating: productRating,
+                  image: productImage.isNotEmpty ? productImage[0] : '',
+                  category_idObj: {
+                    '_id': productCategoryId,
                   },
+                  description: productDescription,
+                  sizechart: sizeChartList, // Converted List<String>
+                  colorchart: colorChartList, // Converted List<int>
                 );
               },
             );

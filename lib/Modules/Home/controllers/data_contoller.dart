@@ -138,8 +138,8 @@ class DataContoller extends GetxController {
     update();
   }
 
-  void removeFromFavorite(String productId) {
-    favoriteProducts.removeWhere((product) => product['_id'] == productId);
+  void removeFromFavorite(Map<String, dynamic> product) {
+    favoriteProducts.remove(product);
     isFavorited.value = false;
     update();
   }
