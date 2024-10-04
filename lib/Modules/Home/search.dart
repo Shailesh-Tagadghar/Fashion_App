@@ -2,6 +2,7 @@ import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Routes/app_routes.dart';
+import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,8 @@ class Search extends StatelessWidget {
               color: ColorConstants.blackColor,
             ),
             onPressed: () {
-              Get.back();
+              // Get.back();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -152,10 +154,35 @@ class Search extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var product = searchResults[index];
                       return ListTile(
-                        title:
-                            Text(product['name']), // Assuming 'name' is a field
-                        subtitle: Text(product['price']
+                        contentPadding: EdgeInsets.only(
+                          bottom: 1.h,
+                          left: 4.w,
+                          right: 2.w,
+                          top: 1.h,
+                        ),
+                        textColor: ColorConstants.blackColor,
+                        titleTextStyle: const TextStyle(
+                          color: ColorConstants.blackColor,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        subtitleTextStyle: const TextStyle(
+                          color: ColorConstants.blackColor,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        tileColor: ColorConstants.lightGrayColor,
+                        leading: Image.network(
+                          '${ApiConstants.imageBaseUrl}${product['image'][0]}', // Ensure this URL is valid
+                          fit: BoxFit.fill,
+                          height: 40.h,
+                          width: 25.w,
+                        ),
+                        title: Text(
+                            'Name : ${product['name']}'), // Assuming 'name' is a field
+                        subtitle: Text('Price : ${product['price']}'
                             .toString()), // Adjust as per your data
+
                         onTap: () {
                           // Navigate to product details
                           Get.toNamed(AppRoutes.productDetailsScreen,
@@ -164,6 +191,39 @@ class Search extends StatelessWidget {
                       );
                     },
                   ),
+                  //     GridView.builder(
+                  //   padding: EdgeInsets.zero,
+                  //   gridDelegate:
+                  //       const SliverGridDelegateWithFixedCrossAxisCount(
+                  //     crossAxisCount: 2, // Number of items per row
+                  //     childAspectRatio: 0.69, // Adjusts the size of the items
+                  //     crossAxisSpacing: 4.0, // Spacing between columns
+                  //     mainAxisSpacing: 4.0, // Spacing between rows
+                  //   ),
+                  //   itemCount: searchResults.length,
+                  //   shrinkWrap: true,
+                  //   physics: const NeverScrollableScrollPhysics(),
+                  //   itemBuilder: (context, index) {
+                  //     final item = searchResults[index];
+                  //     return GestureDetector(
+                  //       onTap: () {
+                  //         // Navigate to product details page
+                  //         Get.toNamed(AppRoutes.productDetailsScreen,
+                  //             arguments: item);
+                  //       },
+                  //       child: ProductCartWidget(
+                  //         name: item['name'],
+                  //         price: item['price'],
+                  //         rating: item['rating'],
+                  //         image: (item['image'] is List &&
+                  //                 (item['image'] as List).isNotEmpty)
+                  //             ? item['image']
+                  //                 [0] // Use the first image from the list
+                  //             : AssetConstant.pd3, // Fallback image
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                 );
               },
             ),
