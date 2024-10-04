@@ -22,7 +22,7 @@ class Navbar extends StatelessWidget {
       Home(),
       Cart(),
       Wishlist(),
-      const Search(),
+      Search(),
       Profile(),
     ];
 

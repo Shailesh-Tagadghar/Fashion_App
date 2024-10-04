@@ -11,6 +11,9 @@ class ApiConstants {
   static const String createCard = "cards/createcard";
   static const String updateCard = "cards/updatecard";
 
+  // search API endpoint
+  static const String searchproduct = "product/searchproduct";
+
   // Products Api endpoints
   static const String getCategotyProducts = "product/getcategoryproduct";
 

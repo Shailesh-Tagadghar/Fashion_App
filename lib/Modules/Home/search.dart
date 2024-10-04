@@ -1,5 +1,6 @@
-
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Auth/services/api_service.dart';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
@@ -9,10 +10,14 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:sizer/sizer.dart';
 
 class Search extends StatelessWidget {
-  const Search({super.key});
+  Search({super.key});
+
+  final searchController = TextEditingController();
+  final searchResults = [].obs;
 
   @override
   Widget build(BuildContext context) {
+    final DataContoller dataContoller = Get.put(DataContoller());
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
       appBar: AppBar(
@@ -59,6 +64,7 @@ class Search extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextField(
+              controller: searchController,
               decoration: InputDecoration(
                 prefixIcon: const Icon(
                   // Icons.search,
@@ -85,6 +91,12 @@ class Search extends StatelessWidget {
                   ),
                 ),
               ),
+              onChanged: (text) async {
+                // Fetch search results
+                List<dynamic> results =
+                    await ApiService.fetchSearchResults(text);
+                searchResults.value = results;
+              },
             ),
             SizedBox(
               height: 2.h,
@@ -100,7 +112,8 @@ class Search extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(AppRoutes.productDetailsScreen);
+                    searchController.clear();
+                    searchResults.clear();
                   },
                   child: const CustomText(
                     text: StringConstants.clear,
@@ -118,7 +131,42 @@ class Search extends StatelessWidget {
               color: ColorConstants.background,
               height: 2.h,
               thickness: 1,
-            )
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            // Display search results
+            Obx(
+              () {
+                if (dataContoller.isLoading.value) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (searchResults.isEmpty) {
+                  return const Text('No products found');
+                }
+
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: searchResults.length,
+                    itemBuilder: (context, index) {
+                      var product = searchResults[index];
+                      return ListTile(
+                        title:
+                            Text(product['name']), // Assuming 'name' is a field
+                        subtitle: Text(product['price']
+                            .toString()), // Adjust as per your data
+                        onTap: () {
+                          // Navigate to product details
+                          Get.toNamed(AppRoutes.productDetailsScreen,
+                              arguments: product);
+                        },
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -13,6 +13,9 @@ class DataContoller extends GetxController {
   final subtotal = 0.0.obs;
   final discount = 0.0.obs;
   final deliveryFee = 0.0.obs;
+  var searchText = ''.obs;
+  var searchResults = [].obs; // To store the search results
+  var searchHistory = [].obs; // To store search history
   final isLoading = true.obs;
 
   @override
@@ -24,6 +27,13 @@ class DataContoller extends GetxController {
     _fetchProducts();
     _fetchCarts();
     _fetchCheckout();
+  }
+
+  //search screen result
+  // Function to clear search history
+  void clearSearchHistory() {
+    searchHistory.clear();
+    searchText.value = '';
   }
 
   Future<void> _fetchCarousal() async {
@@ -106,6 +116,4 @@ class DataContoller extends GetxController {
       isLoading.value = false;
     }
   }
-
-  
 }

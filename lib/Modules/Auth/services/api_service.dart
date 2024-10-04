@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -606,6 +607,50 @@ class ApiService {
           backgroundColor: Colors.red,
           colorText: Colors.white);
       throw Exception('Failed to Carts');
+    }
+  }
+
+  //search result display
+  static Future<List<dynamic>> fetchSearchResults(String searchText) async {
+    const String url = '${ApiConstants.baseUrl}${ApiConstants.searchproduct}';
+    final token = GetStorage().read('token');
+
+    print('Bearer Token : $token');
+
+    try {
+      DataContoller().isLoading.value = true;
+      var headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = json.encode({"searchtext": searchText});
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseData = await response.stream.bytesToString();
+        var jsonResponse = json.decode(responseData);
+
+        // Ensure the response contains the expected 'data' field
+        if (jsonResponse != null && jsonResponse['data'] != null) {
+          return jsonResponse['data']; // Returning only the data field
+        } else {
+          print('Unexpected response format: $jsonResponse');
+          return [];
+        }
+      } else {
+        print('API Error: ${response.reasonPhrase}');
+        return [];
+      }
+    } catch (e) {
+      print('Error fetching search results: $e');
+      return [];
+    } finally {
+      DataContoller().isLoading.value =
+          false; // Ensure loading stops after request
     }
   }
 }

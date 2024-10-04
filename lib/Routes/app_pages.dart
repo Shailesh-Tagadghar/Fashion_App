@@ -68,7 +68,7 @@ class AppPages {
         transition: transition),
     GetPage(
         name: AppRoutes.searchScreen,
-        page: () => const Search(),
+        page: () => Search(),
         transition: transition),
     GetPage(
         name: AppRoutes.homeScreen, page: () => Home(), transition: transition),
