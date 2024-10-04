@@ -15,8 +15,9 @@ class DataContoller extends GetxController {
   final deliveryFee = 0.0.obs;
   final isLoading = true.obs;
 
-  RxBool isFavorited = false.obs; // Favorite state
-  var favoriteProducts = <dynamic>[].obs; // List to hold favorite products
+  var isFavorited = false.obs; // Favorite state
+  var favoriteProducts =
+      <Map<String, dynamic>>[].obs; // List to hold favorite products
 
   @override
   void onInit() {
@@ -114,40 +115,32 @@ class DataContoller extends GetxController {
   Future<void> _fetchFavorites() async {
     isLoading.value = true;
     try {
-      final favorites = await ApiService.fetchFavorites();
-      if (favorites != null && favorites.isNotEmpty) {
-        favoriteProducts.assignAll(favorites);
+      var favorites = await ApiService.fetchFavorites();
+
+      // Check if favorites is not null
+      if (favorites != null) {
+        favoriteProducts.value = favorites
+            .map((product) => product as Map<String, dynamic>)
+            .toList();
       } else {
-        favoriteProducts.clear();
-        print("Favorites are null in controller");
+        favoriteProducts.clear(); // If no favorites found, clear the list
       }
     } catch (e) {
-      print("Error fetching favorites in controller: $e");
+      print("Error fetching favorite products in controller: $e");
     } finally {
       isLoading.value = false;
     }
   }
 
-  void toggleFavoriteProduct(dynamic product) {
-    if (favoriteProducts.contains(product)) {
-      favoriteProducts.remove(product); // Remove if already in the list
-    } else {
-      favoriteProducts.add(product); // Add to the list
-    }
-    update(); // Update the UI
+  void addToFavorite(Map<String, dynamic> product) {
+    favoriteProducts.add(product);
+    isFavorited.value = true;
+    update();
   }
-  //   if (product != null) {
-  //     try {
-  //       await ApiService.addToFavorite(
-  //           productId, product['category_id'], isFavorited, context);
-  //       if (isFavorited) {
-  //         favoriteProducts.remove(product);
-  //       } else {
-  //         favoriteProducts.add(product);
-  //       }
-  //     } catch (e) {
-  //       print("Error toggling favorite status: $e");
-  //     }
-  //   }
-  // }
+
+  void removeFromFavorite(String productId) {
+    favoriteProducts.removeWhere((product) => product['_id'] == productId);
+    isFavorited.value = false;
+    update();
+  }
 }

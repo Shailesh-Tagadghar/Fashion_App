@@ -43,7 +43,7 @@ class ProductCartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // bool isFavorited = false;
     final DataContoller dataContoller = Get.put(DataContoller());
-    bool isFavorited = dataContoller.isFavorited.value;
+    bool isFavorited = dataContoller.favoriteProducts.contains(id);
 
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
@@ -74,43 +74,41 @@ class ProductCartWidget extends StatelessWidget {
                   color: ColorConstants.whiteColor.withOpacity(0.5),
                   shape: BoxShape.circle,
                 ),
-                child: Obx(
-                  () => IconButton(
-                    padding: const EdgeInsets.all(1),
-                    iconSize: 22,
-                    icon: Icon(
-                      dataContoller.isFavorited.value
-                          ? Icons.favorite
-                          : Icons.favorite_outline_outlined,
-                      color: dataContoller.isFavorited.value
-                          ? ColorConstants.primary
-                          : ColorConstants.primary.withOpacity(0.5),
-                    ),
-                    onPressed: () async {
-                      if (category_id != null) {
-                        try {
-                          await ApiService.addToFavorite(
-                              id, category_id!, isFavorited, context);
-                          print("Item added to favorites in product widget");
-                        } catch (e) {
-                          print("Error adding to favorites: $e");
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content:
-                                  Text("Error: Unable to add to favorites."),
-                            ),
-                          );
-                        }
-                      } else {
-                        print("category_id is null, cannot add to favorites.");
+                child: IconButton(
+                  padding: const EdgeInsets.all(1),
+                  iconSize: 22,
+                  icon: Icon(
+                    isFavorited
+                        ? Icons.favorite
+                        : Icons.favorite_outline_outlined,
+                    color: isFavorited
+                        ? ColorConstants.primary
+                        : ColorConstants.primary.withOpacity(0.5),
+                  ),
+                  onPressed: () async {
+                    if (category_id != null) {
+                      try {
+                        await ApiService.addToFavorite(
+                            id, category_id!, isFavorited, context);
+                      } catch (e) {
+                        print(
+                            "Error toggling favorite status in product cart: $e");
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("Error: Category ID is null."),
+                            content: Text(
+                                "Error: Unable to update favorite status in product cart."),
                           ),
                         );
                       }
-                    },
-                  ),
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              "Error: Category ID is null in product cart."),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ],

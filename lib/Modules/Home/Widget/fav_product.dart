@@ -1,5 +1,6 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
+import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -18,6 +19,10 @@ class FavProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = product['product_id']['image'];
+    final safeImageUrl = (imageUrl is List && imageUrl.isNotEmpty)
+        ? '${ApiConstants.imageBaseUrl}${imageUrl[0]}'
+        : AssetConstant.pd3; // Replace with a valid URL
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
@@ -33,7 +38,8 @@ class FavProduct extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  '${ApiConstants.imageBaseUrl}${product['product_id']['image'][0]}',
+                  // '${ApiConstants.imageBaseUrl}${product['product_id']['image'][0]}',
+                  safeImageUrl,
                   fit: BoxFit.fill,
                   width: 100.w,
                   height: 19.h,
@@ -56,9 +62,7 @@ class FavProduct extends StatelessWidget {
                         : Icons.favorite_outline_outlined,
                     color: ColorConstants.primary,
                   ),
-                  onPressed: () async {
-                    onFavoriteToggle();
-                  },
+                  onPressed: onFavoriteToggle,
                 ),
               ),
             ],

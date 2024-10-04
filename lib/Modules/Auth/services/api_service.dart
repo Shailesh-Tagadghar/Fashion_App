@@ -640,8 +640,7 @@ class ApiService {
       // Handle the response
       if (response.statusCode == 200) {
         if (isFavorited) {
-          // If the item is already favorited, we assume the action is to remove
-          DataContoller().isFavorited.value = false;
+          Get.find<DataContoller>().removeFromFavorite(productId);
           print('Item removed from favorites in API Service: ${response.body}');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -650,8 +649,10 @@ class ApiService {
             ),
           );
         } else {
-          // Otherwise, add to favorites
-          DataContoller().isFavorited.value = true;
+          Get.find<DataContoller>().addToFavorite({
+            'product_id': productId,
+            'category_id': categoryId,
+          });
           print('Item added to favorites in API Service: ${response.body}');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -687,27 +688,23 @@ class ApiService {
   static Future<List<dynamic>?> fetchFavorites() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getFavorite}';
 
-    try {
-      final token = GetStorage()
-          .read('token'); // Adjust if your token storage key is different
-      print('Bearer Token : $token');
+    final token = GetStorage().read('token');
 
+    try {
       final response = await http.get(
         Uri.parse(url),
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
-          // 'Authorization':
-          //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1ODU0YWIwZjBmYWE3ZTJjZmY2NzYzMCIsImlhdCI6MTcwNDE3MDU1MH0.97dXImRYVRbZuLXeh1hDube2d4vSvIb_WZLtEB0Ju_4'
+          'Content-Type': 'application/json',
         },
       );
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        return data['data']; // Ensure you're accessing the correct key
+        return data['data'];
       } else {
         print(
-            'Error response fetching favorites in API Service: ${response.statusCode}, Body: ${response.body}');
+            'Error fetching favorites in API Service: ${response.statusCode}, Body: ${response.body}');
         throw Exception('Failed to load favorites in API Service');
       }
     } catch (e) {

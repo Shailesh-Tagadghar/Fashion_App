@@ -114,17 +114,13 @@ class Wishlist extends StatelessWidget {
               // itemCount: 8,
               itemCount: dataContoller.favoriteProducts.length,
               itemBuilder: (context, index) {
-                if (dataContoller.favoriteProducts[index] == null) {
-                  return const Center(
-                      child: Text('Product data is unavailable'));
-                }
                 var product = dataContoller.favoriteProducts[index];
 
                 return FavProduct(
-                  product: product, // Pass the product data to ProductWidget
-                  isFavorite: dataContoller.favoriteProducts.contains(product),
+                  product: product,
+                  isFavorite: true,
                   onFavoriteToggle: () {
-                    dataContoller.toggleFavoriteProduct(product);
+                    dataContoller.removeFromFavorite(product['_id']);
                   },
                 );
               },
