@@ -718,29 +718,4 @@ class ApiService {
       DataContoller().isLoading.value = false;
     }
   }
-
-  // fetch favourites
-  static Future<List<String>> getFavorite() async {
-    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFavorite}');
-    final token = GetStorage().read('token');
-    final headers = {
-      'Authorization': 'Bearer $token',
-    };
-
-    try {
-      final response = await http.get(url, headers: headers);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        // Assuming 'product_id' field is in the response to map favorite items
-        return data.map((item) => item['product_id'].toString()).toList();
-      } else {
-        print(
-            "Failed to fetch favorite items in api service: ${response.reasonPhrase}");
-        return [];
-      }
-    } catch (e) {
-      print("Error fetching favorite items in api service: $e");
-      return [];
-    }
-  }
 }
