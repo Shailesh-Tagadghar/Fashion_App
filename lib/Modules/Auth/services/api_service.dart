@@ -718,4 +718,43 @@ class ApiService {
       DataContoller().isLoading.value = false;
     }
   }
+
+  // fetch favourite products
+  static Future<List<String>> getFavoriteProducts() async {
+    final url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.getFavorite}'); // Adjust the endpoint as necessary
+    final token = GetStorage()
+        .read('token'); // Make sure the token is retrieved correctly
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        // Check if the response is a Map and contains the 'data' key
+        if (data is Map && data.containsKey('data')) {
+          final List<dynamic> favoriteList = data['data'];
+
+          // Extract product IDs from the favoriteList
+          return favoriteList
+              .map((item) =>
+                  item['product_id']['_id'] as String) // Access the product ID
+              .toList(); // Ensure this is a List<String>
+        } else {
+          print('Unexpected response format: $data');
+          return []; // Return an empty list if format is unexpected
+        }
+      } else {
+        print('Failed to fetch favorites: ${response.reasonPhrase}');
+        return [];
+      }
+    } catch (e) {
+      print('Error fetching favorite products: $e');
+      return [];
+    }
+  }
 }

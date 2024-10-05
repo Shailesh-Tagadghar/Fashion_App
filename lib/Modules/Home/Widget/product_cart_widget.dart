@@ -16,6 +16,8 @@ class ProductCartWidget extends StatelessWidget {
   final String? salecategory_id;
   final String? category_id;
   final String? gender;
+  final bool isFavorite; // New property
+  final VoidCallback onToggleFavorite; // New callback
 
   const ProductCartWidget({
     super.key,
@@ -30,6 +32,8 @@ class ProductCartWidget extends StatelessWidget {
     this.salecategory_id,
     this.category_id,
     this.gender,
+    required this.isFavorite,
+    required this.onToggleFavorite,
   });
 
   @override
@@ -66,11 +70,18 @@ class ProductCartWidget extends StatelessWidget {
                 child: IconButton(
                   padding: const EdgeInsets.all(1),
                   iconSize: 22,
-                  icon: const Icon(
-                    Icons.favorite_outline_outlined,
-                    color: ColorConstants.primary,
+                  // icon: const Icon(
+                  //   Icons.favorite_outline_outlined,
+                  //   color: ColorConstants.primary,
+                  // ),
+                  // onPressed: () {},
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite
+                        ? ColorConstants.rich
+                        : ColorConstants.blackColor,
                   ),
-                  onPressed: () {},
+                  onPressed: onToggleFavorite,
                 ),
               ),
             ],

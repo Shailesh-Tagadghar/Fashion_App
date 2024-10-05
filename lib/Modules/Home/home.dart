@@ -1,5 +1,6 @@
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/banner_widget.dart';
 import 'package:fashion/Modules/Home/Widget/category_widget.dart';
 import 'package:fashion/Modules/Home/Widget/product_cart_widget.dart';
@@ -383,6 +384,11 @@ class Home extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         final item = dataContoller.productsItems[index];
+                        final productId = item['_id'];
+                        final categoryId = item['category_id']['_id'];
+                        final isFavorite = dataContoller.favoriteProducts
+                            .contains(productId); // Track favorites
+
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(AppRoutes.productDetailsScreen,
@@ -397,6 +403,19 @@ class Home extends StatelessWidget {
                                 ? item['image']
                                     [0] // Use the first image from the list
                                 : AssetConstant.pd3, // Fallback image
+                            isFavorite: isFavorite,
+                            onToggleFavorite: () async {
+                              if (isFavorite) {
+                                await ApiService.removeFromFavorite(
+                                    productId, categoryId);
+                                dataContoller.favoriteProducts
+                                    .remove(productId);
+                              } else {
+                                await ApiService.addToFavorites(
+                                    productId, categoryId);
+                                dataContoller.favoriteProducts.add(productId);
+                              }
+                            },
                           ),
                         );
                       },

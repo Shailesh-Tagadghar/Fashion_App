@@ -15,6 +15,8 @@ class DataContoller extends GetxController {
   final deliveryFee = 0.0.obs;
   final isLoading = true.obs;
 
+  final favoriteProducts = <String>[].obs; // Track favorite product IDs
+
   @override
   void onInit() {
     super.onInit();
@@ -66,6 +68,8 @@ class DataContoller extends GetxController {
       final products = await ApiService.fetchProducts();
       // print('Fetched Categories: $category');
       productsItems.assignAll(products);
+      favoriteProducts.assignAll(await ApiService.getFavoriteProducts());
+
       isLoading.value = false;
     } catch (e) {
       print('Error fetching sales Category: $e');
@@ -103,6 +107,17 @@ class DataContoller extends GetxController {
       isLoading.value = false;
     } catch (e) {
       print('Error fetching Checkout in controller: $e');
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchFavoriteProducts() async {
+    try {
+      isLoading.value = true;
+      favoriteProducts.assignAll(await ApiService.getFavoriteProducts());
+      isLoading.value = false;
+    } catch (e) {
+      print('Error fetching favorite products: $e');
       isLoading.value = false;
     }
   }
