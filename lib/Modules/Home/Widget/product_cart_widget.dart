@@ -70,11 +70,6 @@ class ProductCartWidget extends StatelessWidget {
                 child: IconButton(
                   padding: const EdgeInsets.all(1),
                   iconSize: 22,
-                  // icon: const Icon(
-                  //   Icons.favorite_outline_outlined,
-                  //   color: ColorConstants.primary,
-                  // ),
-                  // onPressed: () {},
                   icon: Icon(
                     isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: isFavorite

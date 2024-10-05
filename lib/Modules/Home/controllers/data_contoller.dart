@@ -6,7 +6,6 @@ class DataContoller extends GetxController {
   final categoryItems = <Map<String, dynamic>>[].obs;
   final salesCategoryItems = <Map<String, dynamic>>[].obs;
   final productsItems = <Map<String, dynamic>>[].obs;
-  // final cartsItems = <String, dynamic>{}.obs;
   final cartsItems = {}.obs;
   final checkoutItems = {}.obs;
   final total = 0.0.obs;
