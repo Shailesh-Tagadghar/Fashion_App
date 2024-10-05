@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
+import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -651,6 +652,96 @@ class ApiService {
     } finally {
       DataContoller().isLoading.value =
           false; // Ensure loading stops after request
+    }
+  }
+
+  // add and remove favourite
+  //to add favourite
+  static Future<void> addToFavorites(
+      String productId, String categoryId) async {
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
+    final token = GetStorage()
+        .read('token'); // Adjust if your token storage key is different
+    print('Bearer Token : $token');
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+    final body = json.encode({
+      "product_id": productId,
+      "category_id": categoryId,
+    });
+
+    HomeController().isLoading.value = true;
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        print("Added to favorites in api service: $productId");
+      } else {
+        print(
+            "Failed to add to favorites in api service: ${response.reasonPhrase}");
+      }
+    } catch (e) {
+      print("Error adding to favorites in api service: $e");
+    } finally {
+      HomeController().isLoading.value = false;
+    }
+  }
+
+  //to remove favourite
+  static Future<void> removeFromFavorite(
+      String productId, String categoryId) async {
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
+    final token = GetStorage()
+        .read('token'); // Adjust if your token storage key is different
+    print('Bearer Token : $token');
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+    final body = json.encode({
+      "product_id": productId,
+      "category_id": categoryId,
+    });
+
+    HomeController().isLoading.value = true;
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        print("Removed from favorites in api service: $productId");
+      } else {
+        print(
+            "Failed to remove from favorites in api service: ${response.reasonPhrase}");
+      }
+    } catch (e) {
+      print("Error remove from favorites in api service: $e");
+    } finally {
+      HomeController().isLoading.value = false;
+    }
+  }
+
+  // fetch favourites
+  static Future<List<String>> getFavorite() async {
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFavorite}');
+    final token = GetStorage().read('token');
+    final headers = {
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        // Assuming 'product_id' field is in the response to map favorite items
+        return data.map((item) => item['product_id'].toString()).toList();
+      } else {
+        print(
+            "Failed to fetch favorite items in api service: ${response.reasonPhrase}");
+        return [];
+      }
+    } catch (e) {
+      print("Error fetching favorite items in api service: $e");
+      return [];
     }
   }
 }
