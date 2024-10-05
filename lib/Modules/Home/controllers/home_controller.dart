@@ -1,24 +1,15 @@
 import 'dart:async';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
-import 'package:fashion/Modules/Home/Model/product_model.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final RxList<String> favoriteItems = <String>[].obs;
-  final RxList<ProductModel> productList = <ProductModel>[].obs;
-
-  final isLoading = false.obs;
-
-  ApiService apiService = ApiService();
-
   @override
   void onInit() {
     activePage.value = 0;
     pageController = PageController();
     startTimer();
-    fetchFavoriteItems();
     super.onInit();
   }
 
@@ -27,6 +18,8 @@ class HomeController extends GetxController {
     pageController.dispose();
     super.onClose();
   }
+
+  ApiService apiService = ApiService();
 
   //for navbar selection
   var selectedIndex = 0.obs;
@@ -197,47 +190,5 @@ class HomeController extends GetxController {
 
   void setCoupon(String coupon) {
     selectedCoupon.value = coupon;
-  }
-
-  ///////////////////////////////////////////////////////////
-  //////////////////////////
-  // Favourite screen
-  bool isFavorited(String? productId) {
-    return favoriteItems.contains(productId);
-  }
-
-  ProductModel? getProductById(String productId) {
-    return productList.firstWhereOrNull((product) => product.id == productId);
-  }
-
-  // Toggle favorite status
-  Future<void> toggleFavorite(String productId, String categoryId) async {
-    isLoading.value = true;
-    try {
-      if (isFavorited(productId)) {
-        // Remove from favorites
-        favoriteItems.remove(productId);
-        await ApiService.removeFromFavorite(productId, categoryId);
-      } else {
-        // Add to favorites
-        favoriteItems.add(productId);
-        await ApiService.addToFavorites(productId, categoryId);
-      }
-    } finally {
-      isLoading.value = false; // Stop loading
-    }
-  }
-
-  // Fetch favorite products from the API
-  Future<void> fetchFavoriteItems() async {
-    isLoading.value = true;
-    try {
-      final favorites = await ApiService.getFavorite();
-      favoriteItems.assignAll(favorites); // Populate favoriteItems list
-    } catch (e) {
-      print("Error fetching favorite items: $e");
-    } finally {
-      isLoading.value = false;
-    }
   }
 }

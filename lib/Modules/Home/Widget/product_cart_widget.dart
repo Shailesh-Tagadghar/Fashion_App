@@ -1,9 +1,7 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
-import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductCartWidget extends StatelessWidget {
@@ -19,7 +17,7 @@ class ProductCartWidget extends StatelessWidget {
   final String? category_id;
   final String? gender;
 
-  ProductCartWidget({
+  const ProductCartWidget({
     super.key,
     this.id,
     required this.name,
@@ -33,8 +31,6 @@ class ProductCartWidget extends StatelessWidget {
     this.category_id,
     this.gender,
   });
-
-  final HomeController controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -59,39 +55,24 @@ class ProductCartWidget extends StatelessWidget {
                   height: 19.h,
                 ),
               ),
-              Obx(() {
-                bool isFavorited = controller.isFavorited(id);
-                return Container(
-                  width: 8.6.w,
-                  height: 4.4.h,
-                  margin: const EdgeInsets.only(right: 8, top: 8),
-                  decoration: BoxDecoration(
-                    color: ColorConstants.whiteColor.withOpacity(0.5),
-                    shape: BoxShape.circle,
+              Container(
+                width: 8.6.w,
+                height: 4.4.h,
+                margin: const EdgeInsets.only(right: 8, top: 8),
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteColor.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  padding: const EdgeInsets.all(1),
+                  iconSize: 22,
+                  icon: const Icon(
+                    Icons.favorite_outline_outlined,
+                    color: ColorConstants.primary,
                   ),
-                  child: IconButton(
-                    padding: const EdgeInsets.all(1),
-                    iconSize: 22,
-                    icon: Icon(
-                      isFavorited
-                          ? Icons.favorite
-                          : Icons.favorite_outline_outlined,
-                      color: isFavorited
-                          ? ColorConstants.rich
-                          : ColorConstants.whiteColor,
-                    ),
-                    onPressed: () {
-                      if (id != null && category_id != null) {
-                        controller.toggleFavorite(id!,
-                            category_id!); // Safely unwraps and passes category_id
-                      } else {
-                        // Handle the case when category_id is null (e.g., show an error or do nothing)
-                        print('Category ID is null and Id is null');
-                      }
-                    },
-                  ),
-                );
-              }),
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
           SizedBox(

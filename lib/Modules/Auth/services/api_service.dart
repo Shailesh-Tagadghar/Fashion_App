@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
-import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -672,7 +671,7 @@ class ApiService {
       "category_id": categoryId,
     });
 
-    HomeController().isLoading.value = true;
+    DataContoller().isLoading.value = true;
     try {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
@@ -684,7 +683,7 @@ class ApiService {
     } catch (e) {
       print("Error adding to favorites in api service: $e");
     } finally {
-      HomeController().isLoading.value = false;
+      DataContoller().isLoading.value = false;
     }
   }
 
@@ -704,7 +703,7 @@ class ApiService {
       "category_id": categoryId,
     });
 
-    HomeController().isLoading.value = true;
+    DataContoller().isLoading.value = true;
     try {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
@@ -716,7 +715,7 @@ class ApiService {
     } catch (e) {
       print("Error remove from favorites in api service: $e");
     } finally {
-      HomeController().isLoading.value = false;
+      DataContoller().isLoading.value = false;
     }
   }
 
