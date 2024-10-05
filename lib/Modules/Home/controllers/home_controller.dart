@@ -157,11 +157,6 @@ class HomeController extends GetxController {
     currentImage.value = imagePath;
   }
 
-  // void addProductToCart(String productId, String size) {
-  //   apiService.addToCart(productId, size).then((_) {
-  //     // Optional: Add any state updates or feedback here
-  //   });
-  // }
 
   Future<void> addProductToCart(String productId, String size) async {
     if (selectedProductSize.isEmpty) {

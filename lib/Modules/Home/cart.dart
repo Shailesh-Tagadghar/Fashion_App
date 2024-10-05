@@ -141,12 +141,6 @@ class Cart extends StatelessWidget {
   void showCheckout(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final DataContoller dataController = Get.find<DataContoller>();
-
-    // // Extract total, subtotal, discount, and delivery fee from cartsItems
-    // final total = dataController.cartsItems['total'] ?? 0;
-    // final subtotal = dataController.cartsItems['subtotal'] ?? 0;
-    // final discount = dataController.cartsItems['discount'] ?? 0;
-    // final deliveryFee = dataController.cartsItems['deliveryfee'] ?? 0;
     showModalBottomSheet(
       context: context,
       backgroundColor: ColorConstants.whiteColor,
@@ -241,11 +235,8 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          // text: '\$${StringConstants.subtotalprice}',
                           text:
                               '\$${dataController.subtotal.value.toStringAsFixed(2)}',
-                          // '\$${dataController.subtotal.value.toStringAsFixed(2)}',
-
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
@@ -265,7 +256,6 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          // text: '\$${StringConstants.deliveryfee}',
                           text:
                               '\$${dataController.deliveryFee.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
@@ -287,8 +277,6 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          // text: '-\$${StringConstants.discountcharge}',
-                          // text: '-\$$discount',
                           text:
                               '-\$${dataController.discount.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
@@ -320,8 +308,6 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          // text: '\$${StringConstants.totalcost}',
-                          // text: '\$$total',
                           text:
                               '\$${dataController.total.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,

@@ -464,6 +464,7 @@ class Productdetails extends StatelessWidget {
                   // };
                   // Get.toNamed(
                   //   AppRoutes.navbarScreen,
+                  //   arguments: cartData,
                   // );
                   var size = homeController.selectedProductSize.value;
                   homeController.addProductToCart(productId, size);

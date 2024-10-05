@@ -23,7 +23,6 @@ class BannerWidget extends StatelessWidget {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 1.w),
         decoration: BoxDecoration(
-          // image: DecorationImage(image: NetworkImage(image), fit: BoxFit.fill),
           image: DecorationImage(
               image: NetworkImage('${ApiConstants.imageBaseUrl}$image'),
               fit: BoxFit.fill),
@@ -49,7 +48,6 @@ class BannerWidget extends StatelessWidget {
                   fontSize: 11,
                 ),
               ),
-              // SizedBox(height: 4),
               SizedBox(
                 width: 37.w,
                 child: CustomText(
