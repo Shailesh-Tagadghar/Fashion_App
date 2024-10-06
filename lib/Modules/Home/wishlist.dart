@@ -92,26 +92,6 @@ class _WishlistState extends State<Wishlist> {
                 itemCount: dataContoller.salesCategoryItems.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  // return Container(
-                  //   width: 40.w,
-                  //   padding: EdgeInsets.only(left: 2.w),
-                  //   child: CustomButton(
-                  //     label: dataContoller.salesCategoryItems[index]['name'] ??
-                  //         'Unknown', // Adjust key based on your API response
-                  //     labelColor: ColorConstants.blackColor,
-                  //     action: () {
-                  //       // Handle category selection
-                  //       homeController.setSelectedSalesCategory(index);
-                  //     },
-                  //     isSelected:
-                  //         homeController.selectedsalesCategoryIndex.value ==
-                  //             index,
-                  //     btnColor: ColorConstants.whiteColor,
-                  //     fontSize: 11,
-                  //     weight: FontWeight.w400,
-                  //   ),
-                  // );
-
                   return Container(
                     width: 40.w,
                     padding: EdgeInsets.only(left: 2.w),
