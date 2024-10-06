@@ -1,6 +1,6 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
-import 'package:fashion/Utils/Constants/api_constants.dart';
+// import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,7 +36,8 @@ class CartItemWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
-              '${ApiConstants.imageBaseUrl}$image',
+              // '${ApiConstants.imageBaseUrl}$image',
+              image,
               width: 25.w,
               height: 12.h,
               fit: BoxFit.fill,

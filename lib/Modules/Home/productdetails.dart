@@ -1,6 +1,7 @@
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
+import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
@@ -453,21 +454,21 @@ class Productdetails extends StatelessWidget {
                 weight: FontWeight.w400,
                 isSelected: true,
                 action: () {
-                  // homeController.selectedIndex.value = 1;
-                  // final cartData = {
-                  //   '_id': productId,
-                  //   'name': productName,
-                  //   'price': productPrice,
-                  //   'size': homeController.selectedProductSize.value,
-                  //   'color': homeController.selectedProductColor.value,
-                  //   'image': imageList.isNotEmpty ? imageList[0] : '',
-                  // };
-                  // Get.toNamed(
-                  //   AppRoutes.navbarScreen,
-                  //   arguments: cartData,
-                  // );
-                  var size = homeController.selectedProductSize.value;
-                  homeController.addProductToCart(productId, size);
+                  homeController.selectedIndex.value = 1;
+                  final cartData = {
+                    '_id': productId,
+                    'name': productName,
+                    'price': productPrice,
+                    'size': homeController.selectedProductSize.value,
+                    'color': homeController.selectedProductColor.value,
+                    'image': imageList.isNotEmpty ? imageList[0] : '',
+                  };
+                  Get.toNamed(
+                    AppRoutes.navbarScreen,
+                    arguments: cartData,
+                  );
+                  // var size = homeController.selectedProductSize.value;
+                  // homeController.addProductToCart(productId, size);
                 },
               ),
             ),
