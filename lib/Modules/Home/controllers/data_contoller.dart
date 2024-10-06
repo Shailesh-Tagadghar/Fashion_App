@@ -19,15 +19,15 @@ class DataContoller extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _fetchCarousal();
-    _fetchCategory();
-    _fetchSalesCategory();
-    _fetchProducts();
-    _fetchCarts();
-    _fetchCheckout();
+    fetchCarousal();
+    fetchCategory();
+    fetchSalesCategory();
+    fetchProducts();
+    fetchCarts();
+    fetchCheckout();
   }
 
-  Future<void> _fetchCarousal() async {
+  Future<void> fetchCarousal() async {
     try {
       final carousal = await ApiService.fetchCarousal();
       carousalItems.assignAll(carousal); // Update the observable list
@@ -38,7 +38,7 @@ class DataContoller extends GetxController {
     }
   }
 
-  Future<void> _fetchCategory() async {
+  Future<void> fetchCategory() async {
     try {
       final category = await ApiService.fetchCategory();
       // print('Fetched Categories: $category');
@@ -50,7 +50,7 @@ class DataContoller extends GetxController {
     }
   }
 
-  Future<void> _fetchSalesCategory() async {
+  Future<void> fetchSalesCategory() async {
     try {
       final salesCategory = await ApiService.fetchSalesCategory();
       // print('Fetched Categories: $category');
@@ -62,7 +62,7 @@ class DataContoller extends GetxController {
     }
   }
 
-  Future<void> _fetchProducts() async {
+  Future<void> fetchProducts() async {
     try {
       final products = await ApiService.fetchProducts();
       // print('Fetched Categories: $category');
@@ -76,7 +76,7 @@ class DataContoller extends GetxController {
     }
   }
 
-  Future<void> _fetchCarts() async {
+  Future<void> fetchCarts() async {
     try {
       final carts = await ApiService.fetchCarts();
       print('Fetched Carts in Controller: $carts');
@@ -89,7 +89,7 @@ class DataContoller extends GetxController {
     }
   }
 
-  Future<void> _fetchCheckout() async {
+  Future<void> fetchCheckout() async {
     try {
       final checkout = await ApiService.fetchCheckout();
       print('Fetched Checkout in Controller: $checkout');
@@ -118,6 +118,30 @@ class DataContoller extends GetxController {
     } catch (e) {
       print('Error fetching favorite products: $e');
       isLoading.value = false;
+    }
+  }
+
+// Fetch products by category ID
+  Future<void> fetchCategoryProducts(String categoryId) async {
+    var response = await ApiService.getCategoryProduct(categoryId);
+
+    if (response != null) {
+      print('Category Products: $response');
+      // You can use the response to update UI state or process further
+    } else {
+      print('Failed to fetch products');
+    }
+  }
+
+  // Fetch products by sales category ID
+  Future<void> fetchSalesCategoryProducts(String saleCategoryId) async {
+    var response = await ApiService.getSalesCategoryProduct(saleCategoryId);
+
+    if (response != null) {
+      print('Sales Category Products: $response');
+      // You can use the response to update UI state or process further
+    } else {
+      print('Failed to fetch sales category products');
     }
   }
 }

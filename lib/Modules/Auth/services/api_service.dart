@@ -745,4 +745,55 @@ class ApiService {
       return [];
     }
   }
+
+  // fetch product by category id
+  static Future<dynamic> getCategoryProduct(String categoryId) async {
+    final token = GetStorage().read('token');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+
+    var body = json.encode({"category_id": categoryId});
+
+    var response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getCategotyProducts}'),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      return json.decode(response.body);
+    } else {
+      // Handle the error case
+      print(
+          'Error to fetch product by category id in api service: ${response.reasonPhrase}');
+      return null;
+    }
+  }
+
+  // fetch product by sales_category id
+  static Future<dynamic> getSalesCategoryProduct(String saleCategoryId) async {
+    final token = GetStorage().read('token');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+
+    var body = json.encode({"salecategory_id": saleCategoryId});
+
+    var response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.salesCategoryProduct}'),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body); // Parse the JSON response
+    } else {
+      print('Error: ${response.reasonPhrase}');
+      return null;
+    }
+  }
 }
