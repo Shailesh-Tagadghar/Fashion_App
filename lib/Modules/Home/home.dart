@@ -221,20 +221,25 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 2.h,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomText(
+                  const CustomText(
                     text: StringConstants.category,
                     color: ColorConstants.blackColor,
                     fontSize: 13,
                     weight: FontWeight.w500,
                   ),
-                  CustomText(
-                    text: StringConstants.seeAll,
-                    color: ColorConstants.rich,
-                    fontSize: 11,
-                    weight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () async {
+                      await dataContoller.fetchProducts();
+                    },
+                    child: const CustomText(
+                      text: StringConstants.seeAll,
+                      color: ColorConstants.rich,
+                      fontSize: 11,
+                      weight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
@@ -252,12 +257,22 @@ class Home extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: dataContoller.categoryItems.length,
                         itemBuilder: (context, index) {
-                          final item = dataContoller
-                              .categoryItems[index]; // Debugging line
-                          return CategoryWidget(
-                            // image: AssetConstant.cat1,
-                            image: item['image'] ?? AssetConstant.cat1,
-                            name: item['name'] ?? 'No name',
+                          final item = dataContoller.categoryItems[index];
+                          final isSelected =
+                              dataContoller.selectedCategoryId.value ==
+                                  item['_id'];
+
+                          return GestureDetector(
+                            onTap: () {
+                              // Fetch products by category when clicked
+                              dataContoller.fetchCategoryProducts(item['_id']);
+                            },
+                            child: CategoryWidget(
+                              image: item['image'] ?? AssetConstant.cat1,
+                              name: item['name'] ?? 'No name',
+                              isSelected:
+                                  isSelected, // Highlight selected category
+                            ),
                           );
                         },
                       ),

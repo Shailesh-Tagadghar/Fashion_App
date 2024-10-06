@@ -15,6 +15,7 @@ class DataContoller extends GetxController {
   final isLoading = true.obs;
 
   final favoriteProducts = <String>[].obs; // Track favorite product IDs
+  final selectedCategoryId = ''.obs; // To store selected category ID
 
   @override
   void onInit() {
@@ -71,7 +72,7 @@ class DataContoller extends GetxController {
 
       isLoading.value = false;
     } catch (e) {
-      print('Error fetching sales Category: $e');
+      print('Error fetching products: $e');
       isLoading.value = false;
     }
   }
@@ -123,13 +124,28 @@ class DataContoller extends GetxController {
 
 // Fetch products by category ID
   Future<void> fetchCategoryProducts(String categoryId) async {
-    var response = await ApiService.getCategoryProduct(categoryId);
+    try {
+      isLoading.value = true;
+      selectedCategoryId.value = categoryId; // Set selected category ID
+      var response = await ApiService.getCategoryProduct(categoryId);
+      print('Fetched Category Products: $response'); // Log the response
 
-    if (response != null) {
-      print('Category Products: $response');
-      // You can use the response to update UI state or process further
-    } else {
-      print('Failed to fetch products');
+      if (response != null) {
+        if (response is Map<String, dynamic> && response.containsKey('data')) {
+          // Assign the list of products from the 'data' key
+          productsItems
+              .assignAll(List<Map<String, dynamic>>.from(response['data']));
+        } else {
+          print(
+              'Expected a list of products in "data", but received something else');
+        }
+      } else {
+        print('Failed to fetch products');
+      }
+      isLoading.value = false;
+    } catch (e) {
+      print('Error fetching Category Products: $e');
+      isLoading.value = false;
     }
   }
 

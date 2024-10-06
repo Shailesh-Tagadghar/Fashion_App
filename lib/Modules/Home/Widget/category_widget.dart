@@ -7,11 +7,13 @@ import 'package:sizer/sizer.dart';
 class CategoryWidget extends StatelessWidget {
   final String image;
   final String name;
+  final bool isSelected;
 
   const CategoryWidget({
     super.key,
     required this.image,
     required this.name,
+    this.isSelected = false,
   });
 
   @override
@@ -27,8 +29,14 @@ class CategoryWidget extends StatelessWidget {
             child: Container(
               width: 16.w, // Set a width
               height: 7.h,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: ColorConstants.background,
+                border: isSelected
+                    ? Border.all(
+                        color: ColorConstants.lightGrayColor,
+                        width: 1,
+                      )
+                    : null,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15),
