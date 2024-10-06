@@ -355,6 +355,12 @@ class Home extends StatelessWidget {
                           action: () {
                             // Handle category selection
                             homeController.setSelectedSalesCategory(index);
+                            String selectedSaleCategoryId =
+                                dataContoller.salesCategoryItems[index]['_id'];
+                            dataContoller.selectedCategoryId.value =
+                                selectedSaleCategoryId; // Store selected category ID
+                            dataContoller.fetchSalesCategoryProducts(
+                                selectedSaleCategoryId); // Fetch products for the selected category
                           },
                           isSelected:
                               homeController.selectedsalesCategoryIndex.value ==

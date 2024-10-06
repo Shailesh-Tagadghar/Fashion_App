@@ -151,13 +151,19 @@ class DataContoller extends GetxController {
 
   // Fetch products by sales category ID
   Future<void> fetchSalesCategoryProducts(String saleCategoryId) async {
-    var response = await ApiService.getSalesCategoryProduct(saleCategoryId);
-
-    if (response != null) {
-      print('Sales Category Products: $response');
-      // You can use the response to update UI state or process further
-    } else {
-      print('Failed to fetch sales category products');
+    try {
+      var response = await ApiService.getSalesCategoryProduct(saleCategoryId);
+      if (response != null && response['status'] == 1) {
+        print('Sales Category Products: $response');
+        var productsList = response['data'] as List; // Get the list of products
+        productsItems.assignAll(productsList
+            .map((product) => product as Map<String, dynamic>)
+            .toList()); // Update the productsItems
+      } else {
+        print('Failed to fetch sales category products');
+      }
+    } catch (e) {
+      print('Error fetching sales category products: $e');
     }
   }
 }
