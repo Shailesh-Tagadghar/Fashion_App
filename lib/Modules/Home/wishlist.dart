@@ -106,6 +106,10 @@ class _WishlistState extends State<Wishlist> {
           Container(
             height: 4.5.h,
             padding: EdgeInsets.symmetric(vertical: 0.3.h),
+            margin: EdgeInsets.only(
+              left: 4.w,
+              right: 4.w,
+            ),
             child: Obx(() {
               if (dataContoller.isLoading.value) {
                 return const Center(
