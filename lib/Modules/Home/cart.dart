@@ -236,10 +236,10 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 2.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const CustomText(
+                        CustomText(
                           text: StringConstants.subtotal,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
@@ -258,10 +258,10 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const CustomText(
+                        CustomText(
                           text: StringConstants.delivery,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
@@ -280,10 +280,10 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const CustomText(
+                        CustomText(
                           text: StringConstants.discount,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
@@ -312,10 +312,10 @@ class Cart extends StatelessWidget {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const CustomText(
+                        CustomText(
                           text: StringConstants.total,
                           color: ColorConstants.greyColor,
                           fontSize: 12,
