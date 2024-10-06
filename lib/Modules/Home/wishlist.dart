@@ -1,4 +1,3 @@
-import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/product_cart_widget.dart';
@@ -76,33 +75,6 @@ class _WishlistState extends State<Wishlist> {
       ),
       body: Column(
         children: [
-          // Container(
-          //   height: 7.2.h,
-          //   padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h),
-          //   child: ListView.builder(
-          //       itemCount: controller.wishlistCategory.length,
-          //       scrollDirection: Axis.horizontal,
-          //       itemBuilder: (context, index) {
-          //         return Container(
-          //           width: 28.w,
-          //           padding: EdgeInsets.only(left: 4.w),
-          //           child: Obx(() {
-          //             return CustomButton(
-          //               label: controller.wishlistCategory[index],
-          //               labelColor: ColorConstants.blackColor,
-          //               action: () {
-          //                 controller.setSelectedCategory(index);
-          //               },
-          //               isSelected:
-          //                   controller.selectedCategoryIndex.value == index,
-          //               btnColor: ColorConstants.whiteColor,
-          //               fontSize: 11,
-          //               weight: FontWeight.w400,
-          //             );
-          //           }),
-          //         );
-          //       }),
-          // ),
           Container(
             height: 4.5.h,
             padding: EdgeInsets.symmetric(vertical: 0.3.h),
@@ -120,30 +92,84 @@ class _WishlistState extends State<Wishlist> {
                 itemCount: dataContoller.salesCategoryItems.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  // return Container(
+                  //   width: 40.w,
+                  //   padding: EdgeInsets.only(left: 2.w),
+                  //   child: CustomButton(
+                  //     label: dataContoller.salesCategoryItems[index]['name'] ??
+                  //         'Unknown', // Adjust key based on your API response
+                  //     labelColor: ColorConstants.blackColor,
+                  //     action: () {
+                  //       // Handle category selection
+                  //       homeController.setSelectedSalesCategory(index);
+                  //     },
+                  //     isSelected:
+                  //         homeController.selectedsalesCategoryIndex.value ==
+                  //             index,
+                  //     btnColor: ColorConstants.whiteColor,
+                  //     fontSize: 11,
+                  //     weight: FontWeight.w400,
+                  //   ),
+                  // );
+
                   return Container(
                     width: 40.w,
                     padding: EdgeInsets.only(left: 2.w),
-                    child: CustomButton(
-                      label: dataContoller.salesCategoryItems[index]['name'] ??
-                          'Unknown', // Adjust key based on your API response
-                      labelColor: ColorConstants.blackColor,
-                      action: () {
-                        // Handle category selection
-                        homeController.setSelectedSalesCategory(index);
-                      },
-                      isSelected:
+                    child: Obx(() {
+                      // Check if this index is the selected one
+                      bool isSelected =
                           homeController.selectedsalesCategoryIndex.value ==
-                              index,
-                      btnColor: ColorConstants.whiteColor,
-                      fontSize: 11,
-                      weight: FontWeight.w400,
-                    ),
+                              index;
+
+                      return ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            isSelected
+                                ? ColorConstants.rich
+                                : ColorConstants.whiteColor,
+                          ),
+                          shape: WidgetStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                              side: BorderSide(
+                                color: isSelected
+                                    ? ColorConstants.rich
+                                    : ColorConstants.lightGrayColor,
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          // Handle category selection
+                          homeController.setSelectedSalesCategory(index);
+                          String selectedSaleCategoryId =
+                              dataContoller.salesCategoryItems[index]['_id'];
+                          dataContoller.selectedCategoryId.value =
+                              selectedSaleCategoryId; // Store selected category ID
+                          dataContoller.fetchSalesCategoryProducts(
+                              selectedSaleCategoryId); // Fetch products for the selected category
+                        },
+                        child: Center(
+                          child: Text(
+                            dataContoller.salesCategoryItems[index]['name'] ??
+                                'Unknown',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                              color: isSelected
+                                  ? ColorConstants.whiteColor
+                                  : ColorConstants.blackColor,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
                   );
                 },
               );
             }),
           ),
-
           listproductItems(),
         ],
       ),
