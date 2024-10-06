@@ -522,17 +522,9 @@ class ApiService {
         // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
           Map<String, dynamic> carts = data['data'];
-
-          // Get.snackbar("Success", "Coupons fetched successfully",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.green,
-          //     colorText: Colors.white);
           return carts;
         } else {
-          // Get.snackbar("Error", "Unexpected response format",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.red,
-          //     colorText: Colors.white);
+          print('Unexpected response format');
           throw Exception('Unexpected response format');
         }
       } else {
@@ -542,10 +534,6 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching Carts in API Service: $e');
-      // Get.snackbar("Error", "Failed to fetch Carts: $e",
-      //     snackPosition: SnackPosition.BOTTOM,
-      //     backgroundColor: Colors.red,
-      //     colorText: Colors.white);
       throw Exception('Failed to Carts');
     }
   }
