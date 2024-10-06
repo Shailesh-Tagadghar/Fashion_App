@@ -90,14 +90,14 @@ class HomeController extends GetxController {
   ///////////////////////////////////////////////////////////////////////////////////
 
   //Wishlist page list view -- list
-  final List<String> wishlistCategory = <String>[
-    StringConstants.category1,
-    StringConstants.category2,
-    StringConstants.category3,
-    StringConstants.category4,
-    StringConstants.category5,
-    StringConstants.category6,
-  ];
+  // final List<String> wishlistCategory = <String>[
+  //   StringConstants.category1,
+  //   StringConstants.category2,
+  //   StringConstants.category3,
+  //   StringConstants.category4,
+  //   StringConstants.category5,
+  //   StringConstants.category6,
+  // ];
 
   void setSelectedCategory(int index) {
     selectedCategoryIndex.value = index;
@@ -117,8 +117,8 @@ class HomeController extends GetxController {
   ///////////////////////////////////////////////////////////////////////////////////
 
   // WishList Category List
-  RxList<String> cartegoryWishlist =
-      ["All", "Jacket", "Shirt", "Pant", "T-Shirt", "Specs"].obs;
+  // RxList<String> cartegoryWishlist =
+  //     ["All", "Jacket", "Shirt", "Pant", "T-Shirt", "Specs"].obs;
 
   RxString selectedCategoryName = "".obs;
   RxBool showAllImages = false.obs;
@@ -156,7 +156,6 @@ class HomeController extends GetxController {
   void updateImage(String imagePath) {
     currentImage.value = imagePath;
   }
-
 
   Future<void> addProductToCart(String productId, String size) async {
     if (selectedProductSize.isEmpty) {
