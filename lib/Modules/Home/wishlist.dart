@@ -21,7 +21,7 @@ class Wishlist extends StatefulWidget {
 }
 
 class _WishlistState extends State<Wishlist> {
-  final HomeController controller = Get.put(HomeController());
+  final HomeController homeController = Get.put(HomeController());
 
   final DataContoller dataContoller = Get.find<DataContoller>();
   // Use the existing controller
@@ -76,33 +76,70 @@ class _WishlistState extends State<Wishlist> {
       ),
       body: Column(
         children: [
+          // Container(
+          //   height: 7.2.h,
+          //   padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h),
+          //   child: ListView.builder(
+          //       itemCount: controller.wishlistCategory.length,
+          //       scrollDirection: Axis.horizontal,
+          //       itemBuilder: (context, index) {
+          //         return Container(
+          //           width: 28.w,
+          //           padding: EdgeInsets.only(left: 4.w),
+          //           child: Obx(() {
+          //             return CustomButton(
+          //               label: controller.wishlistCategory[index],
+          //               labelColor: ColorConstants.blackColor,
+          //               action: () {
+          //                 controller.setSelectedCategory(index);
+          //               },
+          //               isSelected:
+          //                   controller.selectedCategoryIndex.value == index,
+          //               btnColor: ColorConstants.whiteColor,
+          //               fontSize: 11,
+          //               weight: FontWeight.w400,
+          //             );
+          //           }),
+          //         );
+          //       }),
+          // ),
           Container(
-            height: 7.2.h,
-            padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h),
-            child: ListView.builder(
-                itemCount: controller.wishlistCategory.length,
+            height: 4.5.h,
+            padding: EdgeInsets.symmetric(vertical: 0.3.h),
+            child: Obx(() {
+              if (dataContoller.isLoading.value) {
+                return const Center(
+                    child:
+                        CircularProgressIndicator()); // Show loading indicator
+              }
+              return ListView.builder(
+                itemCount: dataContoller.salesCategoryItems.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Container(
-                    width: 28.w,
-                    padding: EdgeInsets.only(left: 4.w),
-                    child: Obx(() {
-                      return CustomButton(
-                        label: controller.wishlistCategory[index],
-                        labelColor: ColorConstants.blackColor,
-                        action: () {
-                          controller.setSelectedCategory(index);
-                        },
-                        isSelected:
-                            controller.selectedCategoryIndex.value == index,
-                        btnColor: ColorConstants.whiteColor,
-                        fontSize: 11,
-                        weight: FontWeight.w400,
-                      );
-                    }),
+                    width: 40.w,
+                    padding: EdgeInsets.only(left: 2.w),
+                    child: CustomButton(
+                      label: dataContoller.salesCategoryItems[index]['name'] ??
+                          'Unknown', // Adjust key based on your API response
+                      labelColor: ColorConstants.blackColor,
+                      action: () {
+                        // Handle category selection
+                        homeController.setSelectedSalesCategory(index);
+                      },
+                      isSelected:
+                          homeController.selectedsalesCategoryIndex.value ==
+                              index,
+                      btnColor: ColorConstants.whiteColor,
+                      fontSize: 11,
+                      weight: FontWeight.w400,
+                    ),
                   );
-                }),
+                },
+              );
+            }),
           ),
+
           listproductItems(),
         ],
       ),

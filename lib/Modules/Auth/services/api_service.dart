@@ -529,10 +529,10 @@ class ApiService {
           //     colorText: Colors.white);
           return carts;
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          // Get.snackbar("Error", "Unexpected response format",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
           throw Exception('Unexpected response format');
         }
       } else {
@@ -542,10 +542,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching Carts in API Service: $e');
-      Get.snackbar("Error", "Failed to fetch Carts: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to fetch Carts: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to Carts');
     }
   }
