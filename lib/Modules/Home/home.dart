@@ -241,35 +241,29 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 1.5.h,
               ),
-              GestureDetector(
-                onTap: () {
-                  homeController.selectedIndex.value = 2;
-                  Get.toNamed(AppRoutes.navbarScreen);
+              Obx(
+                () {
+                  if (dataContoller.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return SizedBox(
+                      height: 10.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: dataContoller.categoryItems.length,
+                        itemBuilder: (context, index) {
+                          final item = dataContoller
+                              .categoryItems[index]; // Debugging line
+                          return CategoryWidget(
+                            // image: AssetConstant.cat1,
+                            image: item['image'] ?? AssetConstant.cat1,
+                            name: item['name'] ?? 'No name',
+                          );
+                        },
+                      ),
+                    );
+                  }
                 },
-                child: Obx(
-                  () {
-                    if (dataContoller.isLoading.value) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      return SizedBox(
-                        height: 10.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: dataContoller.categoryItems.length,
-                          itemBuilder: (context, index) {
-                            final item = dataContoller
-                                .categoryItems[index]; // Debugging line
-                            return CategoryWidget(
-                              // image: AssetConstant.cat1,
-                              image: item['image'] ?? AssetConstant.cat1,
-                              name: item['name'] ?? 'No name',
-                            );
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
               ),
               SizedBox(
                 height: 1.h,
