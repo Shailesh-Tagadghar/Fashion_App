@@ -39,6 +39,7 @@ class AssetConstant {
   static const String pd1 = '$globalImagePath/pd1.png';
   static const String pd2 = '$globalImagePath/pd2.png';
   static const String pd3 = '$globalImagePath/pd3.png';
+  static const String defaultImage = '$globalImagePath/default_image.jpg';
 
   //profile images
   static const String image = '$globalImagePath/editImage.png';

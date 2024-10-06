@@ -149,7 +149,7 @@ class _ProfileState extends State<Profile> {
                           radius: 60,
                           backgroundImage: userImage.isNotEmpty
                               ? NetworkImage(imageUrl)
-                              : const AssetImage(AssetConstant.pd1)
+                              : const AssetImage(AssetConstant.defaultImage)
                                   as ImageProvider,
                           backgroundColor: ColorConstants.background,
                           child: Align(
