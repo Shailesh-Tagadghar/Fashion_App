@@ -100,26 +100,6 @@ class HomeController extends GetxController {
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////
 
-  // // WishList Category List
-
-  // RxString selectedCategoryName = "".obs;
-  // RxBool showAllImages = false.obs;
-
-  // void selectCategory(String category) {
-  //   if (selectedCategoryName.value == category) {
-  //     selectedCategoryName.value = "";
-  //   } else {
-  //     selectedCategoryName.value = category;
-  //   }
-  // }
-
-  // void setSelectedCategory(int index) {
-  //   selectedCategoryIndex.value = index;
-  // }
-
-  ///////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////
-
   // Product Details SIZE Section
 
   var selectedProductColor = ''.obs;
