@@ -21,14 +21,6 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     final DataContoller dataContoller = Get.find<DataContoller>();
 
-    // final cartData = Get.arguments ?? {};
-    // final String productName = cartData['name'] ?? 'Unknown Product';
-    // final double productPrice = cartData['price'] ?? 0.0;
-    // final String productSize = cartData['size'] ?? 'N/A';
-    // final String productImage =
-    //     cartData['image'] ?? AssetConstant.pd1; // Fallback image
-
-    // print('cart data from arguments : $cartData');
     dataContoller.fetchCarts();
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
