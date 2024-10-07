@@ -82,8 +82,6 @@ class Cart extends StatelessWidget {
               ),
             );
           }
-          // final carts = dataContoller.cartsItems;
-          // final products = carts['product'] ?? [];
           final products = dataContoller.cartsItems['product'] ?? [];
 
           return Padding(
