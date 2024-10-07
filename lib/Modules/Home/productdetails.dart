@@ -1,5 +1,6 @@
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
@@ -14,6 +15,8 @@ class Productdetails extends StatelessWidget {
   Productdetails({super.key});
 
   final HomeController homeController = Get.find();
+  final ValidationController validationController =
+      Get.put(ValidationController());
 
   @override
   Widget build(BuildContext context) {
@@ -331,6 +334,15 @@ class Productdetails extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
+                      height: 0.1.h,
+                    ),
+                    Obx(() => CustomText(
+                          text: validationController.sizeError.value,
+                          color: ColorConstants.errorColor,
+                          fontSize: 10,
+                          weight: FontWeight.w400,
+                        )),
+                    SizedBox(
                       height: 1.5.h,
                     ),
 
@@ -352,6 +364,15 @@ class Productdetails extends StatelessWidget {
                           weight: FontWeight.w500,
                           fontSize: 14,
                         ),
+                        SizedBox(
+                          width: 2.w,
+                        ),
+                        Obx(() => CustomText(
+                              text: validationController.colorError.value,
+                              color: ColorConstants.errorColor,
+                              fontSize: 10,
+                              weight: FontWeight.w400,
+                            )),
                       ],
                     ),
                     SizedBox(
@@ -468,7 +489,17 @@ class Productdetails extends StatelessWidget {
                   //   arguments: cartData,
                   // );
                   var size = homeController.selectedProductSize.value;
-
+                  var color = homeController.selectedProductColor
+                      .value; // Assume you have a similar method for color
+                  validationController.validateSize(size);
+                  validationController.validateColor(color);
+                  if (validationController.sizeError.value.isNotEmpty ||
+                      validationController.colorError.value.isNotEmpty) {
+                    // Optionally show a message or toast here
+                    print(
+                        "Validation errors: ${validationController.sizeError.value}, ${validationController.colorError.value}");
+                    return; // Stop execution if there are errors
+                  }
                   homeController.addProductToCart(productId, size);
                   Get.toNamed(AppRoutes.navbarScreen);
                 },

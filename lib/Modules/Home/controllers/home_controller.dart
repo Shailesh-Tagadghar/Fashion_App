@@ -158,15 +158,15 @@ class HomeController extends GetxController {
   }
 
   Future<void> addProductToCart(String productId, String size) async {
-    if (selectedProductSize.isEmpty) {
-      Get.snackbar('Error', 'Please select a size.');
-      return;
-    }
+    // if (selectedProductSize.isEmpty) {
+    //   Get.snackbar('Error', 'Please select a size.');
+    //   return;
+    // }
 
-    if (selectedProductColor.isEmpty) {
-      Get.snackbar('Error', 'Please select a color.');
-      return;
-    }
+    // if (selectedProductColor.isEmpty) {
+    //   Get.snackbar('Error', 'Please select a color.');
+    //   return;
+    // }
     print("Attempting to add to cart with:");
     print("Product ID: $productId");
     print("Selected Size: ${selectedProductSize.value}");

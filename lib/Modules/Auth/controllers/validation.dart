@@ -1,4 +1,3 @@
-
 import 'package:email_validator/email_validator.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:get/get.dart';
@@ -21,6 +20,10 @@ class ValidationController extends GetxController {
   var cityError = ''.obs;
   var stateError = ''.obs;
   var pinError = ''.obs;
+
+  //product detail screen
+  var sizeError = ''.obs;
+  var colorError = ''.obs;
 
   //////////
   var agreeToTerms = false.obs;
@@ -79,6 +82,23 @@ class ValidationController extends GetxController {
   void setPhoneNumber(String value) {
     phoneNumber.value = value;
     validatePhone(value); // to validate
+  }
+
+  //for product details screen validation
+  void validateSize(String size) {
+    if (size.isEmpty) {
+      sizeError.value = 'Please select Size.';
+    } else {
+      sizeError.value = '';
+    }
+  }
+
+  void validateColor(String color) {
+    if (color.isEmpty) {
+      colorError.value = 'Please select Color.';
+    } else {
+      colorError.value = '';
+    }
   }
 
   // Validations
