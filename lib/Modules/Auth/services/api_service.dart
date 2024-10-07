@@ -458,13 +458,10 @@ class ApiService {
 
   // add to cart
   Future<void> addToCart(String productId, String size) async {
-    final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
 
     var headers = {
-      // 'Authorization':
-      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImNaZFBSTXRNUlMtRElHVXhoYlh4T0k6QVBBOTFiSHIzZTNueTZLdjQzX0FfWVdwUTRId0x1LTdLYXlaVk9IMldhcDV6cDFUYTJKOTVtMVNUaFNlZVpZelpFbGNVWlk3c0dZTHNmbXgxSkV6S1FCemxUaEZ2VjdoemtsWXZ0bjZveTdHR1JMN1hXUDV3Znkwc1lCWVM1N3lsNkQxc19nQlVERVoiLCJpYXQiOjE3MjgyNzIzNDl9.tB1sRk_I6bnm9PJhkWbo3VPuuyvYNyg7ksNcwRpFUHo',
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
     };
@@ -479,7 +476,6 @@ class ApiService {
       print("Response Body in api service: ${response.body}");
 
       if (response.statusCode == 200) {
-        // Parse response or handle success
         print("Product added to cart successfully.");
       } else {
         final Map<String, dynamic> errorResponse = json.decode(response.body);

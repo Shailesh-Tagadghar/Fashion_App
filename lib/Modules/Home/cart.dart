@@ -82,8 +82,9 @@ class Cart extends StatelessWidget {
               ),
             );
           }
-          final carts = dataContoller.cartsItems;
-          final products = carts['product'] ?? [];
+          // final carts = dataContoller.cartsItems;
+          // final products = carts['product'] ?? [];
+          final products = dataContoller.cartsItems['product'] ?? [];
 
           return Padding(
             padding: EdgeInsets.only(
@@ -107,21 +108,22 @@ class Cart extends StatelessWidget {
                           : AssetConstant.pd1; // Fallback image
 
                       return Dismissible(
-                        key: Key(item
-                            .toString()), // Ensure each item has a unique key
-
-                        direction: DismissDirection
-                            .endToStart, // Swipe from right to left
+                        key: Key(item.toString()),
+                        direction: DismissDirection.endToStart,
                         background: Container(
-                          // padding: EdgeInsets.symmetric(horizontal: 20),
-                          color: Colors.red, // Background color when swiped
+                          color: Colors.red,
                           alignment: Alignment.centerRight,
                           child: const Icon(Icons.delete,
                               color: Colors.white), // Delete icon
                         ),
                         confirmDismiss: (direction) async {
-                          // Call the bottom sheet before dismissing the item
                           return await showDeleteBottomSheet(context, index);
+                        },
+                        onDismissed: (direction) {
+                          // Remove the item from the list
+                          dataContoller.cartsItems['product'].removeAt(index);
+                          print(
+                              'Data $productName Name remove from cart screen after remove cart...');
                         },
                         child: CartItemWidget(
                           image: productImage,

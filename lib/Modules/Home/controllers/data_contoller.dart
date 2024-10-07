@@ -79,14 +79,15 @@ class DataContoller extends GetxController {
   }
 
   Future<void> fetchCarts() async {
+    isLoading.value = true;
     try {
       final carts = await ApiService.fetchCarts();
-      print('Fetched Carts in Controller: $carts');
+      print('Fetched Carts in controller: $carts');
       cartsItems.assignAll(carts);
-      isLoading.value = false;
     } catch (e) {
       print('Error fetching Carts in controller: $e');
-      isLoading.value = false;
+    } finally {
+      isLoading.value = false; // Stop loading
     }
   }
 
