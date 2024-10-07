@@ -476,18 +476,6 @@ class Productdetails extends StatelessWidget {
                 isSelected: true,
                 action: () {
                   homeController.selectedIndex.value = 1;
-                  // final cartData = {
-                  //   '_id': productId,
-                  //   'name': productName,
-                  //   'price': productPrice,
-                  //   'size': homeController.selectedProductSize.value,
-                  //   'color': homeController.selectedProductColor.value,
-                  //   'image': imageList.isNotEmpty ? imageList[0] : '',
-                  // };
-                  // Get.toNamed(
-                  //   AppRoutes.navbarScreen,
-                  //   arguments: cartData,
-                  // );
                   var size = homeController.selectedProductSize.value;
                   var color = homeController.selectedProductColor
                       .value; // Assume you have a similar method for color

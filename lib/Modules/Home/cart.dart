@@ -97,9 +97,9 @@ class Cart extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: products.length,
                     itemBuilder: (context, index) {
-                      final item = dataContoller.cartsItems[index];
-                      final product = products[index]['product_id'] ?? {};
-                      final size = products[index]['size'] ?? 'N/A';
+                      final item = products[index];
+                      final product = item['product_id'] ?? {};
+                      final size = item['size'] ?? 'N/A';
                       final productName = product['name'] ?? 'Unknown Product';
                       final productPrice = product['price'] ?? 0;
                       final productImage = product['image']?.isNotEmpty == true
@@ -165,18 +165,32 @@ class Cart extends StatelessWidget {
 
     final removeProduct = carts['product'][index]['_id'];
     final products = carts['product'] ?? [];
-    final product = products[index]['product_id'] ?? {};
-    final size = products[index]['size'] ?? 'N/A';
+    // final product = products[index]['product_id'] ?? {};
+    // final size = products[index]['size'] ?? 'N/A';
+    // final productName = product['name'] ?? 'Unknown Product';
+    // final productPrice = product['price'] ?? 0;
+    // final productImage = product['image']?.isNotEmpty == true
+    //     ? product['image'][0]
+    //     : AssetConstant.pd1; // Fallback image
+    final item = products[index];
+    final product = item['product_id'] ?? {};
+    final size = item['size'] ?? 'N/A';
     final productName = product['name'] ?? 'Unknown Product';
     final productPrice = product['price'] ?? 0;
     final productImage = product['image']?.isNotEmpty == true
         ? product['image'][0]
         : AssetConstant.pd1; // Fallback image
+
     return await Get.bottomSheet(
           Container(
             height: 36.h,
             width: 100.w,
-            padding: EdgeInsets.only(top: 1.5.h, bottom: 4.h),
+            padding: EdgeInsets.only(
+              top: 1.5.h,
+              bottom: 4.h,
+              left: 2.w,
+              right: 2.w,
+            ),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -193,7 +207,17 @@ class Cart extends StatelessWidget {
                   fontSize: 16,
                   weight: FontWeight.w500,
                 ),
-                SizedBox(height: 2.4.h),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Divider(
+                  color: ColorConstants.background,
+                  height: 1.h,
+                  thickness: 2,
+                ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
                 CartItemWidget(
                   image: productImage,
                   title: productName,
@@ -228,7 +252,9 @@ class Cart extends StatelessWidget {
                         isSelected: true,
                         action: () {
                           print('Product Cart id for remove : $removeProduct');
+
                           ApiService.removeProduct(removeProduct);
+                          dataContoller.cartsItems.remove(index);
                           Get.back(result: true);
                         },
                         fontSize: 14,

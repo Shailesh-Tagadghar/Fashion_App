@@ -7,6 +7,7 @@ class DataContoller extends GetxController {
   final salesCategoryItems = <Map<String, dynamic>>[].obs;
   final productsItems = <Map<String, dynamic>>[].obs;
   final cartsItems = {}.obs;
+
   final checkoutItems = {}.obs;
   final total = 0.0.obs;
   final subtotal = 0.0.obs;
@@ -82,8 +83,6 @@ class DataContoller extends GetxController {
       final carts = await ApiService.fetchCarts();
       print('Fetched Carts in Controller: $carts');
       cartsItems.assignAll(carts);
-      // cartsItems.value = carts;
-      // cartsItems.value = carts['data'] ?? {};
       isLoading.value = false;
     } catch (e) {
       print('Error fetching Carts in controller: $e');

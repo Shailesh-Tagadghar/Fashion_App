@@ -161,7 +161,7 @@ class StringConstants {
   static const String trending = 'Trending';
 
   static const String remove = 'Remove';
-  static const String removeFromCart = 'Yes, Remove';
+  static const String removeFromCart = 'Remove from Cart?';
 }
 
 ///

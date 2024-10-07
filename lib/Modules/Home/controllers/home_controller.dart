@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -158,21 +159,13 @@ class HomeController extends GetxController {
   }
 
   Future<void> addProductToCart(String productId, String size) async {
-    // if (selectedProductSize.isEmpty) {
-    //   Get.snackbar('Error', 'Please select a size.');
-    //   return;
-    // }
-
-    // if (selectedProductColor.isEmpty) {
-    //   Get.snackbar('Error', 'Please select a color.');
-    //   return;
-    // }
     print("Attempting to add to cart with:");
     print("Product ID: $productId");
     print("Selected Size: ${selectedProductSize.value}");
     print("Selected Color: ${selectedProductColor.value}");
 
     await apiService.addToCart(productId, selectedProductSize.value);
+    await DataContoller().fetchCarts();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
