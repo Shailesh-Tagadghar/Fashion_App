@@ -464,7 +464,7 @@ class ApiService {
 
     var headers = {
       // 'Authorization':
-      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImR1bW15X2ZjbV90b2tlbiIsImlhdCI6MTcyODAzNzk5NX0.EJMrJwV8-rslUmAWHbF3c_WGwW1ks-sM_qIZxwtGSks',
+      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbW9AZ21haWwuY28iLCJ1c2VySWQiOiI2NmYyNjI0NWI3YjE1ZDk0YjVmMjg3OTUiLCJmY21Ub2tlbiI6ImNaZFBSTXRNUlMtRElHVXhoYlh4T0k6QVBBOTFiSHIzZTNueTZLdjQzX0FfWVdwUTRId0x1LTdLYXlaVk9IMldhcDV6cDFUYTJKOTVtMVNUaFNlZVpZelpFbGNVWlk3c0dZTHNmbXgxSkV6S1FCemxUaEZ2VjdoemtsWXZ0bjZveTdHR1JMN1hXUDV3Znkwc1lCWVM1N3lsNkQxc19nQlVERVoiLCJpYXQiOjE3MjgyNzIzNDl9.tB1sRk_I6bnm9PJhkWbo3VPuuyvYNyg7ksNcwRpFUHo',
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
     };
@@ -503,7 +503,7 @@ class ApiService {
     final headers = {
       'Authorization': 'Bearer $token',
       // 'Authorization':
-      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1ODU0YWIwZjBmYWE3ZTJjZmY2NzYzMCIsImlhdCI6MTcwNDE3MDU1MH0.97dXImRYVRbZuLXeh1hDube2d4vSvIb_WZLtEB0Ju_4'
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVuaXF1ZUBnbWFpbC5jb20iLCJ1c2VySWQiOiI2NzAzNmJmOWI3YjE1ZDk0YjVmMzA5ZTMiLCJmY21Ub2tlbiI6ImVKcTJ1Wk4yUjJPM1ZidlJuImVKcTJ1Wk4yUjJPM1ZidlJubHFfdW46QVBBOTFiRWFNNmxaTTBLY3EyaVFLMlpHZno2VkRHV2xQYW4tdGJ6T29DeTBEbkRGODFkWG83VWRGLWhzV1Z4UWVnYXFLT1RhanhGeEpoRFRGcXlsMEtLQzlvdHNic3ZNd0FTNjR2QlBTWXlzQ1RjODFUMTJvOWhEMW4LNjdqMUtmVUxGR1JFc3VnYk9TWXlzQ1RjODFUMTJvOWhEMW4iLCJpYXQiOjE3MjgyNzc0OTd9.Juc-r0I_iZmINPMOgA0KxeSo2pNhk6XuyqG9fLxikto'
     };
 
     try {

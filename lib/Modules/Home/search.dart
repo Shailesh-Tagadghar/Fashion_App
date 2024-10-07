@@ -50,8 +50,8 @@ class Search extends StatelessWidget {
               color: ColorConstants.blackColor,
             ),
             onPressed: () {
-              // Get.back();
-              Navigator.pop(context);
+              Get.back();
+              // Navigator.pop(context);
             },
           ),
         ),

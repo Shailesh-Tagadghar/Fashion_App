@@ -81,8 +81,9 @@ class DataContoller extends GetxController {
     try {
       final carts = await ApiService.fetchCarts();
       print('Fetched Carts in Controller: $carts');
-      // cartsItems.assignAll(carts);
-      cartsItems.value = carts;
+      cartsItems.assignAll(carts);
+      // cartsItems.value = carts;
+      // cartsItems.value = carts['data'] ?? {};
       isLoading.value = false;
     } catch (e) {
       print('Error fetching Carts in controller: $e');

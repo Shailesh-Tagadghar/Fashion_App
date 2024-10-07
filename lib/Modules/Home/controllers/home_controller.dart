@@ -167,6 +167,10 @@ class HomeController extends GetxController {
       Get.snackbar('Error', 'Please select a color.');
       return;
     }
+    print("Attempting to add to cart with:");
+    print("Product ID: $productId");
+    print("Selected Size: ${selectedProductSize.value}");
+    print("Selected Color: ${selectedProductColor.value}");
 
     await apiService.addToCart(productId, selectedProductSize.value);
   }
