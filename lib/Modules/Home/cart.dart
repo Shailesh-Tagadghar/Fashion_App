@@ -225,6 +225,7 @@ class Cart extends StatelessWidget {
                       child: CustomButton(
                         height: 6.h,
                         label: StringConstants.remove,
+                        isSelected: true,
                         action: () {
                           print('Product Cart id for remove : $removeProduct');
                           ApiService.removeProduct(removeProduct);
