@@ -184,7 +184,7 @@ class ApiService {
         '${ApiConstants.baseUrl}${ApiConstants.getCoupons}'; // Adjust endpoint as necessary
 
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -194,22 +194,17 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      // Send the request and await the response
+      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        // print('Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
         // print('Coupon DATA : $data');
 
-        // Check if data is a Map and contains the 'coupons' key
+       
         if (data is Map && data.containsKey('data')) {
           List<dynamic> coupons = data['data'];
-          // Get.snackbar("Success", "Coupons fetched successfully",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.green,
-          //     colorText: Colors.white);
           return coupons
               .map((coupon) => coupon as Map<String, dynamic>)
               .toList();
@@ -239,7 +234,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCarousal}';
 
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -249,22 +244,16 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      // Send the request and await the response
+      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        // print('Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
         // print('carousal DATA : $data');
 
-        // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
           List<dynamic> carousal = data['data'];
-          // Get.snackbar("Success", "Coupons fetched successfully",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.green,
-          //     colorText: Colors.white);
           return carousal
               .map((carousal) => carousal as Map<String, dynamic>)
               .toList();
@@ -294,7 +283,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCategory}';
 
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -304,22 +293,16 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      // Send the request and await the response
+      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        // print('Category Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
         // print('Category DATA : $data');
 
-        // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
           List<dynamic> category = data['data'];
-          // Get.snackbar("Success", "Coupons fetched successfully",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.green,
-          //     colorText: Colors.white);
           return category
               .map((category) => category as Map<String, dynamic>)
               .toList();
@@ -350,7 +333,7 @@ class ApiService {
         '${ApiConstants.baseUrl}${ApiConstants.getSalesCategory}';
 
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -360,22 +343,16 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      // Send the request and await the response
+      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        // print('Category Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
         // print('Sales Category DATA : $data');
 
-        // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
           List<dynamic> salesCategory = data['data'];
-          // Get.snackbar("Success", "Coupons fetched successfully",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.green,
-          //     colorText: Colors.white);
           return salesCategory
               .map((salesCategory) => salesCategory as Map<String, dynamic>)
               .toList();
@@ -406,7 +383,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getProducts}';
 
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -416,22 +393,16 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      // Send the request and await the response
+      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        // print('Category Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
         // print('Product Data : $data');
 
-        // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
           List<dynamic> product = data['data'];
-          // Get.snackbar("Success", "Coupons fetched successfully",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.green,
-          //     colorText: Colors.white);
           return product
               .map((product) => product as Map<String, dynamic>)
               .toList();
@@ -530,28 +501,24 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
-      // 'Authorization':
-      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVuaXF1ZUBnbWFpbC5jb20iLCJ1c2VySWQiOiI2NzAzNmJmOWI3YjE1ZDk0YjVmMzA5ZTMiLCJmY21Ub2tlbiI6ImVKcTJ1Wk4yUjJPM1ZidlJuImVKcTJ1Wk4yUjJPM1ZidlJubHFfdW46QVBBOTFiRWFNNmxaTTBLY3EyaVFLMlpHZno2VkRHV2xQYW4tdGJ6T29DeTBEbkRGODFkWG83VWRGLWhzV1Z4UWVnYXFLT1RhanhGeEpoRFRGcXlsMEtLQzlvdHNic3ZNd0FTNjR2QlBTWXlzQ1RjODFUMTJvOWhEMW4LNjdqMUtmVUxGR1JFc3VnYk9TWXlzQ1RjODFUMTJvOWhEMW4iLCJpYXQiOjE3MjgyNzc0OTd9.Juc-r0I_iZmINPMOgA0KxeSo2pNhk6XuyqG9fLxikto'
-    };
+       };
 
     try {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      // Send the request and await the response
+      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        // print('Category Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
         print('Cart Data API Service : $data');
 
-        // Check if data is a Map and contains the 'coupons' key
         if (data is Map && data.containsKey('data')) {
           Map<String, dynamic> carts = data['data'];
           return carts;
@@ -575,38 +542,30 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
-      // 'Authorization':
-      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGlsQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1ODU0YWIwZjBmYWE3ZTJjZmY2NzYzMCIsImlhdCI6MTcwNDE3MDU1MH0.97dXImRYVRbZuLXeh1hDube2d4vSvIb_WZLtEB0Ju_4'
-    };
+      };
 
     try {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      // Send the request and await the response
+      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        // print('Category Response body: $responseBody'); // Log the response body
         final data = jsonDecode(responseBody);
         print('Cart Data API Service : $data');
 
-        // Check if data is a Map and contains the 'coupons' key
+       
         if (data is Map && data.containsKey('data')) {
-          // Map<String, dynamic> carts = data['data'];
           final Map<String, dynamic> data =
               jsonDecode(responseBody).cast<String, dynamic>();
 
-          // Get.snackbar("Success", "Coupons fetched successfully",
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     backgroundColor: Colors.green,
-          //     colorText: Colors.white);
-          // return carts;
+          
           return data;
         } else {
           Get.snackbar("Error", "Unexpected response format",
@@ -654,9 +613,8 @@ class ApiService {
         var responseData = await response.stream.bytesToString();
         var jsonResponse = json.decode(responseData);
 
-        // Ensure the response contains the expected 'data' field
         if (jsonResponse != null && jsonResponse['data'] != null) {
-          return jsonResponse['data']; // Returning only the data field
+          return jsonResponse['data'];
         } else {
           print('Unexpected response format: $jsonResponse');
           return [];
@@ -681,7 +639,7 @@ class ApiService {
       String productId, String categoryId) async {
     final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -713,7 +671,7 @@ class ApiService {
       String productId, String categoryId) async {
     final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
     final token = GetStorage()
-        .read('token'); // Adjust if your token storage key is different
+        .read('token'); 
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -743,9 +701,9 @@ class ApiService {
   // fetch favourite products
   static Future<List<String>> getFavoriteProducts() async {
     final url = Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.getFavorite}'); // Adjust the endpoint as necessary
+        '${ApiConstants.baseUrl}${ApiConstants.getFavorite}'); 
     final token = GetStorage()
-        .read('token'); // Make sure the token is retrieved correctly
+        .read('token'); 
     final headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
@@ -756,18 +714,16 @@ class ApiService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
-        // Check if the response is a Map and contains the 'data' key
         if (data is Map && data.containsKey('data')) {
           final List<dynamic> favoriteList = data['data'];
 
-          // Extract product IDs from the favoriteList
           return favoriteList
               .map((item) =>
                   item['product_id']['_id'] as String) // Access the product ID
               .toList(); // Ensure this is a List<String>
         } else {
           print('Unexpected response format: $data');
-          return []; // Return an empty list if format is unexpected
+          return []; 
         }
       } else {
         print('Failed to fetch favorites: ${response.reasonPhrase}');
