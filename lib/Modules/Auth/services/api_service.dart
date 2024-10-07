@@ -493,6 +493,42 @@ class ApiService {
     }
   }
 
+  //remove cart from API
+  static Future<void> removeProduct(String productId) async {
+    final data = {
+      "id": productId,
+    };
+
+    print('Sending data: $data');
+
+    try {
+      final url =
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.removeProduct}');
+
+      final response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
+          "Content-Type": "application/json"
+        },
+        body: json.encode(data),
+      );
+
+      print('headers ${response.headers}');
+
+      print('Response: ${response.body}'); // Log the response body
+      print('Status code: ${response.statusCode}'); // Log the status code
+
+      if (response.statusCode == 200) {
+        print("Removed From Cart successfully");
+      } else {
+        print("Failed to Remove from cart");
+      }
+    } catch (e) {
+      print("Error Removing From Cart: $e");
+    }
+  }
+
   //fetch Carts
   static Future<Map<String, dynamic>> fetchCarts() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
@@ -643,6 +679,7 @@ class ApiService {
   }
 
   // add and remove favourite
+
   //to add favourite
   static Future<void> addToFavorites(
       String productId, String categoryId) async {
@@ -794,42 +831,6 @@ class ApiService {
     } else {
       print('Error: ${response.reasonPhrase}');
       return null;
-    }
-  }
-
-  //remove cart from API
-  static Future<void> removeProduct(String productId) async {
-    final data = {
-      "id": productId,
-    };
-
-    print('Sending data: $data');
-
-    try {
-      final url =
-          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.removeProduct}');
-
-      final response = await http.post(
-        url,
-        headers: {
-          'Authorization': 'Bearer ${GetStorage().read('token')}',
-          "Content-Type": "application/json"
-        },
-        body: json.encode(data),
-      );
-
-      print('headers ${response.headers}');
-
-      print('Response: ${response.body}'); // Log the response body
-      print('Status code: ${response.statusCode}'); // Log the status code
-
-      if (response.statusCode == 200) {
-        print("Removed From Cart successfully");
-      } else {
-        print("Failed to Remove from cart");
-      }
-    } catch (e) {
-      print("Error Removing From Cart: $e");
     }
   }
 }
