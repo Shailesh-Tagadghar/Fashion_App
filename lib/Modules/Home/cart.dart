@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/cart_item_widget.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
@@ -83,6 +84,7 @@ class Cart extends StatelessWidget {
           }
           final carts = dataContoller.cartsItems;
           final products = carts['product'] ?? [];
+
           return Padding(
             padding: EdgeInsets.only(
               left: 3.w,
@@ -95,6 +97,7 @@ class Cart extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: products.length,
                     itemBuilder: (context, index) {
+                      final item = dataContoller.cartsItems[index];
                       final product = products[index]['product_id'] ?? {};
                       final size = products[index]['size'] ?? 'N/A';
                       final productName = product['name'] ?? 'Unknown Product';
@@ -103,11 +106,29 @@ class Cart extends StatelessWidget {
                           ? product['image'][0]
                           : AssetConstant.pd1; // Fallback image
 
-                      return CartItemWidget(
-                        image: productImage,
-                        title: productName,
-                        size: size,
-                        price: productPrice.toString(),
+                      return Dismissible(
+                        key: Key(item
+                            .toString()), // Ensure each item has a unique key
+
+                        direction: DismissDirection
+                            .endToStart, // Swipe from right to left
+                        background: Container(
+                          // padding: EdgeInsets.symmetric(horizontal: 20),
+                          color: Colors.red, // Background color when swiped
+                          alignment: Alignment.centerRight,
+                          child: const Icon(Icons.delete,
+                              color: Colors.white), // Delete icon
+                        ),
+                        confirmDismiss: (direction) async {
+                          // Call the bottom sheet before dismissing the item
+                          return await showDeleteBottomSheet(context, index);
+                        },
+                        child: CartItemWidget(
+                          image: productImage,
+                          title: productName,
+                          size: size,
+                          price: productPrice.toString(),
+                        ),
                       );
                     },
                   ),
@@ -136,6 +157,90 @@ class Cart extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<bool> showDeleteBottomSheet(BuildContext context, int index) async {
+    final DataContoller dataContoller = Get.put(DataContoller());
+    final carts = dataContoller.cartsItems;
+
+    final removeProduct = carts['product'][index]['_id'];
+    final products = carts['product'] ?? [];
+    final product = products[index]['product_id'] ?? {};
+    final size = products[index]['size'] ?? 'N/A';
+    final productName = product['name'] ?? 'Unknown Product';
+    final productPrice = product['price'] ?? 0;
+    final productImage = product['image']?.isNotEmpty == true
+        ? product['image'][0]
+        : AssetConstant.pd1; // Fallback image
+    return await Get.bottomSheet(
+          Container(
+            height: 36.h,
+            width: 100.w,
+            padding: EdgeInsets.only(top: 1.5.h, bottom: 4.h),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const CustomText(
+                  // StringConstants.profileHead1LogoutTxt,
+                  text: StringConstants.removeFromCart,
+                  fontSize: 16,
+                  weight: FontWeight.w500,
+                ),
+                SizedBox(height: 2.4.h),
+                CartItemWidget(
+                  image: productImage,
+                  title: productName,
+                  size: size,
+                  price: productPrice.toString(),
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 42.w,
+                      child: CustomButton(
+                        height: 6.h,
+                        label: StringConstants.cancel,
+                        action: () => Get.back(),
+                        btnColor: ColorConstants.rich,
+                        isSelected: true,
+                        fontSize: 14,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3.w,
+                    ),
+                    SizedBox(
+                      width: 42.w,
+                      child: CustomButton(
+                        height: 6.h,
+                        label: StringConstants.remove,
+                        action: () {
+                          print('Product Cart id for remove : $removeProduct');
+                          ApiService.removeProduct(removeProduct);
+                          Get.back(result: true);
+                        },
+                        fontSize: 14,
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          isDismissible: true,
+        ) ??
+        false;
   }
 
   void showCheckout(BuildContext context) {

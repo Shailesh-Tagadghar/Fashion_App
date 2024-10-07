@@ -159,6 +159,9 @@ class StringConstants {
   static const String men = 'Men';
   static const String women = 'Women';
   static const String trending = 'Trending';
+
+  static const String remove = 'Remove';
+  static const String removeFromCart = 'Yes, Remove';
 }
 
 ///
