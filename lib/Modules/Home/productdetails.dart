@@ -2,7 +2,6 @@ import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
-import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
@@ -14,7 +13,7 @@ import 'package:sizer/sizer.dart';
 class Productdetails extends StatelessWidget {
   Productdetails({super.key});
 
-  final HomeController homeController = Get.find();
+  final homeController = Get.find<HomeController>();
   final ValidationController validationController =
       Get.put(ValidationController());
 
@@ -475,7 +474,7 @@ class Productdetails extends StatelessWidget {
                 weight: FontWeight.w400,
                 isSelected: true,
                 action: () {
-                  homeController.selectedIndex.value = 1;
+                  // homeController.selectedIndex.value = 1;
                   var size = homeController.selectedProductSize.value;
                   var color = homeController.selectedProductColor
                       .value; // Assume you have a similar method for color
@@ -489,7 +488,8 @@ class Productdetails extends StatelessWidget {
                     return; // Stop execution if there are errors
                   }
                   homeController.addProductToCart(productId, size);
-                  Get.toNamed(AppRoutes.navbarScreen);
+                  Get.snackbar('Product added to cart', 'Done Added');
+                  // Get.toNamed(AppRoutes.navbarScreen);
                 },
               ),
             ),

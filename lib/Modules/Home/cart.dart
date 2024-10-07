@@ -29,6 +29,7 @@ class Cart extends StatelessWidget {
     //     cartData['image'] ?? AssetConstant.pd1; // Fallback image
 
     // print('cart data from arguments : $cartData');
+    dataContoller.fetchCarts();
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
       appBar: AppBar(

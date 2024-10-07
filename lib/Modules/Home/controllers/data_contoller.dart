@@ -7,16 +7,14 @@ class DataContoller extends GetxController {
   final salesCategoryItems = <Map<String, dynamic>>[].obs;
   final productsItems = <Map<String, dynamic>>[].obs;
   final cartsItems = {}.obs;
-
   final checkoutItems = {}.obs;
   final total = 0.0.obs;
   final subtotal = 0.0.obs;
   final discount = 0.0.obs;
   final deliveryFee = 0.0.obs;
+  final favoriteProducts = <String>[].obs;
+  final selectedCategoryId = ''.obs;
   final isLoading = true.obs;
-
-  final favoriteProducts = <String>[].obs; // Track favorite product IDs
-  final selectedCategoryId = ''.obs; // To store selected category ID
 
   @override
   void onInit() {
@@ -84,6 +82,7 @@ class DataContoller extends GetxController {
       final carts = await ApiService.fetchCarts();
       print('Fetched Carts in controller: $carts');
       cartsItems.assignAll(carts);
+      update();
     } catch (e) {
       print('Error fetching Carts in controller: $e');
     } finally {
@@ -123,7 +122,6 @@ class DataContoller extends GetxController {
     }
   }
 
-// Fetch products by category ID
   Future<void> fetchCategoryProducts(String categoryId) async {
     try {
       isLoading.value = true;
@@ -150,7 +148,6 @@ class DataContoller extends GetxController {
     }
   }
 
-  // Fetch products by sales category ID
   Future<void> fetchSalesCategoryProducts(String saleCategoryId) async {
     try {
       var response = await ApiService.getSalesCategoryProduct(saleCategoryId);

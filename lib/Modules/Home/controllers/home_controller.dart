@@ -90,23 +90,6 @@ class HomeController extends GetxController {
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////
 
-  //Wishlist page list view -- list
-  // final List<String> wishlistCategory = <String>[
-  //   StringConstants.category1,
-  //   StringConstants.category2,
-  //   StringConstants.category3,
-  //   StringConstants.category4,
-  //   StringConstants.category5,
-  //   StringConstants.category6,
-  // ];
-
-  void setSelectedCategory(int index) {
-    selectedCategoryIndex.value = index;
-  }
-
-  ///////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////
-
   //Product Details Screen Controller
   var activePage = 0.obs;
 
@@ -117,20 +100,22 @@ class HomeController extends GetxController {
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////
 
-  // WishList Category List
-  // RxList<String> cartegoryWishlist =
-  //     ["All", "Jacket", "Shirt", "Pant", "T-Shirt", "Specs"].obs;
+  // // WishList Category List
 
-  RxString selectedCategoryName = "".obs;
-  RxBool showAllImages = false.obs;
+  // RxString selectedCategoryName = "".obs;
+  // RxBool showAllImages = false.obs;
 
-  void selectCategory(String category) {
-    if (selectedCategoryName.value == category) {
-      selectedCategoryName.value = "";
-    } else {
-      selectedCategoryName.value = category;
-    }
-  }
+  // void selectCategory(String category) {
+  //   if (selectedCategoryName.value == category) {
+  //     selectedCategoryName.value = "";
+  //   } else {
+  //     selectedCategoryName.value = category;
+  //   }
+  // }
+
+  // void setSelectedCategory(int index) {
+  //   selectedCategoryIndex.value = index;
+  // }
 
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////
@@ -165,13 +150,11 @@ class HomeController extends GetxController {
     print("Selected Color: ${selectedProductColor.value}");
 
     await apiService.addToCart(productId, selectedProductSize.value);
-    await DataContoller().fetchCarts();
+    DataContoller().fetchCarts();
+    update();
+
+    print("Product added to cart and local state updated.");
   }
-
-  ///////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////
-
-  //Cart Screen
 
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////

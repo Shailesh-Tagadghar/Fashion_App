@@ -1,5 +1,6 @@
 import 'package:fashion/Modules/Auth/controllers/auth_controller.dart';
 import 'package:fashion/Modules/Auth/services/fcm_service.dart';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,9 @@ class GlobalControllerBindings extends Bindings {
     Get.put(
       PageController(),
     );
-
+    Get.put(
+      DataContoller(),
+    );
     Get.put(
       FcmService(),
     );
