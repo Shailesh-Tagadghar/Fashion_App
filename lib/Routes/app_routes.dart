@@ -17,4 +17,6 @@ class AppRoutes {
   static const wishlistScreen = '/wishlist';
   static const couponScreen = '/coupon';
   static const productDetailsScreen = '/productdetails';
+  static const checkoutScreen = '/checkout';
+
 }

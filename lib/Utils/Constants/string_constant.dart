@@ -109,6 +109,8 @@ class StringConstants {
   static const String size1 = 'XL';
   static const String productprice1 = '120';
   static const String productname2 = 'Yellow Shirt';
+  static const String remove = 'Remove';
+  static const String removeFromCart = 'Remove from Cart?';
 
   //Wishlist Screen
   static const String wishlist = 'My Wishlist';
@@ -160,8 +162,13 @@ class StringConstants {
   static const String women = 'Women';
   static const String trending = 'Trending';
 
-  static const String remove = 'Remove';
-  static const String removeFromCart = 'Remove from Cart?';
+  //Checkout Page
+  static const String payment = 'Payment';
+  static const String success = 'Payment Successful!';
+  static const String thankyounote = 'Thank you for your purchase';
+  static const String vieworder = 'View Order';
+  static const String receipt = 'View E-Receipt';
+  static const String home = 'Home';
 }
 
 ///
