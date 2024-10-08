@@ -458,7 +458,7 @@ class Cart extends StatelessWidget {
                       weight: FontWeight.w400,
                       action: () {
                         homeController.selectedIndex.value = 1;
-                        Get.offAllNamed(AppRoutes.navbarScreen);
+                        Get.offAllNamed(AppRoutes.checkoutScreen);
                       },
                     ),
                   ],
