@@ -447,7 +447,7 @@ class Home extends StatelessWidget {
                                     [0] // Use the first image from the list
                                 : AssetConstant.pd3, // Fallback image
                             isFavorite: isFavorite,
-                            onToggleFavorite: () async {
+                            onToggleFavorite: (isNowFavorite) async {
                               if (isFavorite) {
                                 await ApiService.removeFromFavorite(
                                     productId, categoryId);
@@ -458,6 +458,7 @@ class Home extends StatelessWidget {
                                     productId, categoryId);
                                 dataContoller.favoriteProducts.add(productId);
                               }
+                              dataContoller.favoriteProducts.refresh();
                             },
                           ),
                         );

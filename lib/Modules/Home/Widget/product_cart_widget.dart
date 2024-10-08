@@ -4,7 +4,7 @@ import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class ProductCartWidget extends StatelessWidget {
+class ProductCartWidget extends StatefulWidget {
   final String? id;
   final String name;
   final int price;
@@ -16,10 +16,10 @@ class ProductCartWidget extends StatelessWidget {
   final String? salecategory_id;
   final String? category_id;
   final String? gender;
-  final bool isFavorite; // New property
-  final VoidCallback onToggleFavorite; // New callback
+  bool isFavorite; // New property
+  final Function(bool) onToggleFavorite; // New callback
 
-  const ProductCartWidget({
+  ProductCartWidget({
     super.key,
     this.id,
     required this.name,
@@ -37,6 +37,11 @@ class ProductCartWidget extends StatelessWidget {
   });
 
   @override
+  State<ProductCartWidget> createState() => _ProductCartWidgetState();
+}
+
+class _ProductCartWidgetState extends State<ProductCartWidget> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsetsDirectional.all(8),
@@ -53,7 +58,7 @@ class ProductCartWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  '${ApiConstants.imageBaseUrl}$image',
+                  '${ApiConstants.imageBaseUrl}${widget.image}',
                   fit: BoxFit.fill,
                   width: 100.w,
                   height: 19.h,
@@ -71,12 +76,18 @@ class ProductCartWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(1),
                   iconSize: 22,
                   icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite
+                    widget.isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: widget.isFavorite
                         ? ColorConstants.rich
                         : ColorConstants.blackColor,
                   ),
-                  onPressed: onToggleFavorite,
+                  // onPressed: widget.onToggleFavorite,
+                  onPressed: () {
+                    setState(() {
+                      widget.isFavorite = !widget.isFavorite;
+                    });
+                    widget.onToggleFavorite(widget.isFavorite);
+                  },
                 ),
               ),
             ],
@@ -85,7 +96,7 @@ class ProductCartWidget extends StatelessWidget {
             height: 0.8.h,
           ),
           CustomText(
-            text: name,
+            text: widget.name,
             fontSize: 11,
             weight: FontWeight.w400,
             color: ColorConstants.blackColor,
@@ -97,7 +108,7 @@ class ProductCartWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                text: '\$${price.toString()}',
+                text: '\$${widget.price.toString()}',
                 fontSize: 12,
                 weight: FontWeight.w500,
                 color: ColorConstants.blackColor,
@@ -114,7 +125,7 @@ class ProductCartWidget extends StatelessWidget {
                     width: 0.5.w,
                   ),
                   CustomText(
-                    text: rating.toString(),
+                    text: widget.rating.toString(),
                     fontSize: 10,
                     weight: FontWeight.w400,
                     color: ColorConstants.greyColor,

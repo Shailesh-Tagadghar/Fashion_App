@@ -161,7 +161,7 @@ class _WishlistState extends State<Wishlist> {
                           ? product['image'][0]
                           : AssetConstant.pd3, // Fallback image
                       isFavorite: isFavorite,
-                      onToggleFavorite: () async {
+                      onToggleFavorite: (isNowFavorite) async {
                         await ApiService.removeFromFavorite(
                             productId, categoryId);
                         dataContoller.favoriteProducts.remove(productId);
