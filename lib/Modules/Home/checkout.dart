@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 class Checkout extends StatelessWidget {
   Checkout({super.key});
 
-  HomeController _controller = HomeController();
+  final HomeController _controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +99,6 @@ class Checkout extends StatelessWidget {
               weight: FontWeight.w500,
               action: () {
                 print("final tap::::${_controller.selectedIndex.value}");
-                // _controller.selectedIndex.value = 2;
-                // Get.toNamed(AppRoutes.navbarScreen);
-                // Get.offAllNamed(AppRoutes.navbarScreen);
                 Get.offNamed(AppRoutes.navbarScreen);
               },
             )
