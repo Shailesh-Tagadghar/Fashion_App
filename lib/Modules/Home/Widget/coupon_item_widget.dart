@@ -1,5 +1,6 @@
-
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Auth/services/api_service.dart';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
@@ -23,6 +24,7 @@ class CouponItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dataContoller = Get.find<DataContoller>();
     final homeController = Get.find<HomeController>();
     return Padding(
       padding: EdgeInsets.only(
@@ -101,6 +103,12 @@ class CouponItemWidget extends StatelessWidget {
                   onTap: () {
                     homeController.setCoupon(title);
                     print('Coupon Value : $title');
+                    ApiService().verifyCoupon(
+                      homeController.selectedCoupon.value.toString(),
+                      dataContoller.subtotal.value.toInt(),
+                      dataContoller.discount.value.toInt(),
+                      dataContoller.deliveryFee.value.toInt(),
+                    );
                     Get.back();
                   },
                   child: Container(

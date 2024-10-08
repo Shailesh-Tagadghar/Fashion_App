@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:fashion/Modules/Home/Model/verify_coupon_model.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
@@ -183,8 +184,7 @@ class ApiService {
     const String url =
         '${ApiConstants.baseUrl}${ApiConstants.getCoupons}'; // Adjust endpoint as necessary
 
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -194,7 +194,6 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -202,7 +201,6 @@ class ApiService {
         final data = jsonDecode(responseBody);
         // print('Coupon DATA : $data');
 
-       
         if (data is Map && data.containsKey('data')) {
           List<dynamic> coupons = data['data'];
           return coupons
@@ -233,8 +231,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchCarousal() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCarousal}';
 
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -244,7 +241,6 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -282,8 +278,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchCategory() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCategory}';
 
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -293,7 +288,6 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -332,8 +326,7 @@ class ApiService {
     const String url =
         '${ApiConstants.baseUrl}${ApiConstants.getSalesCategory}';
 
-    final token = GetStorage()
-        .read('token');
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -343,7 +336,6 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -382,8 +374,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchProducts() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getProducts}';
 
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -393,7 +384,6 @@ class ApiService {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -500,18 +490,16 @@ class ApiService {
   static Future<Map<String, dynamic>> fetchCarts() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
-       };
+    };
 
     try {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -541,18 +529,16 @@ class ApiService {
   static Future<Map<String, dynamic>> fetchCheckout() async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
-      };
+    };
 
     try {
       var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(headers);
 
-      
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -560,12 +546,10 @@ class ApiService {
         final data = jsonDecode(responseBody);
         print('Cart Data API Service : $data');
 
-       
         if (data is Map && data.containsKey('data')) {
           final Map<String, dynamic> data =
               jsonDecode(responseBody).cast<String, dynamic>();
 
-          
           return data;
         } else {
           Get.snackbar("Error", "Unexpected response format",
@@ -586,6 +570,48 @@ class ApiService {
           backgroundColor: Colors.red,
           colorText: Colors.white);
       throw Exception('Failed to Carts');
+    }
+  }
+
+  //fetch verify coupon
+  Future<void> verifyCoupon(
+      String couponCode, int subtotal, int discount, int deliveryfee) async {
+    String url = '${ApiConstants.baseUrl}${ApiConstants.verifyCoupon}';
+
+    final data = {
+      "coupen_code": couponCode,
+      "subtotal": subtotal,
+      "discount": discount,
+      "deliveryfee": deliveryfee
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
+          "Content-Type": "application/json"
+        },
+        body: json.encode(data),
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['data'] != null) {
+          VerifyCouponData couponData =
+              VerifyCouponData.fromJson(jsonResponse['data']);
+
+          DataContoller().verifyCouponData.clear();
+          DataContoller().verifyCouponData.add(couponData);
+        } else {
+          print('Failed to verify coupon in api service.');
+        }
+      } else {
+        print('Failed to verify coupon in api service.');
+      }
+    } catch (e) {
+      print("Error verify coupon in api service: $e");
     }
   }
 
@@ -638,8 +664,7 @@ class ApiService {
   static Future<void> addToFavorites(
       String productId, String categoryId) async {
     final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -670,8 +695,7 @@ class ApiService {
   static Future<void> removeFromFavorite(
       String productId, String categoryId) async {
     final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
-    final token = GetStorage()
-        .read('token'); 
+    final token = GetStorage().read('token');
     print('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
@@ -700,10 +724,8 @@ class ApiService {
 
   // fetch favourite products
   static Future<List<String>> getFavoriteProducts() async {
-    final url = Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.getFavorite}'); 
-    final token = GetStorage()
-        .read('token'); 
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFavorite}');
+    final token = GetStorage().read('token');
     final headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
@@ -723,7 +745,7 @@ class ApiService {
               .toList(); // Ensure this is a List<String>
         } else {
           print('Unexpected response format: $data');
-          return []; 
+          return [];
         }
       } else {
         print('Failed to fetch favorites: ${response.reasonPhrase}');

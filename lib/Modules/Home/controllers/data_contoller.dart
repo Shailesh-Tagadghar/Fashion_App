@@ -1,4 +1,5 @@
 import 'package:fashion/Modules/Auth/services/api_service.dart';
+import 'package:fashion/Modules/Home/Model/verify_coupon_model.dart';
 import 'package:get/get.dart';
 
 class DataContoller extends GetxController {
@@ -14,6 +15,8 @@ class DataContoller extends GetxController {
   final deliveryFee = 0.0.obs;
   final favoriteProducts = <String>[].obs;
   final selectedCategoryId = ''.obs;
+  var verifyCouponData = <VerifyCouponData>[].obs;
+
   final isLoading = true.obs;
 
   @override

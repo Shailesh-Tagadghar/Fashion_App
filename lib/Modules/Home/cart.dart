@@ -22,6 +22,8 @@ class Cart extends StatelessWidget {
     final DataContoller dataContoller = Get.find<DataContoller>();
 
     dataContoller.fetchCarts();
+    dataContoller.fetchCheckout();
+
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
       appBar: AppBar(
@@ -360,8 +362,9 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text:
-                              '\$${dataController.subtotal.value.toStringAsFixed(2)}',
+                          text: dataController.verifyCouponData.isNotEmpty
+                              ? '\$${dataController.verifyCouponData[0].subtotal.toString()}'
+                              : '\$${dataController.subtotal.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
@@ -381,8 +384,9 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text:
-                              '\$${dataController.deliveryFee.value.toStringAsFixed(2)}',
+                          text: dataController.verifyCouponData.isNotEmpty
+                              ? '\$${dataController.verifyCouponData[0].deliveryfee.toString()}'
+                              : '\$${dataController.deliveryFee.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
@@ -402,8 +406,9 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text:
-                              '-\$${dataController.discount.value.toStringAsFixed(2)}',
+                          text: dataController.verifyCouponData.isNotEmpty
+                              ? '\$${dataController.verifyCouponData[0].discount.toString()}'
+                              : '-\$${dataController.discount.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
@@ -433,8 +438,9 @@ class Cart extends StatelessWidget {
                           weight: FontWeight.w400,
                         ),
                         CustomText(
-                          text:
-                              '\$${dataController.total.value.toStringAsFixed(2)}',
+                          text: dataController.verifyCouponData.isNotEmpty
+                              ? '\$${dataController.verifyCouponData[0].total.toString()}'
+                              : '\$${dataController.total.value.toStringAsFixed(2)}',
                           color: ColorConstants.blackColor,
                           fontSize: 12,
                           weight: FontWeight.w500,
