@@ -574,7 +574,7 @@ class ApiService {
   }
 
   //fetch verify coupon
-  Future<VerifyCouponModel?> verifyCoupon(
+  Future<void> verifyCoupon(
       String couponCode, int subtotal, int discount, int deliveryfee) async {
     String url = '${ApiConstants.baseUrl}${ApiConstants.verifyCoupon}';
 
@@ -599,19 +599,19 @@ class ApiService {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
 
         if (jsonResponse['data'] != null) {
-          return VerifyCouponModel.fromJson(jsonResponse);
+          VerifyCouponData couponData =
+              VerifyCouponData.fromJson(jsonResponse['data']);
+
+          DataContoller().verifyCouponData.clear();
+          DataContoller().verifyCouponData.add(couponData);
         } else {
-          print('Failed to verify coupon in API service: No data found.');
-          return null;
+          print('Failed to verify coupon in api service.');
         }
       } else {
-        print(
-            'Failed to verify coupon in API service: Status code ${response.statusCode}.');
-        return null;
+        print('Failed to verify coupon in api service.');
       }
     } catch (e) {
-      print("Error verifying coupon in API service: $e");
-      return null;
+      print("Error verify coupon in api service: $e");
     }
   }
 
