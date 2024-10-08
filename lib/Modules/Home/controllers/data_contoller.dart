@@ -114,6 +114,15 @@ class DataContoller extends GetxController {
     }
   }
 
+  // Method to update checkout data when a coupon is applied
+  void updateCheckoutData(VerifyCouponData couponData) {
+    subtotal.value = (couponData.subtotal?.toDouble() ?? subtotal.value);
+    deliveryFee.value =
+        (couponData.deliveryfee?.toDouble() ?? deliveryFee.value);
+    discount.value = (couponData.discount?.toDouble() ?? discount.value);
+    total.value = (couponData.total?.toDouble() ?? total.value);
+  }
+
   Future<void> fetchFavoriteProducts() async {
     try {
       isLoading.value = true;

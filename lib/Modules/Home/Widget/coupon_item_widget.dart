@@ -100,15 +100,47 @@ class CouponItemWidget extends StatelessWidget {
                   height: 2.h,
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     homeController.setCoupon(title);
                     print('Coupon Value : $title');
-                    ApiService().verifyCoupon(
+                    // Call the verifyCoupon method and await the response
+                    var couponResponse = await ApiService().verifyCoupon(
                       homeController.selectedCoupon.value.toString(),
                       dataContoller.subtotal.value.toInt(),
                       dataContoller.discount.value.toInt(),
                       dataContoller.deliveryFee.value.toInt(),
                     );
+
+                    // Update the checkout data in the controller
+                    if (couponResponse != null) {
+                      switch (couponResponse.status) {
+                        case 200:
+                          dataContoller
+                              .updateCheckoutData(couponResponse.data!);
+                          print(
+                              'Checkout data updated with coupon: ${couponResponse.data}');
+                          print(
+                              'Coupon applied successfully: Enjoy Discount of ${couponResponse.data!.discount} INR!');
+                          break;
+                        case 400:
+                          print(
+                              'Invalid coupon: ${couponResponse.message ?? "Coupon does not meet criteria."}');
+                          break;
+                        case 404:
+                          print(
+                              'Coupon not found: ${couponResponse.message ?? "No coupon found."}');
+                          break;
+                        case 500:
+                          print(
+                              'Server error: ${couponResponse.message ?? "Please try again later."}');
+                          break;
+                        default:
+                          print(
+                              'Unexpected error: ${couponResponse.message ?? "An error occurred."}');
+                      }
+                    } else {
+                      print('Error: couponResponse is null.');
+                    }
                     Get.back();
                   },
                   child: Container(
