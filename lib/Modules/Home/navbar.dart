@@ -26,6 +26,8 @@ class Navbar extends StatelessWidget {
       Profile(),
     ];
 
+    controller.selectedIndex.value = 0;
+
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
       extendBody: true,
@@ -76,6 +78,10 @@ class Navbar extends StatelessWidget {
             ],
             currentIndex: controller.selectedIndex.value,
             onTap: (index) => controller.onItemTapped(index),
+            // onTap: (index) {
+            //   selectedIndex = index;
+            //   // setState(() {});
+            // },
           );
         },
       ),

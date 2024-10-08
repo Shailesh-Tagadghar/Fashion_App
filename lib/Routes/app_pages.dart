@@ -91,7 +91,7 @@ class AppPages {
         transition: transition),
     GetPage(
         name: AppRoutes.checkoutScreen,
-        page: () => const Checkout(),
+        page: () => Checkout(),
         transition: transition),
   ];
 }

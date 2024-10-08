@@ -1,5 +1,6 @@
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
+import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
@@ -9,7 +10,9 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:sizer/sizer.dart';
 
 class Checkout extends StatelessWidget {
-  const Checkout({super.key});
+  Checkout({super.key});
+
+  HomeController _controller = HomeController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,8 @@ class Checkout extends StatelessWidget {
         padding: EdgeInsets.only(
           left: 6.w,
           right: 6.w,
-          bottom: 2.h,
+          bottom: 10.h,
+          top: 25.h,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +68,7 @@ class Checkout extends StatelessWidget {
             Icon(
               Bootstrap.check_circle_fill,
               color: ColorConstants.rich,
-              size: 6.h,
+              size: 12.h,
             ),
             SizedBox(
               height: 2.h,
@@ -72,31 +76,33 @@ class Checkout extends StatelessWidget {
             const CustomText(
               text: StringConstants.success,
               color: ColorConstants.blackColor,
-              fontSize: 24,
+              fontSize: 16,
               weight: FontWeight.w500,
             ),
             SizedBox(
-              height: 2.h,
+              height: 1.5.h,
             ),
             const CustomText(
               text: StringConstants.thankyounote,
               color: ColorConstants.greyColor,
-              fontSize: 16,
+              fontSize: 12,
               weight: FontWeight.w400,
             ),
-            SizedBox(
-              height: 5.h,
-            ),
+            const Spacer(),
             CustomButton(
               label: StringConstants.home,
               btnColor: ColorConstants.rich,
               isSelected: true,
-              fontSize: 24,
+              fontSize: 16,
               labelColor: ColorConstants.whiteColor,
               height: 6.h,
               weight: FontWeight.w500,
               action: () {
-                Get.toNamed(AppRoutes.navbarScreen);
+                print("final tap::::${_controller.selectedIndex.value}");
+                // _controller.selectedIndex.value = 2;
+                // Get.toNamed(AppRoutes.navbarScreen);
+                // Get.offAllNamed(AppRoutes.navbarScreen);
+                Get.offNamed(AppRoutes.navbarScreen);
               },
             )
           ],
