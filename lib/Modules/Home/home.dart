@@ -341,78 +341,137 @@ class Home extends StatelessWidget {
                 height: 1.h,
               ),
 
-              //sales category items
-              Container(
-                height: 4.5.h,
-                padding: EdgeInsets.symmetric(vertical: 0.3.h),
-                child: Obx(() {
-                  if (dataContoller.isLoading.value) {
-                    return const Center(
-                        child:
-                            CircularProgressIndicator()); // Show loading indicator
-                  }
-                  return ListView.builder(
-                    itemCount: dataContoller.salesCategoryItems.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: 40.w,
-                        padding: EdgeInsets.only(left: 2.w),
-                        child: Obx(() {
-                          // Check if this index is the selected one
-                          bool isSelected =
-                              homeController.selectedsalesCategoryIndex.value ==
-                                  index;
+              Row(
+                children: [
+                  // All Button
+                  Container(
+                    height: 4.5.h,
+                    // width: 25.w,
+                    padding: EdgeInsets.symmetric(vertical: 0.3.h),
+                    child: Obx(() {
+                      // Check if the 'All' button is selected
+                      bool isSelected =
+                          homeController.selectedsalesCategoryIndex.value == -1;
 
-                          return ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                isSelected
+                      return ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            isSelected
+                                ? ColorConstants.rich
+                                : ColorConstants.whiteColor,
+                          ),
+                          shape: WidgetStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                              side: BorderSide(
+                                color: isSelected
                                     ? ColorConstants.rich
-                                    : ColorConstants.whiteColor,
-                              ),
-                              shape: WidgetStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
-                                    color: isSelected
-                                        ? ColorConstants.rich
-                                        : ColorConstants.lightGrayColor,
-                                    width: 1,
-                                  ),
-                                ),
+                                    : ColorConstants.lightGrayColor,
+                                width: 1,
                               ),
                             ),
-                            onPressed: () {
-                              // Handle category selection
-                              homeController.setSelectedSalesCategory(index);
-                              String selectedSaleCategoryId = dataContoller
-                                  .salesCategoryItems[index]['_id'];
-                              dataContoller.selectedCategoryId.value =
-                                  selectedSaleCategoryId; // Store selected category ID
-                              dataContoller.fetchSalesCategoryProducts(
-                                  selectedSaleCategoryId); // Fetch products for the selected category
-                            },
-                            child: Center(
-                              child: Text(
-                                dataContoller.salesCategoryItems[index]
-                                        ['name'] ??
-                                    'Unknown',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w400,
-                                  color: isSelected
-                                      ? ColorConstants.whiteColor
-                                      : ColorConstants.blackColor,
-                                ),
-                              ),
+                          ),
+                        ),
+                        onPressed: () {
+                          // Fetch all products and mark 'All' as selected
+                          dataContoller.fetchProducts();
+                          homeController.setSelectedSalesCategory(
+                              -1); // -1 indicates the 'All' button
+                        },
+                        child: Center(
+                          child: Text(
+                            'All',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                              color: isSelected
+                                  ? ColorConstants.whiteColor
+                                  : ColorConstants.blackColor,
                             ),
-                          );
-                        }),
+                          ),
+                        ),
                       );
-                    },
-                  );
-                }),
+                    }),
+                  ),
+
+                  // Sales Category Items
+                  Expanded(
+                    child: Container(
+                      height: 4.5.h,
+                      padding: EdgeInsets.symmetric(vertical: 0.3.h),
+                      child: Obx(() {
+                        if (dataContoller.isLoading.value) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return ListView.builder(
+                          itemCount: dataContoller.salesCategoryItems.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: 28.w,
+                              padding: EdgeInsets.only(left: 2.w),
+                              child: Obx(() {
+                                // Check if this index is the selected one
+                                bool isSelected = homeController
+                                        .selectedsalesCategoryIndex.value ==
+                                    index;
+
+                                return ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStateProperty.all(
+                                      isSelected
+                                          ? ColorConstants.rich
+                                          : ColorConstants.whiteColor,
+                                    ),
+                                    shape: WidgetStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        side: BorderSide(
+                                          color: isSelected
+                                              ? ColorConstants.rich
+                                              : ColorConstants.lightGrayColor,
+                                          width: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    // Handle category selection
+                                    homeController
+                                        .setSelectedSalesCategory(index);
+                                    String selectedSaleCategoryId =
+                                        dataContoller.salesCategoryItems[index]
+                                            ['_id'];
+                                    dataContoller.selectedCategoryId.value =
+                                        selectedSaleCategoryId; // Store selected category ID
+                                    dataContoller.fetchSalesCategoryProducts(
+                                        selectedSaleCategoryId); // Fetch products for the selected category
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      dataContoller.salesCategoryItems[index]
+                                              ['name'] ??
+                                          'Unknown',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400,
+                                        color: isSelected
+                                            ? ColorConstants.whiteColor
+                                            : ColorConstants.blackColor,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                            );
+                          },
+                        );
+                      }),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 1.5.h,
