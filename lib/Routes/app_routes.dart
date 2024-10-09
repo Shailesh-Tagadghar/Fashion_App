@@ -18,5 +18,5 @@ class AppRoutes {
   static const couponScreen = '/coupon';
   static const productDetailsScreen = '/productdetails';
   static const checkoutScreen = '/checkout';
-
+  static const categoryScreen = '/category';
 }

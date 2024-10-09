@@ -7,6 +7,7 @@ import 'package:fashion/Modules/Auth/sign_up.dart';
 import 'package:fashion/Modules/Auth/user_detail.dart';
 import 'package:fashion/Modules/Home/Widget/profile_widget.dart';
 import 'package:fashion/Modules/Home/cart.dart';
+import 'package:fashion/Modules/Home/category.dart';
 import 'package:fashion/Modules/Home/checkout.dart';
 import 'package:fashion/Modules/Home/coupon.dart';
 import 'package:fashion/Modules/Home/home.dart';
@@ -92,6 +93,10 @@ class AppPages {
     GetPage(
         name: AppRoutes.checkoutScreen,
         page: () => Checkout(),
+        transition: transition),
+    GetPage(
+        name: AppRoutes.categoryScreen,
+        page: () => Category(),
         transition: transition),
   ];
 }

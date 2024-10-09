@@ -245,6 +245,7 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 1.5.h,
               ),
+              //category items
               Obx(
                 () {
                   if (dataContoller.isLoading.value) {
@@ -263,8 +264,17 @@ class Home extends StatelessWidget {
 
                           return GestureDetector(
                             onTap: () {
-                              // Fetch products by category when clicked
-                              dataContoller.fetchCategoryProducts(item['_id']);
+                              final categoryId = item['_id'];
+                              print(
+                                  'Category ID: $categoryId'); // Check if the category ID is null or valid
+                              if (categoryId != null && categoryId.isNotEmpty) {
+                                Get.toNamed(AppRoutes.categoryScreen,
+                                    arguments: categoryId);
+                                print(
+                                    'Navigated with Category ID: $categoryId');
+                              } else {
+                                print('Category ID is null or empty');
+                              }
                             },
                             child: CategoryWidget(
                               image: item['image'] ?? AssetConstant.cat1,
@@ -330,6 +340,8 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 1.h,
               ),
+
+              //sales category items
               Container(
                 height: 4.5.h,
                 padding: EdgeInsets.symmetric(vertical: 0.3.h),
@@ -405,6 +417,7 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 1.5.h,
               ),
+              //products
               Obx(
                 () {
                   if (dataContoller.isLoading.value) {
@@ -422,11 +435,15 @@ class Home extends StatelessWidget {
                         crossAxisSpacing: 4.0, // Spacing between columns
                         mainAxisSpacing: 4.0, // Spacing between rows
                       ),
-                      itemCount: dataContoller.productsItems.length,
+                      // itemCount: dataContoller.productsItems.length,
+                      itemCount: dataContoller.filteredProductsItems.length,
+
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        final item = dataContoller.productsItems[index];
+                        // final item = dataContoller.productsItems[index];
+                        final item = dataContoller.filteredProductsItems[index];
+
                         final productId = item['_id'];
                         final categoryId = item['category_id']['_id'];
                         final isFavorite = dataContoller.favoriteProducts

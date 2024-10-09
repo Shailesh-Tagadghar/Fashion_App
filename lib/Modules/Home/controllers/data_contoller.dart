@@ -7,6 +7,9 @@ class DataContoller extends GetxController {
   final categoryItems = <Map<String, dynamic>>[].obs;
   final salesCategoryItems = <Map<String, dynamic>>[].obs;
   final productsItems = <Map<String, dynamic>>[].obs;
+  final filteredProductsItems =
+      <Map<String, dynamic>>[].obs; // Filtered Products
+
   final cartsItems = {}.obs;
   final checkoutItems = {}.obs;
   final total = 0.0.obs;
@@ -70,6 +73,9 @@ class DataContoller extends GetxController {
       final products = await ApiService.fetchProducts();
       // print('Fetched Categories: $category');
       productsItems.assignAll(products);
+      filteredProductsItems
+          .assignAll(productsItems); // Initially show all products
+
       favoriteProducts.assignAll(await ApiService.getFavoriteProducts());
 
       isLoading.value = false;
@@ -157,9 +163,24 @@ class DataContoller extends GetxController {
       if (response != null && response['status'] == 1) {
         print('Sales Category Products: $response');
         var productsList = response['data'] as List; // Get the list of products
-        productsItems.assignAll(productsList
-            .map((product) => product as Map<String, dynamic>)
-            .toList()); // Update the productsItems
+        if (productsList.isNotEmpty) {
+          // Update the productsItems
+          productsItems.assignAll(
+            productsList
+                .map((product) => product as Map<String, dynamic>)
+                .toList(),
+          );
+
+          // Update filtered products
+          filteredProductsItems.assignAll(
+            productsList
+                .map((product) => product as Map<String, dynamic>)
+                .toList(),
+          );
+        } else {
+          // If there are no products, you can choose to clear the filtered list or handle accordingly
+          filteredProductsItems.clear();
+        }
       } else {
         print('Failed to fetch sales category products');
       }

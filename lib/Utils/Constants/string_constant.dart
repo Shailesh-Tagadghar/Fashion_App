@@ -161,6 +161,7 @@ class StringConstants {
   static const String men = 'Men';
   static const String women = 'Women';
   static const String trending = 'Trending';
+  static const String categoryProduct = 'Category Product';
 
   //Checkout Page
   static const String payment = 'Payment';
