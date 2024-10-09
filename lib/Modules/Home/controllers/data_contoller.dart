@@ -8,7 +8,7 @@ class DataContoller extends GetxController {
   final productsItems = <Map<String, dynamic>>[].obs;
   final filteredProductsItems =
       <Map<String, dynamic>>[].obs; // Filtered Products
-
+  var couponItems = <Map<String, dynamic>>[].obs;
   final cartsItems = {}.obs;
   final checkoutItems = {}.obs;
   final total = 0.0.obs;
@@ -29,6 +29,7 @@ class DataContoller extends GetxController {
     fetchProducts();
     fetchCarts();
     fetchCheckout();
+    fetchCoupons();
   }
 
   //Coupon copy value
@@ -36,6 +37,16 @@ class DataContoller extends GetxController {
 
   void setCoupon(String coupon) {
     selectedCoupon.value = coupon;
+
+    if (coupon == 'FIRST 50') {
+      discount.value = 40;
+    } else {
+      discount.value = 0.0;
+    }
+  }
+
+  void calculateTotal() {
+    total.value = subtotal.value + deliveryFee.value - discount.value;
   }
 
   Future<void> fetchCarousal() async {
@@ -122,6 +133,42 @@ class DataContoller extends GetxController {
     } catch (e) {
       print('Error fetching Checkout in controller: $e');
       isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchCoupons() async {
+    try {
+      final coupons = await ApiService.fetchCoupons();
+      couponItems.assignAll(coupons); // Update the observable list
+    } catch (e) {
+      print('Error fetching coupons: $e');
+    } finally {
+      isLoading.value = false; // Stop loading regardless of success or failure
+    }
+  }
+
+  Future<void> verifyCoupon() async {
+    final couponCode = selectedCoupon.value;
+    final cartSubtotal = subtotal.value;
+    final cartDiscount = discount.value;
+    final cartDeliveryFee = deliveryFee.value;
+
+    try {
+      final couponData = await ApiService.verifyCoupon(
+          couponCode, cartSubtotal, cartDiscount, cartDeliveryFee);
+      print('Verified Coupon Data: $couponData');
+
+      // Update checkout items and totals with coupon data
+      checkoutItems.value =
+          couponData['cart_items']; // Assuming 'cart_items' holds updated items
+      total.value = couponData['total'].toDouble();
+      subtotal.value = couponData['subtotal'].toDouble();
+      discount.value = couponData['discount'].toDouble();
+      deliveryFee.value = couponData['deliveryfee'].toDouble();
+
+      update(); // Notify UI about the change
+    } catch (e) {
+      print('Error verifying coupon in controller: $e');
     }
   }
 

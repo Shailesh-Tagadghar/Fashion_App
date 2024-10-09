@@ -572,6 +572,57 @@ class ApiService {
     }
   }
 
+  static Future<Map<String, dynamic>> verifyCoupon(String couponCode,
+      double subtotal, double discount, double deliveryFee) async {
+    const String url = '${ApiConstants.baseUrl}${ApiConstants.verifyCoupon}';
+
+    final token = GetStorage().read('token');
+    print('Bearer Token : $token');
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = json.encode({
+        "coupen_code": couponCode,
+        "subtotal": subtotal,
+        "discount": discount,
+        "deliveryfee": deliveryFee,
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final data = jsonDecode(responseBody);
+        print('Coupon Verification Data : $data');
+
+        if (data is Map && data.containsKey('data')) {
+          return data['data'];
+        } else {
+          Get.snackbar("Error", "Unexpected response format",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          throw Exception('Unexpected response format');
+        }
+      } else {
+        print('Error response: ${response.reasonPhrase}');
+        throw Exception('Failed to verify coupon: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error verifying coupon: $e');
+      Get.snackbar("Error", "Failed to verify coupon: $e",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      throw Exception('Failed to verify coupon');
+    }
+  }
+
   //search result display
   static Future<List<dynamic>> fetchSearchResults(String searchText) async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.searchproduct}';
