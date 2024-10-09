@@ -37,12 +37,6 @@ class DataContoller extends GetxController {
 
   void setCoupon(String coupon) {
     selectedCoupon.value = coupon;
-
-    if (coupon == 'FIRST 50') {
-      discount.value = 40;
-    } else {
-      discount.value = 0.0;
-    }
   }
 
   void calculateTotal() {
