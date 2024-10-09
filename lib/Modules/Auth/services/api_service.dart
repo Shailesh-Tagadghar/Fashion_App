@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:fashion/Modules/Home/Model/verify_coupon_model.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
@@ -570,48 +569,6 @@ class ApiService {
           backgroundColor: Colors.red,
           colorText: Colors.white);
       throw Exception('Failed to Carts');
-    }
-  }
-
-  //fetch verify coupon
-  Future<void> verifyCoupon(
-      String couponCode, int subtotal, int discount, int deliveryfee) async {
-    String url = '${ApiConstants.baseUrl}${ApiConstants.verifyCoupon}';
-
-    final data = {
-      "coupen_code": couponCode,
-      "subtotal": subtotal,
-      "discount": discount,
-      "deliveryfee": deliveryfee
-    };
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {
-          'Authorization': 'Bearer ${GetStorage().read('token')}',
-          "Content-Type": "application/json"
-        },
-        body: json.encode(data),
-      );
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> jsonResponse = json.decode(response.body);
-
-        if (jsonResponse['data'] != null) {
-          VerifyCouponData couponData =
-              VerifyCouponData.fromJson(jsonResponse['data']);
-
-          DataContoller().verifyCouponData.clear();
-          DataContoller().verifyCouponData.add(couponData);
-        } else {
-          print('Failed to verify coupon in api service.');
-        }
-      } else {
-        print('Failed to verify coupon in api service.');
-      }
-    } catch (e) {
-      print("Error verify coupon in api service: $e");
     }
   }
 
