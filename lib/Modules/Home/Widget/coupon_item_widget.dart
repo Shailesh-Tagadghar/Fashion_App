@@ -1,5 +1,5 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
-import 'package:fashion/Modules/Home/controllers/home_controller.dart';
+import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class CouponItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.find<HomeController>();
+    final dataController = Get.find<DataContoller>();
     return Padding(
       padding: EdgeInsets.only(
         left: 1.5.w,
@@ -98,7 +98,7 @@ class CouponItemWidget extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    homeController.setCoupon(title);
+                    dataController.setCoupon(title);
                     print('Coupon Value : $title');
 
                     Get.back();

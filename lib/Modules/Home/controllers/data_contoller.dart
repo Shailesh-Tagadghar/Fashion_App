@@ -31,6 +31,13 @@ class DataContoller extends GetxController {
     fetchCheckout();
   }
 
+  //Coupon copy value
+  var selectedCoupon = ''.obs;
+
+  void setCoupon(String coupon) {
+    selectedCoupon.value = coupon;
+  }
+
   Future<void> fetchCarousal() async {
     try {
       final carousal = await ApiService.fetchCarousal();

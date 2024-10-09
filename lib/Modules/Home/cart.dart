@@ -300,7 +300,7 @@ class Cart extends StatelessWidget {
                       child: Obx(
                         () => TextField(
                           controller: TextEditingController(
-                              text: homeController.selectedCoupon.value),
+                              text: dataController.selectedCoupon.value),
                           readOnly: true,
                           decoration: InputDecoration(
                             suffixIcon: Padding(
