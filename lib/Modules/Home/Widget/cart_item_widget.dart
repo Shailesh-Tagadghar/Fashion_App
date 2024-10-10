@@ -1,5 +1,5 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
-import 'package:fashion/Modules/Home/controllers/home_controller.dart';
+import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,8 @@ class CartItemWidget extends StatelessWidget {
   final String title;
   final String size;
   final String price;
+  final String? cartIdP;
+  final RxInt quantity;
 
   const CartItemWidget({
     super.key,
@@ -18,11 +20,13 @@ class CartItemWidget extends StatelessWidget {
     required this.title,
     required this.size,
     required this.price,
+    required this.quantity,
+    this.cartIdP,
   });
 
   @override
   Widget build(BuildContext context) {
-    final HomeController controller = Get.put(HomeController());
+    // final HomeController controller = Get.put(HomeController());
     return Padding(
       padding: EdgeInsets.only(
         left: 2.w,
@@ -100,7 +104,14 @@ class CartItemWidget extends StatelessWidget {
                                   color: ColorConstants.blackColor,
                                   size: 18,
                                 ),
-                                onPressed: controller.decrement,
+                                // onPressed: controller.decrement,
+                                onPressed: () {
+                                  if (quantity.value > 1) {
+                                    quantity.value -= 1; // Decrease quantity
+                                    ApiService().addQuantity(
+                                        quantity.value, cartIdP ?? '');
+                                  }
+                                },
                               ),
                             ),
                             SizedBox(
@@ -108,7 +119,8 @@ class CartItemWidget extends StatelessWidget {
                             ),
                             Obx(
                               () => CustomText(
-                                text: controller.quantity.value.toString(),
+                                // text: controller.quantity.value.toString(),
+                                text: quantity.value.toString(),
                                 fontSize: 14,
                                 color: ColorConstants.blackColor,
                                 weight: FontWeight.w400,
@@ -133,7 +145,14 @@ class CartItemWidget extends StatelessWidget {
                                   color: ColorConstants.whiteColor,
                                   size: 18,
                                 ),
-                                onPressed: controller.increment,
+                                // onPressed: controller.increment,
+                                onPressed: () {
+                                  quantity.value += 1; // Increase quantity
+                                  ApiService().addQuantity(
+                                      quantity.value, cartIdP ?? '');
+                                  print(
+                                      'on tap increase cart id in cart screen : $cartIdP');
+                                },
                               ),
                             ),
                           ],

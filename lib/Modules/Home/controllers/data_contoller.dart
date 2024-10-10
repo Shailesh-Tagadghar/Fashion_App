@@ -21,6 +21,7 @@ class DataContoller extends GetxController {
   final favoriteProducts = <String>[].obs;
   final selectedCategoryId = ''.obs;
   final isAppliedDone = false.obs;
+  RxInt quantity = 1.obs;
   final isLoading = true.obs;
 
   @override

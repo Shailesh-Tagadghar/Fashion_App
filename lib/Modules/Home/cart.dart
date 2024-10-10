@@ -103,6 +103,11 @@ class _CartState extends State<Cart> {
                       final productImage = product['image']?.isNotEmpty == true
                           ? product['image'][0]
                           : AssetConstant.pd1; // Fallback image
+                      final cartIdP = item['_id'].toString();
+                      // final quantity = product['qty'];
+                      final quantityValue =
+                          item['qty'] ?? 1; // Default to 1 if null
+                      final quantity = RxInt(quantityValue); // Wrap it in RxInt
                       print(
                           'Coupon Codtttttttte : ${dataContoller.selectedCoupon}');
                       return Dismissible(
@@ -128,6 +133,8 @@ class _CartState extends State<Cart> {
                           title: productName,
                           size: size,
                           price: productPrice.toString(),
+                          cartIdP: cartIdP,
+                          quantity: quantity,
                         ),
                       );
                     },
@@ -180,7 +187,10 @@ class _CartState extends State<Cart> {
     final productImage = product['image']?.isNotEmpty == true
         ? product['image'][0]
         : AssetConstant.pd1; // Fallback image
-
+    final cartIdP = item['_id'].toString();
+    // final quantity = product['qty'];
+    final quantityValue = item['qty'] ?? 1; // Default to 1 if null
+    final quantity = RxInt(quantityValue);
     return await Get.bottomSheet(
           Container(
             height: 36.h,
@@ -223,6 +233,8 @@ class _CartState extends State<Cart> {
                   title: productName,
                   size: size,
                   price: productPrice.toString(),
+                  quantity: quantity,
+                  cartIdP: cartIdP,
                 ),
                 SizedBox(
                   height: 4.h,
