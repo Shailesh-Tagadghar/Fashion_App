@@ -71,21 +71,21 @@ class ApiService {
           print('Data after registration : $data');
         } else {
           print('Server returned an error: ${response.statusCode}');
-          Get.snackbar(
-              "Error", "Failed to register user: ${response.statusCode}",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
-          throw Exception('Failed to register user');
+          // Get.snackbar(
+          //     "Error", "Failed to register user: ${response.statusCode}",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
+          // throw Exception('Failed to register user');
         }
       });
     } catch (e) {
       print('Error during registration: $e');
-      Get.snackbar("Error", "Error during registration: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
-      throw Exception('Failed to register user');
+      // Get.snackbar("Error", "Error during registration: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
+      // throw Exception('Failed to register user');
     }
   }
 
@@ -127,19 +127,19 @@ class ApiService {
         print('Data after Login : $data');
       } else {
         print('Server returned an error: ${response.statusCode}');
-        Get.snackbar("Error", "Failed to log in: ${response.statusCode}",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white);
-        throw Exception('Failed to log in');
+        // Get.snackbar("Error", "Failed to log in: ${response.statusCode}",
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     backgroundColor: Colors.red,
+        //     colorText: Colors.white);
+        // throw Exception('Failed to log in');
       }
     } catch (e) {
       print('Error during login: $e');
-      Get.snackbar("Error", "Error during login: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
-      throw Exception('Failed to log in');
+      // Get.snackbar("Error", "Error during login: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
+      // throw Exception('Failed to log in');
     }
   }
 
@@ -166,17 +166,20 @@ class ApiService {
         print('Password changed successfully');
       } else {
         // Handle failure
-        Get.snackbar("Error", "Failed to change password: ${response.body}",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white);
-        throw Exception('Failed to change password: ${response.body}');
+        print('Failed to change password: ${response.body}');
+
+        // Get.snackbar("Error", "Failed to change password: ${response.body}",
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     backgroundColor: Colors.red,
+        //     colorText: Colors.white);
+        // throw Exception('Failed to change password: ${response.body}');
       }
     } catch (e) {
-      Get.snackbar("Error", "Error changing password: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      print('Error changing password: $e');
+      // Get.snackbar("Error", "Error changing password: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
     }
   }
 
@@ -208,10 +211,7 @@ class ApiService {
               .map((coupon) => coupon as Map<String, dynamic>)
               .toList();
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          print('Unexpected response format');
           throw Exception('Unexpected response format');
         }
       } else {
@@ -220,10 +220,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching coupons: $e');
-      Get.snackbar("Error", "Failed to fetch coupons: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to fetch coupons: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to fetch coupons');
     }
   }
@@ -255,10 +255,10 @@ class ApiService {
               .map((carousal) => carousal as Map<String, dynamic>)
               .toList();
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          // Get.snackbar("Error", "Unexpected response format",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
           throw Exception('Unexpected response format');
         }
       } else {
@@ -267,10 +267,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching coupons: $e');
-      Get.snackbar("Error", "Failed to fetch coupons: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to fetch coupons: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to fetch coupons');
     }
   }
@@ -302,10 +302,10 @@ class ApiService {
               .map((category) => category as Map<String, dynamic>)
               .toList();
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          // Get.snackbar("Error", "Unexpected response format",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
           throw Exception('Unexpected response format');
         }
       } else {
@@ -314,10 +314,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching coupons: $e');
-      Get.snackbar("Error", "Failed to fetch coupons: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to fetch coupons: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to fetch coupons');
     }
   }
@@ -350,10 +350,10 @@ class ApiService {
               .map((salesCategory) => salesCategory as Map<String, dynamic>)
               .toList();
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          // Get.snackbar("Error", "Unexpected response format",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
           throw Exception('Unexpected response format');
         }
       } else {
@@ -363,10 +363,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching coupons: $e');
-      Get.snackbar("Error", "Failed to fetch Sales Category: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to fetch Sales Category: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to Sales Category');
     }
   }
@@ -398,10 +398,10 @@ class ApiService {
               .map((product) => product as Map<String, dynamic>)
               .toList();
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          // Get.snackbar("Error", "Unexpected response format",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
           throw Exception('Unexpected response format');
         }
       } else {
@@ -410,10 +410,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching coupons: $e');
-      Get.snackbar("Error", "Failed to fetch product: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to fetch product: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to product');
     }
   }
@@ -553,10 +553,10 @@ class ApiService {
 
           return data;
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          // Get.snackbar("Error", "Unexpected response format",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
           throw Exception('Unexpected response format');
         }
       } else {
@@ -566,10 +566,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error fetching Carts in API Service: $e');
-      Get.snackbar("Error", "Failed to fetch Carts: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to fetch Carts: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to Carts');
     }
   }
@@ -607,10 +607,10 @@ class ApiService {
           print('Verify Coupon data : $data');
           return data['data'];
         } else {
-          Get.snackbar("Error", "Unexpected response format",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white);
+          // Get.snackbar("Error", "Unexpected response format",
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.red,
+          //     colorText: Colors.white);
           throw Exception('Unexpected response format');
         }
       } else {
@@ -619,10 +619,10 @@ class ApiService {
       }
     } catch (e) {
       print('Error verifying coupon: $e');
-      Get.snackbar("Error", "Failed to verify coupon: $e",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      // Get.snackbar("Error", "Failed to verify coupon: $e",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white);
       throw Exception('Failed to verify coupon');
     }
   }
