@@ -8,18 +8,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
+class SplashScreen extends StatelessWidget {
   final RxBool showLogo = true.obs;
   final RxBool showLottie = false.obs;
-  String? finalEmail;
-  final storage = GetStorage();
+
+  SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
