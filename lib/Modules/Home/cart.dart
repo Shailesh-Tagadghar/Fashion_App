@@ -327,11 +327,12 @@ class _CartState extends State<Cart> {
                                 },
                                 child: Obx(() => CustomButton(
                                       label: StringConstants.apply,
-                                      // isSelected: true,
+                                      isSelected: true,
+                                      labelColor: ColorConstants.whiteColor,
                                       btnColor:
                                           dataController.isAppliedDone.value ==
                                                   true
-                                              ? Colors.grey
+                                              ? ColorConstants.greyColor
                                               : ColorConstants.rich,
                                       height: 4.5.h,
                                       width: 25.w,
@@ -379,12 +380,14 @@ class _CartState extends State<Cart> {
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
-                        CustomText(
-                          text:
-                              '\$${dataController.subtotal.value.toStringAsFixed(2)}',
-                          color: ColorConstants.blackColor,
-                          fontSize: 12,
-                          weight: FontWeight.w500,
+                        Obx(
+                          () => CustomText(
+                            text:
+                                '\$${dataController.subtotal.value.toStringAsFixed(2)}',
+                            color: ColorConstants.blackColor,
+                            fontSize: 12,
+                            weight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
@@ -400,12 +403,14 @@ class _CartState extends State<Cart> {
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
-                        CustomText(
-                          text:
-                              '\$${dataController.deliveryFee.value.toStringAsFixed(2)}',
-                          color: ColorConstants.blackColor,
-                          fontSize: 12,
-                          weight: FontWeight.w500,
+                        Obx(
+                          () => CustomText(
+                            text:
+                                '\$${dataController.deliveryFee.value.toStringAsFixed(2)}',
+                            color: ColorConstants.blackColor,
+                            fontSize: 12,
+                            weight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
