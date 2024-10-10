@@ -14,11 +14,23 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:sizer/sizer.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final HomeController homeController = Get.put(HomeController());
+
   final DataContoller dataContoller = Get.put(DataContoller());
+
+  @override
+  void initState() {
+    super.initState();
+    dataContoller.onInit();
+  }
 
   @override
   Widget build(BuildContext context) {

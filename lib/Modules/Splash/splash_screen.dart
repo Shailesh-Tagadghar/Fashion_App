@@ -8,15 +8,22 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 
-class SplashScreen extends StatelessWidget {
-  final RxBool showLogo = true.obs;
-  final RxBool showLottie = false.obs;
-
+class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  final RxBool showLogo = true.obs;
+
+  final RxBool showLottie = false.obs;
 
   @override
   Widget build(BuildContext context) {
     final isLoggedIn = GetStorage().read('isLoggedIn') ?? false;
+    print('login status : $isLoggedIn');
     Timer(const Duration(seconds: 3), () {
       showLogo.value = false;
       showLottie.value = true;

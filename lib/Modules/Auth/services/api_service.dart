@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class ApiService {
+  final token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlbW9VQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY3MDRjN2Y0YjdiMTVkOTRiNWYzMTg1MCIsImZjbVRva2VuIjoiZVk4ZjloOWRSSDZJZ2EtOVNvZGpsNzpBUEE5MWJFbC10MGpJWld6UDZGQkNnU0RzaExvWmZvUlhIM0xtTnR0RkxmbXZhQU5OWGVUQ0Nud1dSRFpGYXNkaTU1UUx4WXNtazlXSVJqUGc1ZTFTZ1JWV1REcjdtYmtxMDFaSm5NWkM5VDBaT2c2U1p6VDR5ZXhQVnF2WDJSZnJnUTdTdkszbjR2RiIsImlhdCI6MTcyODU1MDY4M30.F_vsMVARxs9VH_zIMw887EccyBb9JEUpawPRUy5AZSA';
   // Register a user
   static Future<void> registerUser(
       Map<String, dynamic> registrationData) async {
