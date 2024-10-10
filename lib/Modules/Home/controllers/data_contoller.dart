@@ -268,7 +268,6 @@ class DataContoller extends GetxController {
   }
 
   void removeSelectedCoupon() {
-    // Assuming you have an observable for the selected coupon
     selectedCoupon.value = ''; // Reset coupon value
 
     print('Selected coupon has been removed.');
