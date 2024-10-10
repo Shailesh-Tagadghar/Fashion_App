@@ -11,7 +11,6 @@ import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 class SignIn extends StatelessWidget {
@@ -179,11 +178,6 @@ class SignIn extends StatelessWidget {
 
                           try {
                             await ApiService.loginUser(loginData);
-                            final SharedPreferences sharedPreferences =
-                                await SharedPreferences.getInstance();
-                            sharedPreferences.setString(
-                                'email', emailController.text);
-
                             Get.offNamed(
                                 AppRoutes.navbarScreen); // Navigate on success
                           } catch (e) {
