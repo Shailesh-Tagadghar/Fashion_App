@@ -255,7 +255,7 @@ class DataContoller extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green,
           colorText: Colors.white);
-
+      removeSelectedCoupon(); // This is a method to clear the coupon value
       // Navigate to the checkout screen
       Get.offAllNamed(AppRoutes.checkoutScreen);
     } catch (e) {
@@ -265,5 +265,12 @@ class DataContoller extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white);
     }
+  }
+
+  void removeSelectedCoupon() {
+    // Assuming you have an observable for the selected coupon
+    selectedCoupon.value = ''; // Reset coupon value
+
+    print('Selected coupon has been removed.');
   }
 }
