@@ -1,4 +1,6 @@
 import 'package:fashion/Modules/Auth/services/api_service.dart';
+import 'package:fashion/Routes/app_routes.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DataContoller extends GetxController {
@@ -235,6 +237,32 @@ class DataContoller extends GetxController {
       }
     } catch (e) {
       print('Error fetching sales category products: $e');
+    }
+  }
+
+  Future<void> checkout() async {
+    final cartId = cartsItems['_id']; // Extract cartId from cartsItems
+    print('Checking out with cartId in controller: $cartId');
+
+    try {
+      final response =
+          await ApiService.checkout(cartId); // Call the checkout method
+      print('Checkout Response in controller: $response');
+
+      // Show success message
+      Get.snackbar("Success", "Checkout successful: ${response['message']}",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
+
+      // Navigate to the checkout screen
+      Get.offAllNamed(AppRoutes.checkoutScreen);
+    } catch (e) {
+      print('Error during checkout in controller: $e');
+      Get.snackbar("Error", "Checkout failed: $e",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
     }
   }
 }

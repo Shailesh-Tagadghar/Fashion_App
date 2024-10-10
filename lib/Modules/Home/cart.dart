@@ -4,7 +4,6 @@ import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/cart_item_widget.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
-import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
@@ -272,7 +271,7 @@ class _CartState extends State<Cart> {
   }
 
   void showCheckout(BuildContext context) {
-    final homeController = Get.find<HomeController>();
+    // final homeController = Get.find<HomeController>();
     final DataContoller dataController = Get.find<DataContoller>();
     dataController.fetchCheckout();
 
@@ -479,9 +478,8 @@ class _CartState extends State<Cart> {
                       isSelected: true,
                       height: 6.h,
                       weight: FontWeight.w400,
-                      action: () {
-                        homeController.selectedIndex.value = 1;
-                        Get.offAllNamed(AppRoutes.checkoutScreen);
+                      action: () async {
+                        await dataController.checkout();
                       },
                     ),
                   ],

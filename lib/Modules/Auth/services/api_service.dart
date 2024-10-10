@@ -572,6 +572,7 @@ class ApiService {
     }
   }
 
+  //verify Coupon
   static Future<Map<String, dynamic>> verifyCoupon(String couponCode,
       double subtotal, double discount, double deliveryFee) async {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.verifyCoupon}';
@@ -814,6 +815,79 @@ class ApiService {
     } else {
       print('Error: ${response.reasonPhrase}');
       return null;
+    }
+  }
+
+  // checkout product
+  static Future<Map<String, dynamic>> checkout(String cartId) async {
+    const String url =
+        '${ApiConstants.baseUrl}${ApiConstants.checkout}'; // Adjust the URL as necessary
+
+    final token = GetStorage().read('token');
+    print('Bearer Token: $token');
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = json.encode({
+        "cartid": cartId,
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final data = jsonDecode(responseBody);
+        print('Checkout Response in api service: $data');
+
+        // Check if the response format is correct
+        if (data is Map<String, dynamic>) {
+          return data;
+        } else {
+          throw Exception('Unexpected response format');
+        }
+      } else {
+        print('Error response in api service: ${response.reasonPhrase}');
+        throw Exception(
+            'Failed to checkout in api service: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error during checkout in api service: $e');
+      throw Exception('Failed to checkout in api service');
+    }
+  }
+
+  // add quantity
+  Future<void> addQuantity(int quantity, String id) async {
+    final data = {"qty": quantity, "id": id};
+
+    print('Sending data in api service: $data');
+
+    try {
+      final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addQty}'),
+        headers: {
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
+          "Content-Type": "application/json"
+        },
+        body: json.encode(data),
+      );
+
+      print('Response in api service: ${response.body}');
+      print('Status code in api service: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        DataContoller().fetchCarts();
+        print("Product Quantity Updated successfully in api service");
+      } else {
+        print("Failed to Add Quantity in api service");
+      }
+    } catch (e) {
+      print("Error Adding Quantity to cart in api service: $e");
     }
   }
 }
