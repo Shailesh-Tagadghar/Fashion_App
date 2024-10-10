@@ -14,16 +14,21 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:sizer/sizer.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
   const Cart({super.key});
 
+  @override
+  State<Cart> createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final DataContoller dataContoller = Get.find<DataContoller>();
 
     dataContoller.fetchCarts();
     dataContoller.fetchCheckout();
-
+    print('disssssssss ${dataContoller.discount.value}');
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
       appBar: AppBar(
@@ -99,7 +104,8 @@ class Cart extends StatelessWidget {
                       final productImage = product['image']?.isNotEmpty == true
                           ? product['image'][0]
                           : AssetConstant.pd1; // Fallback image
-
+                      print(
+                          'Coupon Codtttttttte : ${dataContoller.selectedCoupon}');
                       return Dismissible(
                         key: Key(item.toString()),
                         direction: DismissDirection.endToStart,
@@ -279,6 +285,7 @@ class Cart extends StatelessWidget {
         ),
       ),
       builder: (BuildContext context) {
+        dataController.isAppliedDone.value = false;
         return Padding(
           padding: EdgeInsets.only(
             left: 5.w,
@@ -311,16 +318,25 @@ class Cart extends StatelessWidget {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(AppRoutes.couponScreen);
+                                  dataController.selectedCoupon.value.isNotEmpty
+                                      ? dataController.isAppliedDone.value ==
+                                              true
+                                          ? () {}
+                                          : dataController.verifyCoupon()
+                                      : Get.toNamed(AppRoutes.couponScreen);
                                 },
-                                child: CustomButton(
-                                  label: StringConstants.apply,
-                                  isSelected: true,
-                                  btnColor: ColorConstants.rich,
-                                  height: 4.5.h,
-                                  width: 25.w,
-                                  weight: FontWeight.w400,
-                                ),
+                                child: Obx(() => CustomButton(
+                                      label: StringConstants.apply,
+                                      // isSelected: true,
+                                      btnColor:
+                                          dataController.isAppliedDone.value ==
+                                                  true
+                                              ? Colors.grey
+                                              : ColorConstants.rich,
+                                      height: 4.5.h,
+                                      width: 25.w,
+                                      weight: FontWeight.w400,
+                                    )),
                               ),
                             ),
                             hintText: StringConstants.promo,
@@ -405,12 +421,14 @@ class Cart extends StatelessWidget {
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
-                        CustomText(
-                          text:
-                              '-\$${dataController.discount.value.toStringAsFixed(2)}',
-                          color: ColorConstants.blackColor,
-                          fontSize: 12,
-                          weight: FontWeight.w500,
+                        Obx(
+                          () => CustomText(
+                            text:
+                                '-\$${dataController.discount.value > 0 ? dataController.discount.value.toStringAsFixed(2) : '0.00'}',
+                            color: ColorConstants.blackColor,
+                            fontSize: 12,
+                            weight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
@@ -436,12 +454,14 @@ class Cart extends StatelessWidget {
                           fontSize: 12,
                           weight: FontWeight.w400,
                         ),
-                        CustomText(
-                          text:
-                              '\$${dataController.total.value.toStringAsFixed(2)}',
-                          color: ColorConstants.blackColor,
-                          fontSize: 12,
-                          weight: FontWeight.w500,
+                        Obx(
+                          () => CustomText(
+                            text:
+                                '\$${(dataController.total.value).toStringAsFixed(2)}',
+                            color: ColorConstants.blackColor,
+                            fontSize: 12,
+                            weight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),

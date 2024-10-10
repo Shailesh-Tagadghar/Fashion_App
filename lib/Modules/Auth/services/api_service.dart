@@ -601,6 +601,7 @@ class ApiService {
         print('Coupon Verification Data : $data');
 
         if (data is Map && data.containsKey('data')) {
+          print('Verify Coupon data : $data');
           return data['data'];
         } else {
           Get.snackbar("Error", "Unexpected response format",

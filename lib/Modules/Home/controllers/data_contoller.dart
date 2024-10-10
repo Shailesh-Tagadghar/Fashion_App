@@ -14,10 +14,11 @@ class DataContoller extends GetxController {
   final total = 0.0.obs;
   final subtotal = 0.0.obs;
   final discount = 0.0.obs;
+  final discountApplied = 0.0.obs;
   final deliveryFee = 0.0.obs;
   final favoriteProducts = <String>[].obs;
   final selectedCategoryId = ''.obs;
-
+  final isAppliedDone = false.obs;
   final isLoading = true.obs;
 
   @override
@@ -37,10 +38,6 @@ class DataContoller extends GetxController {
 
   void setCoupon(String coupon) {
     selectedCoupon.value = coupon;
-  }
-
-  void calculateTotal() {
-    total.value = subtotal.value + deliveryFee.value - discount.value;
   }
 
   Future<void> fetchCarousal() async {
@@ -143,24 +140,30 @@ class DataContoller extends GetxController {
 
   Future<void> verifyCoupon() async {
     final couponCode = selectedCoupon.value;
-    final cartSubtotal = subtotal.value;
-    final cartDiscount = discount.value;
-    final cartDeliveryFee = deliveryFee.value;
+    // final cartSubtotal = subtotal.value;
+    // final cartDiscount = discount.value;
+    // final cartDeliveryFee = deliveryFee.value;
 
     try {
       final couponData = await ApiService.verifyCoupon(
-          couponCode, cartSubtotal, cartDiscount, cartDeliveryFee);
-      print('Verified Coupon Data: $couponData');
+          couponCode, subtotal.value, discount.value, deliveryFee.value);
+      print('Verified Coupon popopopoppopo: ${couponData}');
 
       // Update checkout items and totals with coupon data
-      checkoutItems.value =
-          couponData['cart_items']; // Assuming 'cart_items' holds updated items
-      total.value = couponData['total'].toDouble();
+      // checkoutItems.value = couponData;
       subtotal.value = couponData['subtotal'].toDouble();
       discount.value = couponData['discount'].toDouble();
       deliveryFee.value = couponData['deliveryfee'].toDouble();
+      total.value = couponData['total'].toDouble();
 
-      update(); // Notify UI about the change
+      isAppliedDone.value = true;
+
+      subtotal.refresh();
+      discount.refresh();
+      deliveryFee.refresh();
+      total.refresh();
+
+      // update();
     } catch (e) {
       print('Error verifying coupon in controller: $e');
     }

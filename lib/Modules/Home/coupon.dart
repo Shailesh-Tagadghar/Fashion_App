@@ -94,7 +94,7 @@ class Coupon extends StatelessWidget {
                                   item['descreption'] ?? 'No Description',
                               amount:
                                   '${StringConstants.offertext} ${item['amount']}% ${StringConstants.offertextII}',
-                              copy: item['copy'] ?? 'Copy',
+                              copy:  'Copy',
                             ),
                             SizedBox(
                               height: 1.5.h,

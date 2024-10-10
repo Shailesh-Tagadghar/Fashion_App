@@ -100,7 +100,6 @@ class CouponItemWidget extends StatelessWidget {
                   onTap: () {
                     dataController.setCoupon(title);
                     print('Coupon Value : $title');
-
                     Get.back();
                   },
                   child: Container(
