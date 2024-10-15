@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_field.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
