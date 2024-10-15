@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sizer/sizer.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
@@ -42,10 +43,16 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Obx(
           () => showLogo.value
-              ? Image.asset(AssetConstant.splashLogo)
+              ? Image.asset(
+                  AssetConstant.splashLogo,
+                  height: 20.h,
+                  width: 50.w,
+                )
               : showLottie.value
                   ? Lottie.asset(
                       AssetConstant.clothLottie,
+                      height: 50.h,
+                      width: 80.w,
                       // AssetConstant.tryLottie,
                     )
                   : const SizedBox(),
