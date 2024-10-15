@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/banner_widget.dart';
@@ -277,15 +279,15 @@ class _HomeState extends State<Home> {
                           return GestureDetector(
                             onTap: () {
                               final categoryId = item['_id'];
-                              print(
+                              log(
                                   'Category ID: $categoryId'); // Check if the category ID is null or valid
                               if (categoryId != null && categoryId.isNotEmpty) {
                                 Get.toNamed(AppRoutes.categoryScreen,
                                     arguments: categoryId);
-                                print(
+                                log(
                                     'Navigated with Category ID: $categoryId');
                               } else {
-                                print('Category ID is null or empty');
+                                log('Category ID is null or empty');
                               }
                             },
                             child: CategoryWidget(

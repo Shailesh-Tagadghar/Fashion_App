@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/product_cart_widget.dart';
@@ -18,7 +20,7 @@ class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryId = Get.arguments as String;
-    print('Category ID from arguments : $categoryId');
+    log('Category ID from arguments : $categoryId');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (categoryId.isNotEmpty) {
         dataContoller.fetchCategoryProducts(categoryId);

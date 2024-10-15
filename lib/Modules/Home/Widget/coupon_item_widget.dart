@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
@@ -99,7 +101,7 @@ class CouponItemWidget extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     dataController.setCoupon(title);
-                    print('Coupon Value : $title');
+                    log('Coupon Value : $title');
                     Get.back();
                   },
                   child: Container(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/controllers/validation.dart';
@@ -483,7 +485,7 @@ class Productdetails extends StatelessWidget {
                   if (validationController.sizeError.value.isNotEmpty ||
                       validationController.colorError.value.isNotEmpty) {
                     // Optionally show a message or toast here
-                    print(
+                    log(
                         "Validation errors: ${validationController.sizeError.value}, ${validationController.colorError.value}");
                     return; // Stop execution if there are errors
                   }

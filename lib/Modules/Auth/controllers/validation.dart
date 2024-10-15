@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:get/get.dart';
@@ -224,7 +226,7 @@ class ValidationController extends GetxController {
 
   void saveNewPassword(String newPassword) {
     updatedPassword.value = newPassword;
-    print("New Password: $newPassword");
+    log("New Password: $newPassword");
   }
 
   // Optionally, set the user name from sign-up

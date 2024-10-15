@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
@@ -150,8 +152,7 @@ class CartItemWidget extends StatelessWidget {
                                   quantity.value += 1; // Increase quantity
                                   ApiService().addQuantity(
                                       quantity.value, cartIdP ?? '');
-                                  print(
-                                      'on tap increase cart id in cart screen : $cartIdP');
+                                  log('on tap increase cart id in cart screen : $cartIdP');
                                 },
                               ),
                             ),

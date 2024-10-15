@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +51,7 @@ class DataContoller extends GetxController {
       carousalItems.assignAll(carousal); // Update the observable list
       isLoading.value = false; // Update loading state
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
       isLoading.value = false;
     }
   }
@@ -57,11 +59,11 @@ class DataContoller extends GetxController {
   Future<void> fetchCategory() async {
     try {
       final category = await ApiService.fetchCategory();
-      // print('Fetched Categories: $category');
+      // log('Fetched Categories: $category');
       categoryItems.assignAll(category);
       isLoading.value = false;
     } catch (e) {
-      print('Error fetching Category: $e');
+      log('Error fetching Category: $e');
       isLoading.value = false;
     }
   }
@@ -69,11 +71,11 @@ class DataContoller extends GetxController {
   Future<void> fetchSalesCategory() async {
     try {
       final salesCategory = await ApiService.fetchSalesCategory();
-      // print('Fetched Categories: $category');
+      // log('Fetched Categories: $category');
       salesCategoryItems.assignAll(salesCategory);
       isLoading.value = false;
     } catch (e) {
-      print('Error fetching sales Category: $e');
+      log('Error fetching sales Category: $e');
       isLoading.value = false;
     }
   }
@@ -81,7 +83,7 @@ class DataContoller extends GetxController {
   Future<void> fetchProducts() async {
     try {
       final products = await ApiService.fetchProducts();
-      // print('Fetched Categories: $category');
+      // log('Fetched Categories: $category');
       productsItems.assignAll(products);
       filteredProductsItems
           .assignAll(productsItems); // Initially show all products
@@ -90,7 +92,7 @@ class DataContoller extends GetxController {
 
       isLoading.value = false;
     } catch (e) {
-      print('Error fetching products: $e');
+      log('Error fetching products: $e');
       isLoading.value = false;
     }
   }
@@ -99,11 +101,11 @@ class DataContoller extends GetxController {
     isLoading.value = true;
     try {
       final carts = await ApiService.fetchCarts();
-      print('Fetched Carts in controller: $carts');
+      log('Fetched Carts in controller: $carts');
       cartsItems.assignAll(carts);
       update();
     } catch (e) {
-      print('Error fetching Carts in controller: $e');
+      log('Error fetching Carts in controller: $e');
     } finally {
       isLoading.value = false; // Stop loading
     }
@@ -112,7 +114,7 @@ class DataContoller extends GetxController {
   Future<void> fetchCheckout() async {
     try {
       final checkout = await ApiService.fetchCheckout();
-      print('Fetched Checkout in Controller: $checkout');
+      log('Fetched Checkout in Controller: $checkout');
 
       // Assign cart data to cartsItems
       checkoutItems.value = checkout['data']; // Assign the cart data
@@ -125,7 +127,7 @@ class DataContoller extends GetxController {
 
       isLoading.value = false;
     } catch (e) {
-      print('Error fetching Checkout in controller: $e');
+      log('Error fetching Checkout in controller: $e');
       isLoading.value = false;
     }
   }
@@ -135,7 +137,7 @@ class DataContoller extends GetxController {
       final coupons = await ApiService.fetchCoupons();
       couponItems.assignAll(coupons); // Update the observable list
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
     } finally {
       isLoading.value = false; // Stop loading regardless of success or failure
     }
@@ -150,7 +152,7 @@ class DataContoller extends GetxController {
     try {
       final couponData = await ApiService.verifyCoupon(
           couponCode, subtotal.value, discount.value, deliveryFee.value);
-      print('Verified Coupon popopopoppopo: ${couponData}');
+      log('Verified Coupon popopopoppopo: ${couponData}');
 
       // Update checkout items and totals with coupon data
       // checkoutItems.value = couponData;
@@ -168,7 +170,7 @@ class DataContoller extends GetxController {
 
       // update();
     } catch (e) {
-      print('Error verifying coupon in controller: $e');
+      log('Error verifying coupon in controller: $e');
     }
   }
 
@@ -178,7 +180,7 @@ class DataContoller extends GetxController {
       favoriteProducts.assignAll(await ApiService.getFavoriteProducts());
       isLoading.value = false;
     } catch (e) {
-      print('Error fetching favorite products: $e');
+      log('Error fetching favorite products: $e');
       isLoading.value = false;
     }
   }
@@ -188,7 +190,7 @@ class DataContoller extends GetxController {
       isLoading.value = true;
       selectedCategoryId.value = categoryId; // Set selected category ID
       var response = await ApiService.getCategoryProduct(categoryId);
-      print('Fetched Category Products: $response'); // Log the response
+      log('Fetched Category Products: $response'); // Log the response
 
       if (response != null) {
         if (response is Map<String, dynamic> && response.containsKey('data')) {
@@ -196,15 +198,14 @@ class DataContoller extends GetxController {
           productsItems
               .assignAll(List<Map<String, dynamic>>.from(response['data']));
         } else {
-          print(
-              'Expected a list of products in "data", but received something else');
+          log('Expected a list of products in "data", but received something else');
         }
       } else {
-        print('Failed to fetch products');
+        log('Failed to fetch products');
       }
       isLoading.value = false;
     } catch (e) {
-      print('Error fetching Category Products: $e');
+      log('Error fetching Category Products: $e');
       isLoading.value = false;
     }
   }
@@ -213,7 +214,7 @@ class DataContoller extends GetxController {
     try {
       var response = await ApiService.getSalesCategoryProduct(saleCategoryId);
       if (response != null && response['status'] == 1) {
-        print('Sales Category Products: $response');
+        log('Sales Category Products: $response');
         var productsList = response['data'] as List; // Get the list of products
         if (productsList.isNotEmpty) {
           // Update the productsItems
@@ -234,21 +235,21 @@ class DataContoller extends GetxController {
           filteredProductsItems.clear();
         }
       } else {
-        print('Failed to fetch sales category products');
+        log('Failed to fetch sales category products');
       }
     } catch (e) {
-      print('Error fetching sales category products: $e');
+      log('Error fetching sales category products: $e');
     }
   }
 
   Future<void> checkout() async {
     final cartId = cartsItems['_id']; // Extract cartId from cartsItems
-    print('Checking out with cartId in controller: $cartId');
+    log('Checking out with cartId in controller: $cartId');
 
     try {
       final response =
           await ApiService.checkout(cartId); // Call the checkout method
-      print('Checkout Response in controller: $response');
+      log('Checkout Response in controller: $response');
 
       // Show success message
       Get.snackbar("Success", "Checkout successful: ${response['message']}",
@@ -259,7 +260,7 @@ class DataContoller extends GetxController {
       // Navigate to the checkout screen
       Get.offAllNamed(AppRoutes.checkoutScreen);
     } catch (e) {
-      print('Error during checkout in controller: $e');
+      log('Error during checkout in controller: $e');
       Get.snackbar("Error", "Checkout failed: $e",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
@@ -270,6 +271,6 @@ class DataContoller extends GetxController {
   void removeSelectedCoupon() {
     selectedCoupon.value = ''; // Reset coupon value
 
-    print('Selected coupon has been removed.');
+    log('Selected coupon has been removed.');
   }
 }

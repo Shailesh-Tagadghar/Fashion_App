@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
@@ -31,7 +32,7 @@ class HomeController extends GetxController {
 
   //to change navbar index
   void onItemTapped(int index) {
-    print("Tapped index: $index");
+    log("Tapped index: $index");
     selectedIndex.value = index;
   }
 
@@ -124,20 +125,18 @@ class HomeController extends GetxController {
   }
 
   Future<void> addProductToCart(String productId, String size) async {
-    print("Attempting to add to cart with:");
-    print("Product ID: $productId");
-    print("Selected Size: ${selectedProductSize.value}");
-    print("Selected Color: ${selectedProductColor.value}");
+    log("Attempting to add to cart with:");
+    log("Product ID: $productId");
+    log("Selected Size: ${selectedProductSize.value}");
+    log("Selected Color: ${selectedProductColor.value}");
 
     await apiService.addToCart(productId, selectedProductSize.value);
     DataContoller().fetchCarts();
     update();
 
-    print("Product added to cart and local state updated.");
+    log("Product added to cart and local state updated.");
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////
-
-  
 }

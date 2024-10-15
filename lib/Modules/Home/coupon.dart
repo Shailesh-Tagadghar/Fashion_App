@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/coupon_item_widget.dart';
@@ -94,7 +96,7 @@ class Coupon extends StatelessWidget {
                                   item['descreption'] ?? 'No Description',
                               amount:
                                   '${StringConstants.offertext} ${item['amount']}% ${StringConstants.offertextII}',
-                              copy:  'Copy',
+                              copy: 'Copy',
                             ),
                             SizedBox(
                               height: 1.5.h,
@@ -116,7 +118,7 @@ class Coupon extends StatelessWidget {
       couponItems.assignAll(coupons); // Update the observable list
       isLoading.value = false; // Update loading state
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
       isLoading.value = false; // Stop loading even on error
     }
   }

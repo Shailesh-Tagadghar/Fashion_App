@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_field.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
@@ -181,7 +183,7 @@ class SignIn extends StatelessWidget {
                             Get.offNamed(
                                 AppRoutes.navbarScreen); // Navigate on success
                           } catch (e) {
-                            print('Login error: $e');
+                            log('Login error: $e');
                             // Handle login errors
                           }
                         }

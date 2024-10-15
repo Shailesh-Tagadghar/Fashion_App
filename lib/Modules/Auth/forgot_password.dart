@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_field.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
@@ -193,9 +195,9 @@ class ForgotPassword extends StatelessWidget {
                             return;
                           }
 
-                          // Print both passwords to the console
-                          print('Old password: $oldpassword');
-                          print('New password: $newpassword');
+                          // log both passwords to the console
+                          log('Old password: $oldpassword');
+                          log('New password: $newpassword');
 
                           // Retrieve the bearer token from GetStorage
                           final storage = GetStorage();
@@ -223,7 +225,7 @@ class ForgotPassword extends StatelessWidget {
                             Get.snackbar(
                                 'Success', 'Password changed successfully');
                           } catch (e) {
-                            print('Failed to change password : $e');
+                            log('Failed to change password : $e');
                           }
                         },
                       ),

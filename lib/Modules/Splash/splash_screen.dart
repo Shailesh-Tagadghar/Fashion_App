@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoggedIn = GetStorage().read('isLoggedIn') ?? false;
-    print('login status : $isLoggedIn');
+    log('login status : $isLoggedIn');
     Timer(const Duration(seconds: 3), () {
       showLogo.value = false;
       showLottie.value = true;

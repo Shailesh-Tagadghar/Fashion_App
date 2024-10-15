@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
@@ -98,7 +100,7 @@ class Checkout extends StatelessWidget {
               height: 6.h,
               weight: FontWeight.w500,
               action: () {
-                print("final tap::::${_controller.selectedIndex.value}");
+                log("final tap::::${_controller.selectedIndex.value}");
                 Get.offNamed(AppRoutes.navbarScreen);
               },
             )

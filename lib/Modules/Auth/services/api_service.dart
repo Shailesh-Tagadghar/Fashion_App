@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
@@ -18,7 +19,7 @@ class ApiService {
     final fcmToken = storage.read('fcm_token');
 
     try {
-      // print('Sending request to $url with data: $registrationData');
+      // log('Sending request to $url with data: $registrationData');
 
       var request = http.MultipartRequest('POST', url)
         ..fields['name'] = registrationData['name']
@@ -55,10 +56,10 @@ class ApiService {
           const Duration(seconds: 30)); // Adding a timeout for network requests
 
       response.stream.transform(utf8.decoder).listen((value) {
-        // print('Response body: $value');
+        // log('Response body: $value');
         if (response.statusCode == 200) {
           final data = jsonDecode(value);
-          print('User registered successfully');
+          log('User registered successfully');
           Get.snackbar("Success", "User registered successfully",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.green,
@@ -66,9 +67,9 @@ class ApiService {
           GetStorage().write('user_data', data);
           // storage.write('user_data', data);
           storage.write('token', data['token']); // Store token
-          print('Data after registration : $data');
+          log('Data after registration : $data');
         } else {
-          print('Server returned an error: ${response.statusCode}');
+          log('Server returned an error: ${response.statusCode}');
           // Get.snackbar(
           //     "Error", "Failed to register user: ${response.statusCode}",
           //     snackPosition: SnackPosition.BOTTOM,
@@ -78,7 +79,7 @@ class ApiService {
         }
       });
     } catch (e) {
-      print('Error during registration: $e');
+      log('Error during registration: $e');
       // Get.snackbar("Error", "Error during registration: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -94,7 +95,7 @@ class ApiService {
     final fcmToken = GetStorage().read('fcm_token');
 
     try {
-      // print('Sending login request to $url with data: $loginData');
+      // log('Sending login request to $url with data: $loginData');
 
       final response = await http
           .post(
@@ -116,15 +117,15 @@ class ApiService {
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.green,
             colorText: Colors.white);
-        print('User logged in successfully');
+        log('User logged in successfully');
         // Store the user information in GetStorage for persistence
         final storage = GetStorage();
         storage.write('user_data', data);
         storage.write('token', data['token']); // Store token
         storage.write('isLoggedIn', true);
-        print('Data after Login : $data');
+        log('Data after Login : $data');
       } else {
-        print('Server returned an error: ${response.statusCode}');
+        log('Server returned an error: ${response.statusCode}');
         // Get.snackbar("Error", "Failed to log in: ${response.statusCode}",
         //     snackPosition: SnackPosition.BOTTOM,
         //     backgroundColor: Colors.red,
@@ -132,7 +133,7 @@ class ApiService {
         // throw Exception('Failed to log in');
       }
     } catch (e) {
-      print('Error during login: $e');
+      log('Error during login: $e');
       // Get.snackbar("Error", "Error during login: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -161,10 +162,10 @@ class ApiService {
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.green,
             colorText: Colors.white);
-        print('Password changed successfully');
+        log('Password changed successfully');
       } else {
         // Handle failure
-        print('Failed to change password: ${response.body}');
+        log('Failed to change password: ${response.body}');
 
         // Get.snackbar("Error", "Failed to change password: ${response.body}",
         //     snackPosition: SnackPosition.BOTTOM,
@@ -173,7 +174,7 @@ class ApiService {
         // throw Exception('Failed to change password: ${response.body}');
       }
     } catch (e) {
-      print('Error changing password: $e');
+      log('Error changing password: $e');
       // Get.snackbar("Error", "Error changing password: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -187,7 +188,7 @@ class ApiService {
         '${ApiConstants.baseUrl}${ApiConstants.getCoupons}'; // Adjust endpoint as necessary
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
     };
@@ -201,7 +202,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        // print('Coupon DATA : $data');
+        // log('Coupon DATA : $data');
 
         if (data is Map && data.containsKey('data')) {
           List<dynamic> coupons = data['data'];
@@ -209,15 +210,15 @@ class ApiService {
               .map((coupon) => coupon as Map<String, dynamic>)
               .toList();
         } else {
-          print('Unexpected response format');
+          log('Unexpected response format');
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception('Failed to fetch coupons: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
       // Get.snackbar("Error", "Failed to fetch coupons: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -231,7 +232,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCarousal}';
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
     };
@@ -245,7 +246,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        // print('carousal DATA : $data');
+        // log('carousal DATA : $data');
 
         if (data is Map && data.containsKey('data')) {
           List<dynamic> carousal = data['data'];
@@ -260,11 +261,11 @@ class ApiService {
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception('Failed to fetch coupons: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
       // Get.snackbar("Error", "Failed to fetch coupons: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -278,7 +279,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCategory}';
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
     };
@@ -292,7 +293,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        // print('Category DATA : $data');
+        // log('Category DATA : $data');
 
         if (data is Map && data.containsKey('data')) {
           List<dynamic> category = data['data'];
@@ -307,11 +308,11 @@ class ApiService {
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception('Failed to fetch coupons: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
       // Get.snackbar("Error", "Failed to fetch coupons: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -326,7 +327,7 @@ class ApiService {
         '${ApiConstants.baseUrl}${ApiConstants.getSalesCategory}';
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
     };
@@ -340,7 +341,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        // print('Sales Category DATA : $data');
+        // log('Sales Category DATA : $data');
 
         if (data is Map && data.containsKey('data')) {
           List<dynamic> salesCategory = data['data'];
@@ -355,12 +356,12 @@ class ApiService {
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception(
             'Failed to fetch Sales Category: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
       // Get.snackbar("Error", "Failed to fetch Sales Category: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -374,7 +375,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getProducts}';
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
     };
@@ -388,7 +389,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        // print('Product Data : $data');
+        // log('Product Data : $data');
 
         if (data is Map && data.containsKey('data')) {
           List<dynamic> product = data['data'];
@@ -403,11 +404,11 @@ class ApiService {
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception('Failed to fetch product: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching coupons: $e');
+      log('Error fetching coupons: $e');
       // Get.snackbar("Error", "Failed to fetch product: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -419,7 +420,7 @@ class ApiService {
   // add to cart
   Future<void> addToCart(String productId, String size) async {
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
 
     var headers = {
       'Authorization': 'Bearer $token',
@@ -432,20 +433,20 @@ class ApiService {
 
     try {
       var response = await http.post(url, headers: headers, body: body);
-      print("Response Status in api service: ${response.statusCode}");
-      print("Response Body in api service: ${response.body}");
+      log("Response Status in api service: ${response.statusCode}");
+      log("Response Body in api service: ${response.body}");
 
       if (response.statusCode == 200) {
-        print("Product added to cart successfully.");
+        log("Product added to cart successfully.");
       } else {
         final Map<String, dynamic> errorResponse = json.decode(response.body);
         String errorMessage =
             errorResponse['message'] ?? 'Something went wrong';
-        print("Failed to add product to cart in api service: $errorMessage");
-        print("Failed to add product to cart in api service: ${response.body}");
+        log("Failed to add product to cart in api service: $errorMessage");
+        log("Failed to add product to cart in api service: ${response.body}");
       }
     } catch (e) {
-      print("Error adding product to cart in api service: $e");
+      log("Error adding product to cart in api service: $e");
     }
   }
 
@@ -455,7 +456,7 @@ class ApiService {
       "id": productId,
     };
 
-    print('Sending data: $data');
+    log('Sending data: $data');
 
     try {
       final url =
@@ -470,18 +471,18 @@ class ApiService {
         body: json.encode(data),
       );
 
-      print('headers ${response.headers}');
+      log('headers ${response.headers}');
 
-      print('Response: ${response.body}'); // Log the response body
-      print('Status code: ${response.statusCode}'); // Log the status code
+      log('Response: ${response.body}'); // Log the response body
+      log('Status code: ${response.statusCode}'); // Log the status code
 
       if (response.statusCode == 200) {
-        print("Removed From Cart successfully");
+        log("Removed From Cart successfully");
       } else {
-        print("Failed to Remove from cart");
+        log("Failed to Remove from cart");
       }
     } catch (e) {
-      print("Error Removing From Cart: $e");
+      log("Error Removing From Cart: $e");
     }
   }
 
@@ -490,7 +491,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
     };
@@ -504,22 +505,22 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        print('Cart Data API Service : $data');
+        log('Cart Data API Service : $data');
 
         if (data is Map && data.containsKey('data')) {
           Map<String, dynamic> carts = data['data'];
           return carts;
         } else {
-          print('Unexpected response format');
+          log('Unexpected response format');
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception(
             'Failed to fetch Carts API Service: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching Carts in API Service: $e');
+      log('Error fetching Carts in API Service: $e');
       throw Exception('Failed to Carts');
     }
   }
@@ -529,7 +530,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.getCart}';
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
     };
@@ -543,7 +544,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        print('Cart Data API Service : $data');
+        log('Cart Data API Service : $data');
 
         if (data is Map && data.containsKey('data')) {
           final Map<String, dynamic> data =
@@ -558,12 +559,12 @@ class ApiService {
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception(
             'Failed to fetch Carts API Service: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching Carts in API Service: $e');
+      log('Error fetching Carts in API Service: $e');
       // Get.snackbar("Error", "Failed to fetch Carts: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -578,7 +579,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.verifyCoupon}';
 
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -599,10 +600,10 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        print('Coupon Verification Data : $data');
+        log('Coupon Verification Data : $data');
 
         if (data is Map && data.containsKey('data')) {
-          print('Verify Coupon data : $data');
+          log('Verify Coupon data : $data');
           return data['data'];
         } else {
           // Get.snackbar("Error", "Unexpected response format",
@@ -612,11 +613,11 @@ class ApiService {
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response: ${response.reasonPhrase}');
+        log('Error response: ${response.reasonPhrase}');
         throw Exception('Failed to verify coupon: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error verifying coupon: $e');
+      log('Error verifying coupon: $e');
       // Get.snackbar("Error", "Failed to verify coupon: $e",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.red,
@@ -630,7 +631,7 @@ class ApiService {
     const String url = '${ApiConstants.baseUrl}${ApiConstants.searchproduct}';
     final token = GetStorage().read('token');
 
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
 
     try {
       DataContoller().isLoading.value = true;
@@ -652,15 +653,15 @@ class ApiService {
         if (jsonResponse != null && jsonResponse['data'] != null) {
           return jsonResponse['data'];
         } else {
-          print('Unexpected response format: $jsonResponse');
+          log('Unexpected response format: $jsonResponse');
           return [];
         }
       } else {
-        print('API Error: ${response.reasonPhrase}');
+        log('API Error: ${response.reasonPhrase}');
         return [];
       }
     } catch (e) {
-      print('Error fetching search results: $e');
+      log('Error fetching search results: $e');
       return [];
     } finally {
       DataContoller().isLoading.value =
@@ -675,7 +676,7 @@ class ApiService {
       String productId, String categoryId) async {
     final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
@@ -689,13 +690,12 @@ class ApiService {
     try {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
-        print("Added to favorites in api service: $productId");
+        log("Added to favorites in api service: $productId");
       } else {
-        print(
-            "Failed to add to favorites in api service: ${response.reasonPhrase}");
+        log("Failed to add to favorites in api service: ${response.reasonPhrase}");
       }
     } catch (e) {
-      print("Error adding to favorites in api service: $e");
+      log("Error adding to favorites in api service: $e");
     } finally {
       DataContoller().isLoading.value = false;
     }
@@ -706,7 +706,7 @@ class ApiService {
       String productId, String categoryId) async {
     final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addFavorite}');
     final token = GetStorage().read('token');
-    print('Bearer Token : $token');
+    log('Bearer Token : $token');
     final headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
@@ -720,13 +720,12 @@ class ApiService {
     try {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
-        print("Removed from favorites in api service: $productId");
+        log("Removed from favorites in api service: $productId");
       } else {
-        print(
-            "Failed to remove from favorites in api service: ${response.reasonPhrase}");
+        log("Failed to remove from favorites in api service: ${response.reasonPhrase}");
       }
     } catch (e) {
-      print("Error remove from favorites in api service: $e");
+      log("Error remove from favorites in api service: $e");
     } finally {
       DataContoller().isLoading.value = false;
     }
@@ -754,15 +753,15 @@ class ApiService {
                   item['product_id']['_id'] as String) // Access the product ID
               .toList(); // Ensure this is a List<String>
         } else {
-          print('Unexpected response format: $data');
+          log('Unexpected response format: $data');
           return [];
         }
       } else {
-        print('Failed to fetch favorites: ${response.reasonPhrase}');
+        log('Failed to fetch favorites: ${response.reasonPhrase}');
         return [];
       }
     } catch (e) {
-      print('Error fetching favorite products: $e');
+      log('Error fetching favorite products: $e');
       return [];
     }
   }
@@ -788,8 +787,7 @@ class ApiService {
       return json.decode(response.body);
     } else {
       // Handle the error case
-      print(
-          'Error to fetch product by category id in api service: ${response.reasonPhrase}');
+      log('Error to fetch product by category id in api service: ${response.reasonPhrase}');
       return null;
     }
   }
@@ -813,7 +811,7 @@ class ApiService {
     if (response.statusCode == 200) {
       return json.decode(response.body); // Parse the JSON response
     } else {
-      print('Error: ${response.reasonPhrase}');
+      log('Error: ${response.reasonPhrase}');
       return null;
     }
   }
@@ -824,7 +822,7 @@ class ApiService {
         '${ApiConstants.baseUrl}${ApiConstants.checkout}'; // Adjust the URL as necessary
 
     final token = GetStorage().read('token');
-    print('Bearer Token: $token');
+    log('Bearer Token: $token');
     final headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -842,7 +840,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        print('Checkout Response in api service: $data');
+        log('Checkout Response in api service: $data');
 
         // Check if the response format is correct
         if (data is Map<String, dynamic>) {
@@ -851,12 +849,12 @@ class ApiService {
           throw Exception('Unexpected response format');
         }
       } else {
-        print('Error response in api service: ${response.reasonPhrase}');
+        log('Error response in api service: ${response.reasonPhrase}');
         throw Exception(
             'Failed to checkout in api service: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error during checkout in api service: $e');
+      log('Error during checkout in api service: $e');
       throw Exception('Failed to checkout in api service');
     }
   }
@@ -865,7 +863,7 @@ class ApiService {
   Future<void> addQuantity(int quantity, String id) async {
     final data = {"qty": quantity, "id": id};
 
-    print('Sending data in api service: $data');
+    log('Sending data in api service: $data');
 
     try {
       final response = await http.post(
@@ -877,17 +875,17 @@ class ApiService {
         body: json.encode(data),
       );
 
-      print('Response in api service: ${response.body}');
-      print('Status code in api service: ${response.statusCode}');
+      log('Response in api service: ${response.body}');
+      log('Status code in api service: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         DataContoller().fetchCarts();
-        print("Product Quantity Updated successfully in api service");
+        log("Product Quantity Updated successfully in api service");
       } else {
-        print("Failed to Add Quantity in api service");
+        log("Failed to Add Quantity in api service");
       }
     } catch (e) {
-      print("Error Adding Quantity to cart in api service: $e");
+      log("Error Adding Quantity to cart in api service: $e");
     }
   }
 }

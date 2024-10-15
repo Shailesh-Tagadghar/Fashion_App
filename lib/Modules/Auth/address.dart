@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_field.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
@@ -295,7 +297,7 @@ class Address extends StatelessWidget {
                                   .navbarScreen); // Navigate to the next screen on success
                             } catch (e) {
                               // Handle registration errors, show error messages, etc.
-                              print('Registration error: $e');
+                              log('Registration error: $e');
                             }
                           }
                         },

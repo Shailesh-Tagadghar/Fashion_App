@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
@@ -27,7 +29,7 @@ class _CartState extends State<Cart> {
 
     dataContoller.fetchCarts();
     dataContoller.fetchCheckout();
-    print('disssssssss ${dataContoller.discount.value}');
+    log('disssssssss ${dataContoller.discount.value}');
     return Scaffold(
       backgroundColor: ColorConstants.whiteColor,
       appBar: AppBar(
@@ -108,7 +110,7 @@ class _CartState extends State<Cart> {
                       final quantityValue =
                           item['qty'] ?? 1; // Default to 1 if null
                       final quantity = RxInt(quantityValue); // Wrap it in RxInt
-                      print(
+                      log(
                           'Coupon Codtttttttte : ${dataContoller.selectedCoupon}');
                       return Dismissible(
                         key: Key(item.toString()),
@@ -125,7 +127,7 @@ class _CartState extends State<Cart> {
                         onDismissed: (direction) {
                           // Remove the item from the list
                           dataContoller.cartsItems['product'].removeAt(index);
-                          print(
+                          log(
                               'Data $productName Name remove from cart screen after remove cart...');
                         },
                         child: CartItemWidget(
@@ -263,7 +265,7 @@ class _CartState extends State<Cart> {
                         label: StringConstants.remove,
                         isSelected: true,
                         action: () {
-                          print('Product Cart id for remove : $removeProduct');
+                          log('Product Cart id for remove : $removeProduct');
 
                           ApiService.removeProduct(removeProduct);
                           dataContoller.cartsItems.remove(index);

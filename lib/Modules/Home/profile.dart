@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/controllers/auth_controller.dart';
 import 'package:fashion/Modules/Auth/controllers/validation.dart';
@@ -46,7 +47,7 @@ class _ProfileState extends State<Profile> {
       setState(() {});
     }
 
-    print('Data after Login / Register / Restart -- : $dataStorage');
+    log('Data after Login / Register / Restart -- : $dataStorage');
   }
 
   @override
@@ -386,7 +387,7 @@ class _ProfileState extends State<Profile> {
       // Navigate to the login screen
       Get.offAllNamed(AppRoutes.signInScreen);
     } catch (e) {
-      print("Error signing out: $e");
+      log("Error signing out: $e");
     }
   }
 }
