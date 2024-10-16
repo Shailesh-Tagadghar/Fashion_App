@@ -94,7 +94,7 @@ class _ProfileState extends State<Profile> {
                 color: ColorConstants.blackColor,
               ),
               onPressed: () {
-                Get.back();
+                // Get.back();
               },
             ),
           ),
