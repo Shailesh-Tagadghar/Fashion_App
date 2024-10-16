@@ -134,6 +134,8 @@ class StringConstants {
 
   //Product Details
   static const String product = 'Product Details';
+  static const String productN = 'Product';
+
   static const String styles = ' Style';
   static const String productName = 'Light Brown Jacket';
   static const String productDetailText = 'New Onepiece Collection';

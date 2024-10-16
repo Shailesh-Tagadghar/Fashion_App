@@ -6,6 +6,8 @@ class ColorConstants {
   static const blackColor = Color(0xFF000000);
   static const lightGrayColor = Color.fromARGB(255, 219, 215, 215);
   static const rich = Color(0xff704f38);
+  static const header = Color(0xff0DA487);
+  static const foreground = Color(0xffF8F8F8);
 
   static const primary = MaterialColor(0xff704f38, {
     900: Color(0xff352317), // dark

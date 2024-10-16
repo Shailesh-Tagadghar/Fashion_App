@@ -50,8 +50,9 @@ class DataContoller extends GetxController {
       final carousal = await ApiService.fetchCarousal();
       carousalItems.assignAll(carousal); // Update the observable list
       isLoading.value = false; // Update loading state
+      log(' fetching carousal: $carousalItems');
     } catch (e) {
-      log('Error fetching coupons: $e');
+      log('Error fetching carousal: $e');
       isLoading.value = false;
     }
   }
