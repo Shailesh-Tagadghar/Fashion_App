@@ -176,8 +176,12 @@ class SignIn extends StatelessWidget {
 
                             try {
                               await ApiService.loginUser(loginData);
-                              Get.offNamed(AppRoutes
-                                  .navbarScreen); // Navigate on success
+                              if (kIsWeb) {
+                                Get.offNamed(AppRoutes.homewebScreen);
+                              } else {
+                                Get.offNamed(AppRoutes.navbarScreen);
+                              }
+                              // Navigate on success
                             } catch (e) {
                               log('Login error: $e');
                               // Handle login errors

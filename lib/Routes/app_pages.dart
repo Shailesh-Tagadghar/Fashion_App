@@ -11,6 +11,7 @@ import 'package:fashion/Modules/Home/category.dart';
 import 'package:fashion/Modules/Home/checkout.dart';
 import 'package:fashion/Modules/Home/coupon.dart';
 import 'package:fashion/Modules/Home/home.dart';
+import 'package:fashion/Modules/Home/homeWeb.dart';
 import 'package:fashion/Modules/Home/navbar.dart';
 import 'package:fashion/Modules/Home/productdetails.dart';
 import 'package:fashion/Modules/Home/profile.dart';
@@ -97,6 +98,10 @@ class AppPages {
     GetPage(
         name: AppRoutes.categoryScreen,
         page: () => Category(),
+        transition: transition),
+    GetPage(
+        name: AppRoutes.homewebScreen,
+        page: () => Homeweb(),
         transition: transition),
   ];
 }
