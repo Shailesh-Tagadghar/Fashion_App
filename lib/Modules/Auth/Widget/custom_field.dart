@@ -1,5 +1,5 @@
-
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -70,7 +70,7 @@ class CustomField extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(
             color: hintTextColor,
-            fontSize: 14,
+            fontSize: kIsWeb ? 4 : 14,
             fontWeight: FontWeight.w500,
           ),
           contentPadding: const EdgeInsets.all(16),
@@ -135,7 +135,7 @@ class CustomField extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(
             color: hintTextColor,
-            fontSize: 14,
+            fontSize: kIsWeb ? 4 : 14,
             fontWeight: FontWeight.w500,
           ),
           contentPadding: const EdgeInsets.all(16),
@@ -158,8 +158,8 @@ class CustomField extends StatelessWidget {
         // cursorRadius: const Radius.circular(8),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
-            left: 4.w,
-            right: 4.w,
+            left: kIsWeb ? 2.w : 4.w,
+            right: kIsWeb ? 2.w : 4.w,
             bottom: 1.h,
             top: 1.h,
           ),
