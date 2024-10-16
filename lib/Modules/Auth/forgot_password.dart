@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
@@ -9,6 +8,7 @@ import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -58,178 +58,176 @@ class ForgotPassword extends StatelessWidget {
         backgroundColor: ColorConstants.whiteColor,
         body: Padding(
           padding: EdgeInsets.only(
-            top: 2.h,
-            left: 4.w,
-            right: 4.w,
-            bottom: 2.h,
+            top: kIsWeb ? 2.h : 2.h,
+            left: kIsWeb ? 4.w : 4.w,
+            right: kIsWeb ? 4.w : 4.w,
+            bottom: kIsWeb ? 4.h : 2.h,
           ),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Align(
                   child: CustomText(
                     text: StringConstants.newPass,
                     color: ColorConstants.blackColor,
-                    fontSize: 18,
+                    fontSize: kIsWeb ? 7 : 18,
                     weight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(
                   height: 0.5.h,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 12.w,
-                    right: 12.w,
-                  ),
-                  child: const CustomText(
-                    text: StringConstants.forgotdisplaytext,
-                    color: ColorConstants.greyColor,
-                    fontSize: 11,
-                    weight: FontWeight.w400,
-                    textAlign: TextAlign.center,
+                Align(
+                  child: SizedBox(
+                    width: kIsWeb ? 40.w : 70.w,
+                    child: const CustomText(
+                      text: StringConstants.forgotdisplaytext,
+                      color: ColorConstants.greyColor,
+                      fontSize: kIsWeb ? 5 : 11,
+                      weight: FontWeight.w400,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 4.h,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 4.w,
-                    right: 4.w,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const CustomText(
-                        text: StringConstants.emaillabel,
-                        color: ColorConstants.blackColor,
-                        fontSize: 11,
-                        weight: FontWeight.w400,
-                      ),
-                      SizedBox(
-                        height: 0.2.h,
-                      ),
-                      CustomField(
-                        controller: emailController,
-                        hintText: StringConstants.email,
-                        fontSize: 11,
-                        hintTextColor: ColorConstants.greyColor,
-                        keyboardType: TextInputType.emailAddress,
-                        // onChanged: (value) => validationController.validateEmail(value),
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      const CustomText(
-                        text: StringConstants.oldPass,
-                        color: ColorConstants.blackColor,
-                        fontSize: 11,
-                        weight: FontWeight.w400,
-                      ),
-                      SizedBox(
-                        height: 0.2.h,
-                      ),
-                      Obx(
-                        () => CustomField(
-                          controller: oldpasswordController,
-                          obscureText: authController.isPasswordVisible.value,
-                          obscuringCharacter: '*',
-                          showPasswordIcon: true,
-                          hintText: StringConstants.password,
-                          fontSize: 11,
-                          hintTextColor: ColorConstants.greyColor,
-                          onIconPressed:
-                              authController.togglePasswordVisibility,
+                Align(
+                  child: SizedBox(
+                    width: kIsWeb ? 40.w : 100.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const CustomText(
+                          text: StringConstants.emaillabel,
+                          color: ColorConstants.blackColor,
+                          fontSize: kIsWeb ? 4 : 11,
+                          weight: FontWeight.w400,
                         ),
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      const CustomText(
-                        text: StringConstants.newPass,
-                        color: ColorConstants.blackColor,
-                        fontSize: 11,
-                        weight: FontWeight.w400,
-                      ),
-                      SizedBox(
-                        height: 0.2.h,
-                      ),
-                      Obx(
-                        () => CustomField(
-                          controller: newpasswordController,
-                          obscureText:
-                              authController.isCnfPasswordVisible.value,
-                          obscuringCharacter: '*',
-                          showPasswordIcon: true,
-                          hintText: StringConstants.password,
-                          fontSize: 11,
-                          hintTextColor: ColorConstants.greyColor,
-                          onIconPressed:
-                              authController.toggleCnfPasswordVisibility,
+                        SizedBox(
+                          height: 0.2.h,
                         ),
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      CustomButton(
-                        label: StringConstants.btntext,
-                        btnColor: ColorConstants.rich,
-                        labelColor: ColorConstants.whiteColor,
-                        isSelected: true,
-                        height: 6.h,
-                        fontSize: 14,
-                        weight: FontWeight.w500,
-                        action: () async {
-                          // Retrieve passwords from controllers
-                          String email = emailController.text;
-                          String oldpassword = oldpasswordController.text;
-                          String newpassword = newpasswordController.text;
+                        CustomField(
+                          controller: emailController,
+                          hintText: StringConstants.email,
+                          fontSize: kIsWeb ? 3 : 11,
+                          hintTextColor: ColorConstants.greyColor,
+                          keyboardType: TextInputType.emailAddress,
+                          // onChanged: (value) => validationController.validateEmail(value),
+                        ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        const CustomText(
+                          text: StringConstants.oldPass,
+                          color: ColorConstants.blackColor,
+                          fontSize: kIsWeb ? 4 : 11,
+                          weight: FontWeight.w400,
+                        ),
+                        SizedBox(
+                          height: 0.2.h,
+                        ),
+                        Obx(
+                          () => CustomField(
+                            controller: oldpasswordController,
+                            obscureText: authController.isPasswordVisible.value,
+                            obscuringCharacter: '*',
+                            showPasswordIcon: true,
+                            hintText: StringConstants.password,
+                            fontSize: kIsWeb ? 3 : 11,
+                            hintTextColor: ColorConstants.greyColor,
+                            onIconPressed:
+                                authController.togglePasswordVisibility,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        const CustomText(
+                          text: StringConstants.newPass,
+                          color: ColorConstants.blackColor,
+                          fontSize: kIsWeb ? 4 : 11,
+                          weight: FontWeight.w400,
+                        ),
+                        SizedBox(
+                          height: 0.2.h,
+                        ),
+                        Obx(
+                          () => CustomField(
+                            controller: newpasswordController,
+                            obscureText:
+                                authController.isCnfPasswordVisible.value,
+                            obscuringCharacter: '*',
+                            showPasswordIcon: true,
+                            hintText: StringConstants.password,
+                            fontSize: kIsWeb ? 3 : 11,
+                            hintTextColor: ColorConstants.greyColor,
+                            onIconPressed:
+                                authController.toggleCnfPasswordVisibility,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        CustomButton(
+                          label: StringConstants.btntext,
+                          btnColor: ColorConstants.rich,
+                          labelColor: ColorConstants.whiteColor,
+                          isSelected: true,
+                          height: kIsWeb ? 6.h : 6.h,
+                          fontSize: kIsWeb ? 4 : 14,
+                          weight: FontWeight.w500,
+                          action: () async {
+                            // Retrieve passwords from controllers
+                            String email = emailController.text;
+                            String oldpassword = oldpasswordController.text;
+                            String newpassword = newpasswordController.text;
 
-                          // Check if fields are not empty
-                          if (email.isEmpty ||
-                              oldpassword.isEmpty ||
-                              newpassword.isEmpty) {
-                            Get.snackbar('Error', 'All fields are required');
-                            return;
-                          }
+                            // Check if fields are not empty
+                            if (email.isEmpty ||
+                                oldpassword.isEmpty ||
+                                newpassword.isEmpty) {
+                              Get.snackbar('Error', 'All fields are required');
+                              return;
+                            }
 
-                          // log both passwords to the console
-                          log('Old password: $oldpassword');
-                          log('New password: $newpassword');
+                            // log both passwords to the console
+                            log('Old password: $oldpassword');
+                            log('New password: $newpassword');
 
-                          // Retrieve the bearer token from GetStorage
-                          final storage = GetStorage();
-                          String? token = storage.read('fcm_token');
+                            // Retrieve the bearer token from GetStorage
+                            final storage = GetStorage();
+                            String? token = storage.read('fcm_token');
 
-                          if (token == null) {
-                            Get.snackbar('Error',
-                                'User not logged in || please enter valid token');
-                            return;
-                          }
-      
-                          // Prepare data to send to the API
-                          Map<String, dynamic> data = {
-                            'email': email,
-                            'oldpassword': oldpassword,
-                            'newpassword': newpassword,
-                          };
+                            if (token == null) {
+                              Get.snackbar('Error',
+                                  'User not logged in || please enter valid token');
+                              return;
+                            }
 
-                          try {
-                            // Call the API to change the password
-                            await ApiService.changePassword(data, token);
-                            emailController.clear();
-                            oldpasswordController.clear();
-                            newpasswordController.clear();
-                            Get.snackbar(
-                                'Success', 'Password changed successfully');
-                          } catch (e) {
-                            log('Failed to change password : $e');
-                          }
-                        },
-                      ),
-                    ],
+                            // Prepare data to send to the API
+                            Map<String, dynamic> data = {
+                              'email': email,
+                              'oldpassword': oldpassword,
+                              'newpassword': newpassword,
+                            };
+
+                            try {
+                              // Call the API to change the password
+                              await ApiService.changePassword(data, token);
+                              emailController.clear();
+                              oldpasswordController.clear();
+                              newpasswordController.clear();
+                              Get.snackbar(
+                                  'Success', 'Password changed successfully');
+                            } catch (e) {
+                              log('Failed to change password : $e');
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

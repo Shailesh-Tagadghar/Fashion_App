@@ -89,7 +89,7 @@ class SignIn extends StatelessWidget {
                             ? CustomText(
                                 text: validationController.emailError.value,
                                 color: Colors.red,
-                                fontSize: kIsWeb ? 4 : 10,
+                                fontSize: kIsWeb ? 3 : 10,
                                 weight: FontWeight.w400,
                               )
                             : Container(),
@@ -123,7 +123,7 @@ class SignIn extends StatelessWidget {
                           ? CustomText(
                               text: validationController.passwordError.value,
                               color: Colors.red,
-                              fontSize: kIsWeb ? 4 : 11,
+                              fontSize: kIsWeb ? 3 : 11,
                               weight: FontWeight.w400,
                             )
                           : Container()),
