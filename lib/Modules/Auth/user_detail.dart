@@ -160,8 +160,8 @@ class UserDetail extends StatelessWidget {
                                     child: Align(
                                       alignment: Alignment.bottomRight,
                                       child: Container(
-                                        height: kIsWeb ? 5.h : 4.h,
-                                        width: kIsWeb ? 4.w : 8.w,
+                                        height: kIsWeb ? 4.h : 4.h,
+                                        width: kIsWeb ? 2.w : 8.w,
                                         decoration: BoxDecoration(
                                           color: ColorConstants.rich,
                                           borderRadius:
