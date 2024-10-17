@@ -5,7 +5,6 @@ import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/controllers/auth_controller.dart';
 import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Home/Widget/banner_widget.dart';
-import 'package:fashion/Modules/Home/Widget/category_widget.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Routes/app_routes.dart';
@@ -14,7 +13,6 @@ import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -203,7 +201,7 @@ class _HomewebState extends State<Homeweb> {
               decoration: const BoxDecoration(
                 color: ColorConstants.foreground,
               ),
-              height: Responsive.isDesktop(context) ? 8.h : 4.h,
+              height: Responsive.isDesktop(context) ? 8.h : 8.h,
               width: 100.w,
               child: Padding(
                 padding: EdgeInsets.only(
@@ -212,6 +210,12 @@ class _HomewebState extends State<Homeweb> {
                   right: Responsive.isDesktop(context) ? 4.w : 4.w,
                   bottom: Responsive.isDesktop(context) ? 2.h : 2.h,
                 ),
+                // padding: EdgeInsets.symmetric(
+                //   vertical: Responsive.isDesktop(context)
+                //       ? 2.h
+                //       : 1.5.h, // Adjusted padding for mobile
+                //   horizontal: Responsive.isDesktop(context) ? 4.w : 3.w,
+                // ),
                 child: Row(
                   children: [
                     FittedBox(
@@ -230,74 +234,86 @@ class _HomewebState extends State<Homeweb> {
                       if (dataContoller.isLoading.value) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
-                        // Check if we are on web or mobile
-                        if (kIsWeb) {
-                          // Dropdown for web
-                          return Center(
-                            child: DropdownButton<String>(
-                              focusColor: ColorConstants.header,
-                              padding: EdgeInsets.all(
-                                Responsive.isDesktop(context) ? 6 : 4,
-                              ),
-                              value: dataContoller
-                                      .selectedCategoryId.value.isNotEmpty
-                                  ? dataContoller.selectedCategoryId.value
-                                  : null,
-                              hint: const Text('Select Category'),
-                              items: dataContoller.categoryItems
-                                  .map<DropdownMenuItem<String>>((item) {
-                                return DropdownMenuItem<String>(
-                                  value: item['_id'],
-                                  child: Text(item['name'] ?? 'No name'),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                if (newValue != null && newValue.isNotEmpty) {
-                                  dataContoller.selectedCategoryId.value =
-                                      newValue;
-                                  Get.toNamed(AppRoutes.categoryScreen,
-                                      arguments: newValue);
-                                  log('Selected Category ID: $newValue');
-                                }
-                              },
+                        // Dropdown for web
+                        return Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: ColorConstants.rich, // Add color
+                              borderRadius: BorderRadius.circular(
+                                  8), // Add border radius for a rounded effect
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(
+                                      0.1), // Light shadow for depth
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 4), // Shadow position
+                                ),
+                              ],
                             ),
-                          );
-                        } else {
-                          // ListView for mobile
-                          return SizedBox(
-                            height: 10.h,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: dataContoller.categoryItems.length,
-                              itemBuilder: (context, index) {
-                                final item = dataContoller.categoryItems[index];
-                                final isSelected =
-                                    dataContoller.selectedCategoryId.value ==
-                                        item['_id'];
-
-                                return GestureDetector(
-                                  onTap: () {
-                                    final categoryId = item['_id'];
-                                    log('Category ID: $categoryId');
-                                    if (categoryId != null &&
-                                        categoryId.isNotEmpty) {
-                                      Get.toNamed(AppRoutes.categoryScreen,
-                                          arguments: categoryId);
-                                      log('Navigated with Category ID: $categoryId');
-                                    } else {
-                                      log('Category ID is null or empty');
-                                    }
-                                  },
-                                  child: CategoryWidget(
-                                    image: item['image'] ?? AssetConstant.cat1,
-                                    name: item['name'] ?? 'No name',
-                                    isSelected: isSelected,
+                            width: Responsive.isDesktop(context) ? 200 : 150,
+                            height: Responsive.isDesktop(context) ? 60 : 60,
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                padding: EdgeInsets.all(
+                                  Responsive.isDesktop(context) ? 10 : 6,
+                                ),
+                                value: dataContoller
+                                        .selectedCategoryId.value.isNotEmpty
+                                    ? dataContoller.selectedCategoryId.value
+                                    : null,
+                                hint: Text(
+                                  'Select Category',
+                                  style: TextStyle(
+                                    fontSize: Responsive.isDesktop(context)
+                                        ? 16
+                                        : 14, // Responsive font size
+                                    color: Colors.white, // Text color
                                   ),
-                                );
-                              },
+                                ),
+                                items: dataContoller.categoryItems
+                                    .map<DropdownMenuItem<String>>((item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item['_id'],
+                                    child: Text(
+                                      item['name'] ?? 'No name',
+                                      style: TextStyle(
+                                        fontSize: Responsive.isDesktop(context)
+                                            ? 16
+                                            : 14, // Responsive text size
+                                        color: Colors
+                                            .black, // Dropdown item text color
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                dropdownColor: Colors.white,
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.white, // Dropdown icon color
+                                  size: Responsive.isDesktop(context)
+                                      ? 30
+                                      : 24, // Adjust icon size
+                                ),
+                                onChanged: (String? newValue) {
+                                  if (newValue != null && newValue.isNotEmpty) {
+                                    dataContoller.selectedCategoryId.value =
+                                        newValue;
+                                    Get.toNamed(AppRoutes.categoryScreen,
+                                        arguments: newValue);
+                                    log('Selected Category ID: $newValue');
+                                  }
+                                },
+                                style: TextStyle(
+                                  color: Colors
+                                      .white, // Text color for the selected item
+                                  fontSize: Responsive.isDesktop(context)
+                                      ? 16
+                                      : 14, // Font size
+                                ),
+                              ),
                             ),
-                          );
-                        }
+                          ),
+                        );
                       }
                     }),
                   ],
