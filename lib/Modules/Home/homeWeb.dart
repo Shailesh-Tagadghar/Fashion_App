@@ -300,7 +300,7 @@ class _HomewebState extends State<Homeweb> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 padding: EdgeInsets.all(
-                                  Responsive.isDesktop(context) ? 10 : 6,
+                                  Responsive.isDesktop(context) ? 5 : 6,
                                 ),
                                 // value: dataContoller
                                 //         .selectedCategoryId.value.isNotEmpty

@@ -7,6 +7,7 @@ import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,44 +45,52 @@ class _WishlistState extends State<Wishlist> {
         surfaceTintColor: ColorConstants.whiteColor,
         toolbarHeight: 10.h,
         leadingWidth: 15.w,
-        title: const CustomText(
-          text: StringConstants.wishlist,
-          weight: FontWeight.w500,
-          fontSize: 13,
+        title: FittedBox(
+          child: CustomText(
+            text: StringConstants.wishlist,
+            weight: FontWeight.w500,
+            fontSize: Responsive.isDesktop(context) ? 4 : 13,
+          ),
         ),
         centerTitle: true,
-        leading: Container(
-          alignment: Alignment.centerLeft,
-          margin: EdgeInsets.only(
-            left: 4.w,
-          ),
-          padding: EdgeInsets.all(
-            0.6.w,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(color: ColorConstants.lightGrayColor, width: 1),
-            shape: BoxShape.circle,
-          ),
-          child: IconButton(
-            iconSize: 24,
-            icon: const Icon(
-              Bootstrap.arrow_left,
-              color: ColorConstants.blackColor,
+        leading: FittedBox(
+          child: Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(
+              left: Responsive.isDesktop(context) ? 0.2.w : 4.w,
             ),
-            onPressed: () {
-              Get.back();
-            },
+            padding: EdgeInsets.all(
+              Responsive.isDesktop(context) ? 0.2.w : 0.6.w,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: ColorConstants.lightGrayColor,
+                  width: Responsive.isDesktop(context) ? 0 : 1),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              iconSize: Responsive.isDesktop(context) ? 20 : 24,
+              icon: const Icon(
+                Bootstrap.arrow_left,
+                color: ColorConstants.blackColor,
+              ),
+              onPressed: () {
+                Get.toNamed(AppRoutes.homewebScreen);
+              },
+            ),
           ),
         ),
       ),
       body: Column(
         children: [
           Container(
-            height: 4.5.h,
-            padding: EdgeInsets.symmetric(vertical: 0.3.h),
+            height: Responsive.isDesktop(context) ? 5.h : 4.5.h,
+            padding: EdgeInsets.symmetric(
+                vertical: Responsive.isDesktop(context) ? 0.1.h : 0.3.h),
             margin: EdgeInsets.only(
               left: 4.w,
               right: 4.w,
+              top: Responsive.isDesktop(context) ? 4.h : 0,
             ),
             child: Obx(() {
               if (dataContoller.isLoading.value) {
@@ -94,7 +103,12 @@ class _WishlistState extends State<Wishlist> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Container(
-                    width: 40.w,
+                    width: Responsive.isDesktop(context)
+                        ? 20.w
+                        : Responsive.isTablet(context)
+                            ? 24.w
+                            : 40.w,
+                    height: Responsive.isDesktop(context) ? 5.h : 4.5.h,
                     padding: EdgeInsets.only(left: 2.w),
                     child: CustomButton(
                       label: dataContoller.salesCategoryItems[index]['name'] ??
@@ -108,13 +122,20 @@ class _WishlistState extends State<Wishlist> {
                           homeController.selectedsalesCategoryIndex.value ==
                               index,
                       btnColor: ColorConstants.whiteColor,
-                      fontSize: 11,
+                      fontSize: Responsive.isDesktop(context)
+                          ? 4
+                          : Responsive.isTablet(context)
+                              ? 7
+                              : 10,
                       weight: FontWeight.w400,
                     ),
                   );
                 },
               );
             }),
+          ),
+          SizedBox(
+            height: Responsive.isDesktop(context) ? 4.h : 0,
           ),
           listproductItems(),
         ],
@@ -132,11 +153,19 @@ class _WishlistState extends State<Wishlist> {
               return const Center(child: CircularProgressIndicator());
             } else {
               return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.69,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: Responsive.isDesktop(context)
+                      ? 4
+                      : Responsive.isTablet(context)
+                          ? 3
+                          : 2,
+                  childAspectRatio: Responsive.isDesktop(context)
+                      ? 0.4
+                      : 0.69, // Adjusts the size of the items
+                  crossAxisSpacing: Responsive.isDesktop(context)
+                      ? 4
+                      : 4.0, // Spacing between columns
+                  mainAxisSpacing: Responsive.isDesktop(context) ? 4 : 2.0,
                 ),
                 // itemCount: 8,
                 itemCount: dataContoller.favoriteProducts.length,
