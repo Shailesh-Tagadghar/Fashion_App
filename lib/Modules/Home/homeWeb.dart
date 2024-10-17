@@ -122,22 +122,32 @@ class _HomewebState extends State<Homeweb> {
                           width: Responsive.isDesktop(context) ? 2.5.w : 2.w,
                         ),
                         FittedBox(
-                          child: CustomText(
-                            text: StringConstants.wishlist,
-                            color: ColorConstants.whiteColor,
-                            fontSize: Responsive.isDesktop(context) ? 4 : 11,
-                            weight: FontWeight.w500,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.wishlistScreen);
+                            },
+                            child: CustomText(
+                              text: StringConstants.wishlist,
+                              color: ColorConstants.whiteColor,
+                              fontSize: Responsive.isDesktop(context) ? 4 : 11,
+                              weight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         SizedBox(
                           width: Responsive.isDesktop(context) ? 2.5.w : 2.w,
                         ),
                         FittedBox(
-                          child: CustomText(
-                            text: StringConstants.search,
-                            color: ColorConstants.whiteColor,
-                            fontSize: Responsive.isDesktop(context) ? 4 : 11,
-                            weight: FontWeight.w500,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.searchScreen);
+                            },
+                            child: CustomText(
+                              text: StringConstants.search,
+                              color: ColorConstants.whiteColor,
+                              fontSize: Responsive.isDesktop(context) ? 4 : 11,
+                              weight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ],
