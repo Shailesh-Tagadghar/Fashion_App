@@ -201,232 +201,352 @@ class _ProductDWebState extends State<ProductDWeb> {
           ),
 
           //Product Detail
-          Padding(
-            padding: EdgeInsets.only(
-              top: Responsive.isDesktop(context) ? 2.h : 2.h,
-              left: Responsive.isDesktop(context) ? 4.w : 4.w,
-              right: Responsive.isDesktop(context) ? 4.w : 4.w,
-              bottom: Responsive.isDesktop(context) ? 2.h : 2.h,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: Responsive.isDesktop(context) ? 35.w : 50.w,
-                  height: Responsive.isDesktop(context) ? 50.h : 50.h,
-                  color: ColorConstants.background,
-                  child: imageList.isNotEmpty
-                      ? Image.network(
-                          imageList[0], // Fetch the first image
-                          fit: BoxFit.fill,
-                        )
-                      : Image.asset(
-                          AssetConstant
-                              .pd1, // Default image in case the list is empty
-                          fit: BoxFit.fill,
-                        ),
+          Wrap(
+            spacing: 20,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            alignment: WrapAlignment.start,
+            runAlignment: WrapAlignment.start,
+            runSpacing: 20,
+            textDirection: TextDirection.ltr,
+            verticalDirection: VerticalDirection.down,
+            // direction: Axis.vertical,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: Responsive.isDesktop(context) ? 2.h : 2.h,
+                  left: Responsive.isDesktop(context)
+                      ? 4.w
+                      : Responsive.isTablet(context)
+                          ? 3.w
+                          : 2.w,
+                  right: Responsive.isDesktop(context)
+                      ? 4.w
+                      : Responsive.isTablet(context)
+                          ? 3.w
+                          : 2.w,
+                  bottom: Responsive.isDesktop(context) ? 2.h : 2.h,
                 ),
-                SizedBox(
-                  width: Responsive.isDesktop(context) ? 4.w : 2.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    FittedBox(
-                      child: CustomText(
-                        text: productName,
-                        fontSize: Responsive.isDesktop(context) ? 4 : 14,
-                        weight: FontWeight.w500,
-                        color: ColorConstants.blackColor,
-                      ),
+                    Container(
+                      width: Responsive.isDesktop(context)
+                          ? 35.w
+                          : Responsive.isTablet(context)
+                              ? 25.w
+                              : 20.w,
+                      height: Responsive.isDesktop(context)
+                          ? 50.h
+                          : Responsive.isTablet(context)
+                              ? 50.h
+                              : 50.h,
+                      color: ColorConstants.background,
+                      child: imageList.isNotEmpty
+                          ? Image.network(
+                              imageList[0], // Fetch the first image
+                              fit: BoxFit.fill,
+                            )
+                          : Image.asset(
+                              AssetConstant
+                                  .pd1, // Default image in case the list is empty
+                              fit: BoxFit.fill,
+                            ),
                     ),
                     SizedBox(
-                      width: Responsive.isDesktop(context) ? 2.h : 2.h,
+                      width: Responsive.isDesktop(context)
+                          ? 4.w
+                          : Responsive.isTablet(context)
+                              ? 2.w
+                              : 2.w,
                     ),
-                    FittedBox(
-                      child: CustomText(
-                        text: '\$$productPrice',
-                        fontSize: Responsive.isDesktop(context) ? 4 : 13.5,
-                        weight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(
-                      width: Responsive.isDesktop(context) ? 2.h : 2.h,
-                    ),
-                    FittedBox(
-                      child: Row(
-                        children: [
-                          CustomText(
-                            text: productDescription,
-                            color: ColorConstants.greyColor,
-                            fontSize: Responsive.isDesktop(context) ? 3 : 12,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        FittedBox(
+                          child: CustomText(
+                            text: productName,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 4
+                                : Responsive.isTablet(context)
+                                    ? 7
+                                    : 10,
+                            weight: FontWeight.w500,
+                            color: ColorConstants.blackColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: Responsive.isDesktop(context) ? 2.h : 2.h,
+                        ),
+                        FittedBox(
+                          child: CustomText(
+                            text: '\$$productPrice',
+                            fontSize: Responsive.isDesktop(context)
+                                ? 4
+                                : Responsive.isTablet(context)
+                                    ? 7
+                                    : 10,
+
+                            // fontSize: Responsive.isDesktop(context) ? 4 : 13.5,
                             weight: FontWeight.w500,
                           ),
-                          SizedBox(
-                            width: Responsive.isDesktop(context) ? 0.5.w : 1.w,
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: CustomText(
-                              text: StringConstants.readMore,
-                              color: ColorConstants.rich,
-                              fontSize: Responsive.isDesktop(context) ? 3 : 12,
-                              weight: FontWeight.w500,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: Responsive.isDesktop(context) ? 2.h : 2.h,
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                      width: 26.w,
-                      child: Divider(
-                        height: 1.5,
-                        color: ColorConstants.lightGrayColor,
-                        thickness: 0.1.h,
-                        endIndent: 10,
-                      ),
-                    ),
-                    SizedBox(
-                      width: Responsive.isDesktop(context) ? 2.h : 2.h,
-                    ),
-                    FittedBox(
-                      child: CustomText(
-                        text: StringConstants.colorText,
-                        color: ColorConstants.blackColor,
-                        weight: FontWeight.w500,
-                        fontSize: Responsive.isDesktop(context) ? 3 : 14,
-                      ),
-                    ),
-                    SizedBox(
-                      height: Responsive.isDesktop(context) ? 1.h : 0.7.h,
-                    ),
-                    // Color Options with proper constraints
-                    Wrap(
-                      spacing: 10,
-                      children: colorChart.map((color) {
-                        return Obx(() => GestureDetector(
-                              onTap: () => selectColor(color),
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color:
-                                      HexColor(color), // Convert hex to color
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: homeController
-                                                .selectedProductColor.value ==
-                                            color
-                                        ? Colors.black
-                                        : Colors.transparent,
-                                    width: 3,
-                                  ),
-                                ),
-                              ),
-                            ));
-                      }).toList(),
-                    ),
-                    SizedBox(
-                      width: Responsive.isDesktop(context) ? 2.h : 2.h,
-                    ),
-                    FittedBox(
-                      child: CustomText(
-                        text: StringConstants.sizeText,
-                        color: ColorConstants.blackColor,
-                        weight: FontWeight.w500,
-                        fontSize: Responsive.isDesktop(context) ? 3 : 14,
-                      ),
-                    ),
+                        ),
+                        SizedBox(
+                          height: Responsive.isDesktop(context) ? 2.h : 2.h,
+                        ),
+                        FittedBox(
+                          child: Row(
+                            children: [
+                              CustomText(
+                                text: productDescription,
+                                color: ColorConstants.greyColor,
+                                fontSize: Responsive.isDesktop(context)
+                                    ? 3
+                                    : Responsive.isTablet(context)
+                                        ? 7
+                                        : 10,
 
-                    SizedBox(
-                      height: Responsive.isDesktop(context) ? 1.h : 0.7.h,
-                    ),
-// Display size options
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: sizeChart.map((size) {
-                        return Obx(() => GestureDetector(
-                              onTap: () => selectSize(size),
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: homeController
-                                              .selectedProductSize.value ==
-                                          size
-                                      ? Colors.blueAccent
-                                      : Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: homeController
-                                                .selectedProductSize.value ==
-                                            size
-                                        ? Colors.black
-                                        : Colors.transparent,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: Text(
-                                  size,
-                                  style: TextStyle(
-                                    color: homeController
-                                                .selectedProductSize.value ==
-                                            size
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                // fontSize:
+                                //     Responsive.isDesktop(context) ? 3 : 12,
+                                weight: FontWeight.w500,
+                              ),
+                              SizedBox(
+                                width:
+                                    Responsive.isDesktop(context) ? 0.5.w : 1.w,
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: CustomText(
+                                  text: StringConstants.readMore,
+                                  color: ColorConstants.rich,
+                                  fontSize: Responsive.isDesktop(context)
+                                      ? 3
+                                      : Responsive.isTablet(context)
+                                          ? 7
+                                          : 10,
+
+                                  // fontSize:
+                                  //     Responsive.isDesktop(context) ? 3 : 12,
+                                  weight: FontWeight.w500,
+                                  decoration: TextDecoration.underline,
                                 ),
                               ),
-                            ));
-                      }).toList(),
-                    ),
-                    SizedBox(
-                      height: Responsive.isDesktop(context) ? 6.h : 2.h,
-                    ),
-                    SizedBox(
-                      width: Responsive.isDesktop(context) ? 45.h : 50.w,
-                      height: Responsive.isDesktop(context) ? 6.h : 5.8.h,
-                      child: CustomButton(
-                        label: StringConstants.addCart,
-                        btnColor: ColorConstants.rich,
-                        fontSize: Responsive.isDesktop(context) ? 4 : 14,
-                        height: Responsive.isDesktop(context) ? 6.h : 6.h,
-                        weight: FontWeight.w400,
-                        isSelected: true,
-                        action: () {
-                          // homeController.selectedIndex.value = 1;
-                          var size = homeController.selectedProductSize.value;
-                          var color = homeController.selectedProductColor
-                              .value; // Assume you have a similar method for color
-                          validationController.validateSize(size);
-                          validationController.validateColor(color);
-                          if (validationController.sizeError.value.isNotEmpty ||
-                              validationController
-                                  .colorError.value.isNotEmpty) {
-                            // Optionally show a message or toast here
-                            log("Validation errors: ${validationController.sizeError.value}, ${validationController.colorError.value}");
-                            return; // Stop execution if there are errors
-                          }
-                          homeController.addProductToCart(productId, size);
-                          Get.snackbar('Product added to cart', 'Done Added');
-                          // Get.toNamed(AppRoutes.navbarScreen);
-                        },
-                      ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: Responsive.isDesktop(context) ? 2.h : 2.h,
+                        ),
+                        SizedBox(
+                          height: 2.h,
+                          width: 26.w,
+                          child: Divider(
+                            height: 1.5,
+                            color: ColorConstants.lightGrayColor,
+                            thickness: 0.1.h,
+                          ),
+                        ),
+                        SizedBox(
+                          height: Responsive.isDesktop(context) ? 2.h : 2.h,
+                        ),
+                        FittedBox(
+                          child: CustomText(
+                            text: StringConstants.colorText,
+                            color: ColorConstants.blackColor,
+                            weight: FontWeight.w500,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 3
+                                : Responsive.isTablet(context)
+                                    ? 7
+                                    : 10,
+                          ),
+                        ),
+                        SizedBox(
+                          height: Responsive.isDesktop(context) ? 1.h : 0.7.h,
+                        ),
+                        // Color Options with proper constraints
+                        Wrap(
+                          spacing: 10,
+                          children: colorChart.map((color) {
+                            return Obx(() => GestureDetector(
+                                  onTap: () => selectColor(color),
+                                  child: Container(
+                                    width: Responsive.isDesktop(context)
+                                        ? 45
+                                        : Responsive.isTablet(context)
+                                            ? 35
+                                            : 20,
+                                    height: Responsive.isDesktop(context)
+                                        ? 45
+                                        : Responsive.isTablet(context)
+                                            ? 35
+                                            : 20,
+                                    decoration: BoxDecoration(
+                                      color: HexColor(
+                                          color), // Convert hex to color
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: homeController
+                                                    .selectedProductColor
+                                                    .value ==
+                                                color
+                                            ? Colors.black
+                                            : Colors.transparent,
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                ));
+                          }).toList(),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Obx(() => CustomText(
+                              text: validationController.colorError.value,
+                              color: ColorConstants.errorColor,
+                              fontSize: Responsive.isDesktop(context)
+                                  ? 3
+                                  : Responsive.isTablet(context)
+                                      ? 7
+                                      : 10,
+                              weight: FontWeight.w400,
+                            )),
+                        SizedBox(
+                          height: 0.1.h,
+                        ),
+                        FittedBox(
+                          child: CustomText(
+                            text: StringConstants.sizeText,
+                            color: ColorConstants.blackColor,
+                            weight: FontWeight.w500,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 3
+                                : Responsive.isTablet(context)
+                                    ? 7
+                                    : 10,
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: Responsive.isDesktop(context) ? 1.h : 0.7.h,
+                        ),
+                        // Display size options
+                        Wrap(
+                          spacing: 10,
+                          runSpacing: 10,
+                          children: sizeChart.map((size) {
+                            return Obx(() => GestureDetector(
+                                  onTap: () => selectSize(size),
+                                  child: Container(
+                                    width: Responsive.isDesktop(context)
+                                        ? 45
+                                        : Responsive.isTablet(context)
+                                            ? 35
+                                            : 20,
+                                    height: Responsive.isDesktop(context)
+                                        ? 45
+                                        : Responsive.isTablet(context)
+                                            ? 35
+                                            : 20,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: homeController
+                                                  .selectedProductSize.value ==
+                                              size
+                                          ? Colors.blueAccent
+                                          : Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: homeController
+                                                    .selectedProductSize
+                                                    .value ==
+                                                size
+                                            ? Colors.black
+                                            : Colors.transparent,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      size,
+                                      style: TextStyle(
+                                        color: homeController
+                                                    .selectedProductSize
+                                                    .value ==
+                                                size
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontSize: Responsive.isDesktop(context)
+                                            ? 10
+                                            : Responsive.isTablet(context)
+                                                ? 7
+                                                : 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ));
+                          }).toList(),
+                        ),
+                        SizedBox(
+                          height: 0.1.h,
+                        ),
+                        Obx(() => CustomText(
+                              text: validationController.sizeError.value,
+                              color: ColorConstants.errorColor,
+                              fontSize: Responsive.isDesktop(context)
+                                  ? 3
+                                  : Responsive.isTablet(context)
+                                      ? 7
+                                      : 10,
+                              weight: FontWeight.w400,
+                            )),
+                        SizedBox(
+                          height: Responsive.isDesktop(context) ? 6.h : 2.h,
+                        ),
+                        SizedBox(
+                          width: Responsive.isDesktop(context) ? 45.h : 50.w,
+                          height: Responsive.isDesktop(context) ? 6.h : 5.8.h,
+                          child: CustomButton(
+                            label: StringConstants.addCart,
+                            btnColor: ColorConstants.rich,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 4
+                                : Responsive.isTablet(context)
+                                    ? 7
+                                    : 10,
+                            height: Responsive.isDesktop(context) ? 6.h : 6.h,
+                            weight: FontWeight.w400,
+                            isSelected: true,
+                            action: () {
+                              // homeController.selectedIndex.value = 1;
+                              var size =
+                                  homeController.selectedProductSize.value;
+                              var color = homeController.selectedProductColor
+                                  .value; // Assume you have a similar method for color
+                              validationController.validateSize(size);
+                              validationController.validateColor(color);
+                              if (validationController
+                                      .sizeError.value.isNotEmpty ||
+                                  validationController
+                                      .colorError.value.isNotEmpty) {
+                                // Optionally show a message or toast here
+                                log("Validation errors: ${validationController.sizeError.value}, ${validationController.colorError.value}");
+                                return; // Stop execution if there are errors
+                              }
+                              homeController.addProductToCart(productId, size);
+                              Get.snackbar(
+                                  'Product added to cart', 'Done Added');
+                              // Get.toNamed(AppRoutes.navbarScreen);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           )
         ],
       ),
