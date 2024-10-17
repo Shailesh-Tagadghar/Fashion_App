@@ -8,6 +8,7 @@ import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -176,7 +177,8 @@ class SignIn extends StatelessWidget {
 
                             try {
                               await ApiService.loginUser(loginData);
-                              if (kIsWeb) {
+                              // ignore: use_build_context_synchronously
+                              if (Responsive.isDesktop(context)) {
                                 Get.offNamed(AppRoutes.homewebScreen);
                               } else {
                                 Get.offNamed(AppRoutes.navbarScreen);

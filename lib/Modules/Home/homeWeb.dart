@@ -92,7 +92,11 @@ class _HomewebState extends State<Homeweb> {
                         FittedBox(
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.homewebScreen);
+                              if (Responsive.isDesktop(context)) {
+                                Get.toNamed(AppRoutes.homewebScreen);
+                              } else {
+                                Get.toNamed(AppRoutes.navbarScreen);
+                              }
                             },
                             child: CustomText(
                               text: StringConstants.home,

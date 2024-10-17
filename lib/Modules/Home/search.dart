@@ -56,7 +56,11 @@ class Search extends StatelessWidget {
                 color: ColorConstants.blackColor,
               ),
               onPressed: () {
-                Get.toNamed(AppRoutes.homewebScreen);
+                if (Responsive.isDesktop(context)) {
+                  Get.toNamed(AppRoutes.homewebScreen);
+                } else {
+                  Get.toNamed(AppRoutes.navbarScreen);
+                }
               },
             ),
           ),

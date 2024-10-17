@@ -75,7 +75,11 @@ class _WishlistState extends State<Wishlist> {
                 color: ColorConstants.blackColor,
               ),
               onPressed: () {
-                Get.toNamed(AppRoutes.homewebScreen);
+                if (Responsive.isDesktop(context)) {
+                  Get.toNamed(AppRoutes.homewebScreen);
+                } else {
+                  Get.toNamed(AppRoutes.navbarScreen);
+                }
               },
             ),
           ),

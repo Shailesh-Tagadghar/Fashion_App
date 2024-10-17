@@ -7,6 +7,7 @@ import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -295,10 +296,14 @@ class Address extends StatelessWidget {
                                 'login_type': 'Email', // Set your login type
                               };
                               try {
-                                await ApiService.registerUser(
-                                    registrationData); // Register user
-                                Get.toNamed(AppRoutes
-                                    .navbarScreen); // Navigate to the next screen on success
+                                await ApiService.registerUser(registrationData);
+                                // ignore: use_build_context_synchronously
+                                if (Responsive.isDesktop(context)) {
+                                  Get.toNamed(AppRoutes.homewebScreen);
+                                } else {
+                                  Get.toNamed(AppRoutes.navbarScreen);
+                                } // Register user
+                                // Navigate to the next screen on success
                               } catch (e) {
                                 // Handle registration errors, show error messages, etc.
                                 log('Registration error: $e');
