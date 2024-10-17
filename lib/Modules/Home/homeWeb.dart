@@ -1,16 +1,20 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ui';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/controllers/auth_controller.dart';
 import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Home/Widget/banner_widget.dart';
+import 'package:fashion/Modules/Home/Widget/category_widget.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
+import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -164,30 +168,41 @@ class _HomewebState extends State<Homeweb> {
               () => dataContoller.isLoading.value
                   ? const Center(child: CircularProgressIndicator())
                   : SizedBox(
-                    height: Responsive.isDesktop(context) ? 70.h : 18.h,
-                    width: 100.w,
-                    child: PageView.builder(
-                      itemCount: dataContoller.carousalItems.length,
-                      onPageChanged: (index) {
-                        homeController.currentPage.value = index;
-                      },
-                      itemBuilder: (context, index) {
-                        final item = dataContoller.carousalItems[index];
-                        return BannerWidget(
-                          // image: AssetConstant.banner2tp,
-                          image: item['image'] ?? AssetConstant.banner1,
-                          title: item['title'] ?? 'No Title',
-                          subtitle: item['subtitle'] ?? 'No Subtitle',
-                        );
-                      },
+                      height: Responsive.isDesktop(context) ? 70.h : 18.h,
+                      width: 100.w,
+                      child: ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(context).copyWith(
+                          dragDevices: {
+                            PointerDeviceKind.touch,
+                            PointerDeviceKind.mouse,
+                          },
+                        ),
+                        child: PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: dataContoller.carousalItems.length,
+                          onPageChanged: (index) {
+                            homeController.currentPage.value = index;
+                          },
+                          itemBuilder: (context, index) {
+                            final item = dataContoller.carousalItems[index];
+                            return BannerWidget(
+                              // image: AssetConstant.banner2tp,
+                              image: item['image'] ?? AssetConstant.banner1,
+                              title: item['title'] ?? 'No Title',
+                              subtitle: item['subtitle'] ?? 'No Subtitle',
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
             ),
             SizedBox(
               height: Responsive.isDesktop(context) ? 2.h : 2.h,
             ),
             Container(
-              decoration: const BoxDecoration(color: ColorConstants.foreground),
+              decoration: const BoxDecoration(
+                color: ColorConstants.foreground,
+              ),
               height: Responsive.isDesktop(context) ? 8.h : 4.h,
               width: 100.w,
               child: Padding(
@@ -197,14 +212,95 @@ class _HomewebState extends State<Homeweb> {
                   right: Responsive.isDesktop(context) ? 4.w : 4.w,
                   bottom: Responsive.isDesktop(context) ? 2.h : 2.h,
                 ),
-                child: FittedBox(
-                  alignment: Alignment.centerLeft,
-                  child: CustomText(
-                    text: StringConstants.category,
-                    color: ColorConstants.blackColor,
-                    fontSize: Responsive.isDesktop(context) ? 4 : 11,
-                    weight: FontWeight.w400,
-                  ),
+                child: Row(
+                  children: [
+                    FittedBox(
+                      alignment: Alignment.centerLeft,
+                      child: CustomText(
+                        text: StringConstants.category,
+                        color: ColorConstants.blackColor,
+                        fontSize: Responsive.isDesktop(context) ? 4 : 11,
+                        weight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(
+                      width: Responsive.isDesktop(context) ? 4.w : 2.w,
+                    ),
+                    Obx(() {
+                      if (dataContoller.isLoading.value) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        // Check if we are on web or mobile
+                        if (kIsWeb) {
+                          // Dropdown for web
+                          return Center(
+                            child: DropdownButton<String>(
+                              focusColor: ColorConstants.header,
+                              padding: EdgeInsets.all(
+                                Responsive.isDesktop(context) ? 6 : 4,
+                              ),
+                              value: dataContoller
+                                      .selectedCategoryId.value.isNotEmpty
+                                  ? dataContoller.selectedCategoryId.value
+                                  : null,
+                              hint: const Text('Select Category'),
+                              items: dataContoller.categoryItems
+                                  .map<DropdownMenuItem<String>>((item) {
+                                return DropdownMenuItem<String>(
+                                  value: item['_id'],
+                                  child: Text(item['name'] ?? 'No name'),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                if (newValue != null && newValue.isNotEmpty) {
+                                  dataContoller.selectedCategoryId.value =
+                                      newValue;
+                                  Get.toNamed(AppRoutes.categoryScreen,
+                                      arguments: newValue);
+                                  log('Selected Category ID: $newValue');
+                                }
+                              },
+                            ),
+                          );
+                        } else {
+                          // ListView for mobile
+                          return SizedBox(
+                            height: 10.h,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: dataContoller.categoryItems.length,
+                              itemBuilder: (context, index) {
+                                final item = dataContoller.categoryItems[index];
+                                final isSelected =
+                                    dataContoller.selectedCategoryId.value ==
+                                        item['_id'];
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    final categoryId = item['_id'];
+                                    log('Category ID: $categoryId');
+                                    if (categoryId != null &&
+                                        categoryId.isNotEmpty) {
+                                      Get.toNamed(AppRoutes.categoryScreen,
+                                          arguments: categoryId);
+                                      log('Navigated with Category ID: $categoryId');
+                                    } else {
+                                      log('Category ID is null or empty');
+                                    }
+                                  },
+                                  child: CategoryWidget(
+                                    image: item['image'] ?? AssetConstant.cat1,
+                                    name: item['name'] ?? 'No name',
+                                    isSelected: isSelected,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      }
+                    }),
+                  ],
                 ),
               ),
             ),
