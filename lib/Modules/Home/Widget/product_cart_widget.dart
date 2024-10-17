@@ -1,6 +1,7 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -62,20 +63,22 @@ class _ProductCartWidgetState extends State<ProductCartWidget> {
                   '${ApiConstants.imageBaseUrl}${widget.image}',
                   fit: BoxFit.fill,
                   width: 100.w,
-                  height: 19.h,
+                  height: Responsive.isDesktop(context) ? 34.h : 19.h,
                 ),
               ),
               Container(
                 width: 8.6.w,
                 height: 4.4.h,
-                margin: const EdgeInsets.only(right: 8, top: 8),
+                margin: EdgeInsets.only(
+                    right: Responsive.isDesktop(context) ? 0.01 : 8,
+                    top: Responsive.isDesktop(context) ? 4 : 8),
                 decoration: BoxDecoration(
                   color: ColorConstants.whiteColor.withOpacity(0.5),
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
                   padding: const EdgeInsets.all(1),
-                  iconSize: 22,
+                  iconSize: Responsive.isDesktop(context) ? 34 : 22,
                   icon: Icon(
                     widget.isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: widget.isFavorite
@@ -94,13 +97,15 @@ class _ProductCartWidgetState extends State<ProductCartWidget> {
             ],
           ),
           SizedBox(
-            height: 0.8.h,
+            height: Responsive.isDesktop(context) ? 1 : 0.8.h,
           ),
-          CustomText(
-            text: widget.name,
-            fontSize: 11,
-            weight: FontWeight.w400,
-            color: ColorConstants.blackColor,
+          FittedBox(
+            child: CustomText(
+              text: widget.name,
+              fontSize: Responsive.isDesktop(context) ? 4 : 11,
+              weight: FontWeight.w400,
+              color: ColorConstants.blackColor,
+            ),
           ),
           SizedBox(
             height: 0.4.h,
@@ -108,11 +113,13 @@ class _ProductCartWidgetState extends State<ProductCartWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomText(
-                text: '\$${widget.price.toString()}',
-                fontSize: 12,
-                weight: FontWeight.w500,
-                color: ColorConstants.blackColor,
+              FittedBox(
+                child: CustomText(
+                  text: '\$${widget.price.toString()}',
+                  fontSize: Responsive.isDesktop(context) ? 4 : 12,
+                  weight: FontWeight.w500,
+                  color: ColorConstants.blackColor,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,11 +132,13 @@ class _ProductCartWidgetState extends State<ProductCartWidget> {
                   SizedBox(
                     width: 0.5.w,
                   ),
-                  CustomText(
-                    text: widget.rating.toString(),
-                    fontSize: 10,
-                    weight: FontWeight.w400,
-                    color: ColorConstants.greyColor,
+                  FittedBox(
+                    child: CustomText(
+                      text: widget.rating.toString(),
+                      fontSize: Responsive.isDesktop(context) ? 3 : 10,
+                      weight: FontWeight.w400,
+                      color: ColorConstants.greyColor,
+                    ),
                   ),
                 ],
               )
