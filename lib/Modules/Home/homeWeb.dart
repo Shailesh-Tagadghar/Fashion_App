@@ -73,6 +73,7 @@ class _HomewebState extends State<Homeweb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            //header
             Container(
               decoration: const BoxDecoration(color: ColorConstants.rich),
               height: Responsive.isDesktop(context) ? 8.h : 4.h,
@@ -164,6 +165,8 @@ class _HomewebState extends State<Homeweb> {
             SizedBox(
               height: Responsive.isDesktop(context) ? 2.h : 2.h,
             ),
+
+            //banner
             Obx(
               () => dataContoller.isLoading.value
                   ? const Center(child: CircularProgressIndicator())
@@ -199,6 +202,8 @@ class _HomewebState extends State<Homeweb> {
             SizedBox(
               height: Responsive.isDesktop(context) ? 2.h : 2.h,
             ),
+
+            //category
             Container(
               decoration: const BoxDecoration(
                 color: ColorConstants.foreground,
@@ -237,6 +242,20 @@ class _HomewebState extends State<Homeweb> {
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         // Dropdown for web
+                        // Ensure there's at least one item in categoryItems
+                        if (dataContoller.categoryItems.isEmpty) {
+                          return const Center(
+                              child: Text('No categories available'));
+                        }
+
+                        String? selectedValue =
+                            dataContoller.selectedCategoryId.value.isNotEmpty
+                                ? dataContoller.selectedCategoryId.value
+                                : null;
+
+                        // Ensure selectedValue exists in categoryItems
+                        bool isValidValue = dataContoller.categoryItems
+                            .any((item) => item['_id'] == selectedValue);
                         return Center(
                           child: Container(
                             decoration: BoxDecoration(
@@ -259,10 +278,12 @@ class _HomewebState extends State<Homeweb> {
                                 padding: EdgeInsets.all(
                                   Responsive.isDesktop(context) ? 10 : 6,
                                 ),
-                                value: dataContoller
-                                        .selectedCategoryId.value.isNotEmpty
-                                    ? dataContoller.selectedCategoryId.value
-                                    : null,
+                                // value: dataContoller
+                                //         .selectedCategoryId.value.isNotEmpty
+                                //     ? dataContoller.selectedCategoryId.value
+                                //     : null,
+                                value: isValidValue ? selectedValue : null,
+
                                 hint: Text(
                                   'Select Category',
                                   style: TextStyle(
@@ -325,6 +346,83 @@ class _HomewebState extends State<Homeweb> {
             SizedBox(
               height: Responsive.isDesktop(context) ? 2.h : 2.h,
             ),
+
+            // Sales Category Items
+            Container(
+              height: 4.5.h,
+              padding: EdgeInsets.symmetric(vertical: 0.3.h),
+              child: Obx(() {
+                if (dataContoller.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return ListView.builder(
+                  itemCount: dataContoller.salesCategoryItems.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 28.w,
+                      padding: EdgeInsets.only(left: 2.w),
+                      child: Obx(() {
+                        // Check if this index is the selected one
+                        bool isSelected =
+                            homeController.selectedsalesCategoryIndex.value ==
+                                index;
+
+                        return ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all(
+                              isSelected
+                                  ? ColorConstants.rich
+                                  : ColorConstants.whiteColor,
+                            ),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                side: BorderSide(
+                                  color: isSelected
+                                      ? ColorConstants.rich
+                                      : ColorConstants.lightGrayColor,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Handle category selection
+                            homeController.setSelectedSalesCategory(index);
+                            String selectedSaleCategoryId =
+                                dataContoller.salesCategoryItems[index]['_id'];
+                            dataContoller.selectedCategoryId.value =
+                                selectedSaleCategoryId; // Store selected category ID
+                            dataContoller.fetchSalesCategoryProducts(
+                                selectedSaleCategoryId); // Fetch products for the selected category
+                          },
+                          child: Center(
+                            child: Text(
+                              dataContoller.salesCategoryItems[index]['name'] ??
+                                  'Unknown',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w400,
+                                color: isSelected
+                                    ? ColorConstants.whiteColor
+                                    : ColorConstants.blackColor,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    );
+                  },
+                );
+              }),
+            ),
+
+            SizedBox(
+              height: Responsive.isDesktop(context) ? 2.h : 2.h,
+            ),
+
+            //products
             Obx(
               () {
                 if (dataContoller.isLoading.value) {
