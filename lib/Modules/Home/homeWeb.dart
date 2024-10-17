@@ -171,7 +171,11 @@ class _HomewebState extends State<Homeweb> {
               () => dataContoller.isLoading.value
                   ? const Center(child: CircularProgressIndicator())
                   : SizedBox(
-                      height: Responsive.isDesktop(context) ? 70.h : 18.h,
+                      height: Responsive.isDesktop(context)
+                          ? 70.h
+                          : Responsive.isTablet(context)
+                              ? 50.h
+                              : 18.h,
                       width: 100.w,
                       child: ScrollConfiguration(
                         behavior: ScrollConfiguration.of(context).copyWith(
