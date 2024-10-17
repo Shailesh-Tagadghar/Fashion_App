@@ -527,79 +527,86 @@ class _HomewebState extends State<Homeweb> {
             ),
 
             //products
-            Obx(
-              () {
-                if (dataContoller.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  return GridView.builder(
-                    // padding: EdgeInsets.only(
-                    //   bottom: 8.h,
-                    // ),
-                    padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: Responsive.isDesktop(context)
-                          ? 4
-                          : Responsive.isTablet(context)
-                              ? 3
-                              : 2,
-                      childAspectRatio: Responsive.isDesktop(context)
-                          ? 0.4
-                          : 0.69, // Adjusts the size of the items
-                      crossAxisSpacing: Responsive.isDesktop(context)
-                          ? 4
-                          : 4.0, // Spacing between columns
-                      mainAxisSpacing: Responsive.isDesktop(context)
-                          ? 4
-                          : 2.0, // Spacing between rows
-                    ),
-                    // itemCount: dataContoller.productsItems.length,
-                    itemCount: dataContoller.filteredProductsItems.length,
+            Padding(
+              padding: EdgeInsets.only(
+                left: Responsive.isDesktop(context) ? 4.w : 4.w,
+                right: Responsive.isDesktop(context) ? 4.w : 4.w,
+              ),
+              child: Obx(
+                () {
+                  if (dataContoller.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return GridView.builder(
+                      // padding: EdgeInsets.only(
+                      //   bottom: 8.h,
+                      // ),
+                      padding: EdgeInsets.zero,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: Responsive.isDesktop(context)
+                            ? 4
+                            : Responsive.isTablet(context)
+                                ? 3
+                                : 2,
+                        childAspectRatio: Responsive.isDesktop(context)
+                            ? 0.4
+                            : 0.69, // Adjusts the size of the items
+                        crossAxisSpacing: Responsive.isDesktop(context)
+                            ? 4
+                            : 4.0, // Spacing between columns
+                        mainAxisSpacing: Responsive.isDesktop(context)
+                            ? 4
+                            : 2.0, // Spacing between rows
+                      ),
+                      // itemCount: dataContoller.productsItems.length,
+                      itemCount: dataContoller.filteredProductsItems.length,
 
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      // final item = dataContoller.productsItems[index];
-                      final item = dataContoller.filteredProductsItems[index];
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        // final item = dataContoller.productsItems[index];
+                        final item = dataContoller.filteredProductsItems[index];
 
-                      final productId = item['_id'];
-                      final categoryId = item['category_id']['_id'];
-                      final isFavorite = dataContoller.favoriteProducts
-                          .contains(productId); // Track favorites
+                        final productId = item['_id'];
+                        final categoryId = item['category_id']['_id'];
+                        final isFavorite = dataContoller.favoriteProducts
+                            .contains(productId); // Track favorites
 
-                      return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.productDwebScreen,
-                              arguments: item);
-                        },
-                        child: ProductCartWidget(
-                          name: item['name'],
-                          price: item['price'],
-                          rating: item['rating'],
-                          image: (item['image'] is List &&
-                                  (item['image'] as List).isNotEmpty)
-                              ? item['image']
-                                  [0] // Use the first image from the list
-                              : AssetConstant.pd3, // Fallback image
-                          isFavorite: isFavorite,
-                          onToggleFavorite: (isNowFavorite) async {
-                            if (isFavorite) {
-                              await ApiService.removeFromFavorite(
-                                  productId, categoryId);
-                              dataContoller.favoriteProducts.remove(productId);
-                            } else {
-                              await ApiService.addToFavorites(
-                                  productId, categoryId);
-                              dataContoller.favoriteProducts.add(productId);
-                            }
-                            dataContoller.favoriteProducts.refresh();
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.productDwebScreen,
+                                arguments: item);
                           },
-                        ),
-                      );
-                    },
-                  );
-                }
-              },
+                          child: ProductCartWidget(
+                            name: item['name'],
+                            price: item['price'],
+                            rating: item['rating'],
+                            image: (item['image'] is List &&
+                                    (item['image'] as List).isNotEmpty)
+                                ? item['image']
+                                    [0] // Use the first image from the list
+                                : AssetConstant.pd3, // Fallback image
+                            isFavorite: isFavorite,
+                            onToggleFavorite: (isNowFavorite) async {
+                              if (isFavorite) {
+                                await ApiService.removeFromFavorite(
+                                    productId, categoryId);
+                                dataContoller.favoriteProducts
+                                    .remove(productId);
+                              } else {
+                                await ApiService.addToFavorites(
+                                    productId, categoryId);
+                                dataContoller.favoriteProducts.add(productId);
+                              }
+                              dataContoller.favoriteProducts.refresh();
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
