@@ -13,6 +13,7 @@ import 'package:fashion/Modules/Home/coupon.dart';
 import 'package:fashion/Modules/Home/home.dart';
 import 'package:fashion/Modules/Home/homeWeb.dart';
 import 'package:fashion/Modules/Home/navbar.dart';
+import 'package:fashion/Modules/Home/productDweb.dart';
 import 'package:fashion/Modules/Home/productdetails.dart';
 import 'package:fashion/Modules/Home/profile.dart';
 import 'package:fashion/Modules/Home/search.dart';
@@ -102,6 +103,10 @@ class AppPages {
     GetPage(
         name: AppRoutes.homewebScreen,
         page: () => Homeweb(),
+        transition: transition),
+    GetPage(
+        name: AppRoutes.productDwebScreen,
+        page: () => ProductDWeb(),
         transition: transition),
   ];
 }

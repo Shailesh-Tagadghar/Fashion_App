@@ -90,11 +90,16 @@ class _HomewebState extends State<Homeweb> {
                     Row(
                       children: [
                         FittedBox(
-                          child: CustomText(
-                            text: StringConstants.home,
-                            color: ColorConstants.whiteColor,
-                            fontSize: Responsive.isDesktop(context) ? 4 : 11,
-                            weight: FontWeight.w500,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.homewebScreen);
+                            },
+                            child: CustomText(
+                              text: StringConstants.home,
+                              color: ColorConstants.whiteColor,
+                              fontSize: Responsive.isDesktop(context) ? 4 : 11,
+                              weight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -549,7 +554,7 @@ class _HomewebState extends State<Homeweb> {
 
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoutes.productDetailsScreen,
+                          Get.toNamed(AppRoutes.productDwebScreen,
                               arguments: item);
                         },
                         child: ProductCartWidget(
