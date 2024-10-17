@@ -21,4 +21,6 @@ class AppRoutes {
   static const categoryScreen = '/category';
   static const homewebScreen = '/homeWeb';
   static const productDwebScreen = '/productDweb';
+  static const cartwebScreen = '/cartWeb';
+
 }

@@ -132,7 +132,7 @@ class _ProductDWebState extends State<ProductDWeb> {
                       FittedBox(
                         child: GestureDetector(
                           onTap: () {
-                            Get.toNamed(AppRoutes.cartScreen);
+                            Get.toNamed(AppRoutes.cartwebScreen);
                           },
                           child: CustomText(
                             text: StringConstants.cart,

@@ -7,6 +7,7 @@ import 'package:fashion/Modules/Auth/sign_up.dart';
 import 'package:fashion/Modules/Auth/user_detail.dart';
 import 'package:fashion/Modules/Home/Widget/profile_widget.dart';
 import 'package:fashion/Modules/Home/cart.dart';
+import 'package:fashion/Modules/Home/cartWeb.dart';
 import 'package:fashion/Modules/Home/category.dart';
 import 'package:fashion/Modules/Home/checkout.dart';
 import 'package:fashion/Modules/Home/coupon.dart';
@@ -107,6 +108,10 @@ class AppPages {
     GetPage(
         name: AppRoutes.productDwebScreen,
         page: () => ProductDWeb(),
+        transition: transition),
+    GetPage(
+        name: AppRoutes.cartwebScreen,
+        page: () => Cartweb(),
         transition: transition),
   ];
 }

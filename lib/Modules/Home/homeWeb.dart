@@ -108,7 +108,7 @@ class _HomewebState extends State<Homeweb> {
                         FittedBox(
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.cartScreen);
+                              Get.toNamed(AppRoutes.cartwebScreen);
                             },
                             child: CustomText(
                               text: StringConstants.cart,
