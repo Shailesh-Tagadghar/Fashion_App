@@ -106,11 +106,16 @@ class _HomewebState extends State<Homeweb> {
                           width: Responsive.isDesktop(context) ? 2.5.w : 2.w,
                         ),
                         FittedBox(
-                          child: CustomText(
-                            text: StringConstants.cart,
-                            color: ColorConstants.whiteColor,
-                            fontSize: Responsive.isDesktop(context) ? 4 : 11,
-                            weight: FontWeight.w500,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.cartScreen);
+                            },
+                            child: CustomText(
+                              text: StringConstants.cart,
+                              color: ColorConstants.whiteColor,
+                              fontSize: Responsive.isDesktop(context) ? 4 : 11,
+                              weight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         SizedBox(
