@@ -1,8 +1,9 @@
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
+import 'package:fashion/Modules/Home/Widget/product_cart_widget.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Routes/app_routes.dart';
-import 'package:fashion/Utils/Constants/api_constants.dart';
+import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
@@ -172,130 +173,132 @@ class Search extends StatelessWidget {
                 }
 
                 return Expanded(
-                  child: ListView.builder(
-                    itemCount: searchResults.length,
-                    itemBuilder: (context, index) {
-                      var product = searchResults[index];
-                      return ListTile(
-                        contentPadding: EdgeInsets.only(
-                          bottom: Responsive.isDesktop(context)
-                              ? 14.h
-                              : Responsive.isTablet(context)
-                                  ? 13.h
-                                  : 1.h,
-                          left: Responsive.isDesktop(context)
-                              ? 4.w
-                              : Responsive.isTablet(context)
-                                  ? 4.w
-                                  : 4.w,
-                          right: Responsive.isDesktop(context)
-                              ? 2.w
-                              : Responsive.isTablet(context)
-                                  ? 2.w
-                                  : 2.w,
-                          top: Responsive.isDesktop(context)
-                              ? 14.h
-                              : Responsive.isTablet(context)
-                                  ? 13.h
-                                  : 1.h,
-                        ),
-                        textColor: ColorConstants.blackColor,
-                        titleTextStyle: TextStyle(
-                          color: ColorConstants.blackColor,
-                          fontSize: Responsive.isDesktop(context)
-                              ? 24
-                              : Responsive.isTablet(context)
-                                  ? 20
-                                  : 19,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        subtitleTextStyle: TextStyle(
-                          color: ColorConstants.blackColor,
-                          fontSize: Responsive.isTablet(context)
-                              ? 24
-                              : Responsive.isDesktop(context)
-                                  ? 20
-                                  : 19,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        tileColor: ColorConstants.lightGrayColor,
-                        leading: Image.network(
-                          '${ApiConstants.imageBaseUrl}${product['image'][0]}',
-                          // Ensure this URL is valid
-                          fit: BoxFit.fill,
-                          height: Responsive.isDesktop(context)
-                              ? 10.h
-                              : Responsive.isTablet(context)
-                                  ? 30.h
-                                  : 40.h,
-                          width: Responsive.isDesktop(context)
-                              ? 10.w
-                              : Responsive.isTablet(context)
-                                  ? 30.w
-                                  : 25.w,
-                        ),
-                        title: Text(
-                            'Name : ${product['name']}'), // Assuming 'name' is a field
-                        subtitle: Text('Price : ${product['price']}'
-                            .toString()), // Adjust as per your data
+                  child:
+                      // ListView.builder(
+                      //   itemCount: searchResults.length,
+                      //   itemBuilder: (context, index) {
+                      //     var product = searchResults[index];
+                      //     return ListTile(
+                      //       contentPadding: EdgeInsets.only(
+                      //         bottom: Responsive.isDesktop(context)
+                      //             ? 14.h
+                      //             : Responsive.isTablet(context)
+                      //                 ? 13.h
+                      //                 : 1.h,
+                      //         left: Responsive.isDesktop(context)
+                      //             ? 4.w
+                      //             : Responsive.isTablet(context)
+                      //                 ? 4.w
+                      //                 : 4.w,
+                      //         right: Responsive.isDesktop(context)
+                      //             ? 2.w
+                      //             : Responsive.isTablet(context)
+                      //                 ? 2.w
+                      //                 : 2.w,
+                      //         top: Responsive.isDesktop(context)
+                      //             ? 14.h
+                      //             : Responsive.isTablet(context)
+                      //                 ? 13.h
+                      //                 : 1.h,
+                      //       ),
+                      //       textColor: ColorConstants.blackColor,
+                      //       titleTextStyle: TextStyle(
+                      //         color: ColorConstants.blackColor,
+                      //         fontSize: Responsive.isDesktop(context)
+                      //             ? 24
+                      //             : Responsive.isTablet(context)
+                      //                 ? 20
+                      //                 : 19,
+                      //         fontWeight: FontWeight.w400,
+                      //       ),
+                      //       subtitleTextStyle: TextStyle(
+                      //         color: ColorConstants.blackColor,
+                      //         fontSize: Responsive.isTablet(context)
+                      //             ? 24
+                      //             : Responsive.isDesktop(context)
+                      //                 ? 20
+                      //                 : 19,
+                      //         fontWeight: FontWeight.w400,
+                      //       ),
+                      //       tileColor: ColorConstants.lightGrayColor,
+                      //       leading: Image.network(
+                      //         '${ApiConstants.imageBaseUrl}${product['image'][0]}',
+                      //         // Ensure this URL is valid
+                      //         fit: BoxFit.fill,
+                      //         height: Responsive.isDesktop(context)
+                      //             ? 10.h
+                      //             : Responsive.isTablet(context)
+                      //                 ? 30.h
+                      //                 : 40.h,
+                      //         width: Responsive.isDesktop(context)
+                      //             ? 10.w
+                      //             : Responsive.isTablet(context)
+                      //                 ? 30.w
+                      //                 : 25.w,
+                      //       ),
+                      //       title: Text(
+                      //           'Name : ${product['name']}'), // Assuming 'name' is a field
+                      //       subtitle: Text('Price : ${product['price']}'
+                      //           .toString()), // Adjust as per your data
 
+                      //       onTap: () {
+                      //         // Navigate to product details
+                      //         if (Responsive.isDesktop(context)) {
+                      //           Get.toNamed(AppRoutes.productDwebScreen,
+                      //               arguments: product);
+                      //         } else {
+                      //           Get.toNamed(AppRoutes.productDetailsScreen,
+                      //               arguments: product);
+                      //         }
+                      //       },
+                      //     );
+                      //   },
+                      // ),
+
+                      GridView.builder(
+                    padding: EdgeInsets.zero,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: Responsive.isDesktop(context)
+                          ? 4
+                          : Responsive.isTablet(context)
+                              ? 3
+                              : 2,
+                      childAspectRatio: Responsive.isDesktop(context)
+                          ? 0.4
+                          : 0.69, // Adjusts the size of the items
+                      crossAxisSpacing: Responsive.isDesktop(context)
+                          ? 4
+                          : 4.0, // Spacing between columns
+                      mainAxisSpacing: Responsive.isDesktop(context)
+                          ? 4
+                          : 2.0, // Spacing between rows
+                    ),
+                    itemCount: searchResults.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final item = searchResults[index];
+                      return GestureDetector(
                         onTap: () {
-                          // Navigate to product details
-                          if (Responsive.isDesktop(context)) {
-                            Get.toNamed(AppRoutes.productDwebScreen,
-                                arguments: product);
-                          } else {
-                            Get.toNamed(AppRoutes.productDetailsScreen,
-                                arguments: product);
-                          }
+                          // Navigate to product details page
+                          Get.toNamed(AppRoutes.productDetailsScreen,
+                              arguments: item);
                         },
+                        child: ProductCartWidget(
+                          name: item['name'],
+                          price: item['price'],
+                          rating: item['rating'],
+                          image: (item['image'] is List &&
+                                  (item['image'] as List).isNotEmpty)
+                              ? item['image']
+                                  [0] // Use the first image from the list
+                              : AssetConstant.pd3, // Fallback image
+                          isFavorite: false,
+                          onToggleFavorite: (p0) {},
+                        ),
                       );
                     },
                   ),
-                  //     GridView.builder(
-                  //   padding: EdgeInsets.zero,
-                  //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //     crossAxisCount: Responsive.isDesktop(context)
-                  //         ? 4
-                  //         : Responsive.isTablet(context)
-                  //             ? 3
-                  //             : 2,
-                  //     childAspectRatio: Responsive.isDesktop(context)
-                  //         ? 0.4
-                  //         : 0.69, // Adjusts the size of the items
-                  //     crossAxisSpacing: Responsive.isDesktop(context)
-                  //         ? 4
-                  //         : 4.0, // Spacing between columns
-                  //     mainAxisSpacing: Responsive.isDesktop(context)
-                  //         ? 4
-                  //         : 2.0, // Spacing between rows
-                  //   ),
-                  //   itemCount: searchResults.length,
-                  //   shrinkWrap: true,
-                  //   physics: const NeverScrollableScrollPhysics(),
-                  //   itemBuilder: (context, index) {
-                  //     final item = searchResults[index];
-                  //     return GestureDetector(
-                  //       onTap: () {
-                  //         // Navigate to product details page
-                  //         Get.toNamed(AppRoutes.productDetailsScreen,
-                  //             arguments: item);
-                  //       },
-                  //       child: ProductCartWidget(
-                  //         name: item['name'],
-                  //         price: item['price'],
-                  //         rating: item['rating'],
-                  //         image: (item['image'] is List &&
-                  //                 (item['image'] as List).isNotEmpty)
-                  //             ? item['image']
-                  //                 [0] // Use the first image from the list
-                  //             : AssetConstant.pd3, // Fallback image
-                  //         isFavorite: false,
-                  //         onToggleFavorite: (p0) {},
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
                 );
               },
             ),
