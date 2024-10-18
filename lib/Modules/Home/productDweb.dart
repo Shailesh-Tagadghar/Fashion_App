@@ -52,8 +52,8 @@ class _ProductDWebState extends State<ProductDWeb> {
       }
       // Update state to ensure the UI reflects the loaded data
       setState(() {});
-      log('Data after Login / Register / Restart -- : $dataStorage');
-      log('Carousal itesms : ${dataContoller.carousalItems.length}');
+      // log('Data after Login / Register / Restart -- : $dataStorage');
+      // log('Carousal itesms : ${dataContoller.carousalItems.length}');
     }
   }
 
