@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/Widget/coupon_item_widget.dart';
+import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,52 +35,65 @@ class Coupon extends StatelessWidget {
         surfaceTintColor: ColorConstants.whiteColor,
         toolbarHeight: 10.h,
         leadingWidth: 15.w,
-        title: const CustomText(
-          text: StringConstants.coupon,
-          weight: FontWeight.w500,
-          fontSize: 13,
+        title: FittedBox(
+          child: CustomText(
+            text: StringConstants.coupon,
+            weight: FontWeight.w500,
+            fontSize: Responsive.isDesktop(context) ? 4 : 13,
+          ),
         ),
         centerTitle: true,
         leading: Container(
           alignment: Alignment.centerLeft,
           margin: EdgeInsets.only(
-            left: 4.w,
+            left: Responsive.isDesktop(context) ? 0.2.w : 4.w,
           ),
           padding: EdgeInsets.all(
-            0.6.w,
+            Responsive.isDesktop(context) ? 0.2.w : 0.6.w,
           ),
-          decoration: BoxDecoration(
-            border: Border.all(color: ColorConstants.lightGrayColor, width: 1),
-            shape: BoxShape.circle,
-          ),
+          // decoration: BoxDecoration(
+          //   border: Border.all(color: ColorConstants.lightGrayColor, width: 1),
+          //   shape: BoxShape.circle,
+          // ),
           child: IconButton(
-            iconSize: 24,
+            iconSize: Responsive.isDesktop(context) ? 20 : 24,
             icon: const Icon(
               Bootstrap.arrow_left,
               color: ColorConstants.blackColor,
             ),
             onPressed: () {
-              Get.back();
+              if (Responsive.isDesktop(context)) {
+                Get.toNamed(AppRoutes.cartwebScreen);
+              } else {
+                Get.back();
+              }
             },
           ),
         ),
       ),
       body: Padding(
         padding: EdgeInsets.only(
-          left: 6.w,
-          right: 6.w,
-          bottom: 2.h,
+          top: Responsive.isDesktop(context) ? 2.h : 0.h,
+          left: Responsive.isDesktop(context) ? 4.w : 6.w,
+          right: Responsive.isDesktop(context) ? 4.w : 6.w,
+          bottom: Responsive.isDesktop(context) ? 2.h : 2.h,
         ),
         child: Obx(() => isLoading.value
             ? const Center(child: CircularProgressIndicator())
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomText(
-                    text: StringConstants.offers,
-                    fontSize: 15,
-                    weight: FontWeight.w500,
-                    color: ColorConstants.blackColor,
+                  FittedBox(
+                    child: CustomText(
+                      text: StringConstants.offers,
+                      fontSize: Responsive.isDesktop(context)
+                          ? 7
+                          : Responsive.isTablet(context)
+                              ? 10
+                              : 15,
+                      weight: FontWeight.w500,
+                      color: ColorConstants.blackColor,
+                    ),
                   ),
                   SizedBox(
                     height: 1.5.h,

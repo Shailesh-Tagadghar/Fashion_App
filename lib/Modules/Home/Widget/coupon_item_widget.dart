@@ -4,6 +4,7 @@ import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -27,9 +28,9 @@ class CouponItemWidget extends StatelessWidget {
     final dataController = Get.find<DataContoller>();
     return Padding(
       padding: EdgeInsets.only(
-        left: 1.5.w,
-        right: 1.5.w,
-        top: 0.2.h,
+        top: Responsive.isDesktop(context) ? 2.h : 0.2.h,
+        left: Responsive.isDesktop(context) ? 22.w : 1.5.w,
+        right: Responsive.isDesktop(context) ? 22.w : 1.5.w,
       ),
       child: Column(
         children: [
@@ -47,9 +48,9 @@ class CouponItemWidget extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    left: 4.w,
-                    right: 4.w,
-                    top: 2.h,
+                    top: Responsive.isDesktop(context) ? 2.h : 2.h,
+                    left: Responsive.isDesktop(context) ? 7.w : 4.w,
+                    right: Responsive.isDesktop(context) ? 7.w : 4.w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +58,11 @@ class CouponItemWidget extends StatelessWidget {
                       CustomText(
                         // text: StringConstants.welcome,
                         text: title,
-                        fontSize: 14,
+                        fontSize: Responsive.isDesktop(context)
+                            ? 4
+                            : Responsive.isTablet(context)
+                                ? 10
+                                : 14,
                         color: ColorConstants.blackColor,
                         weight: FontWeight.w500,
                       ),
@@ -66,7 +71,11 @@ class CouponItemWidget extends StatelessWidget {
                       ),
                       CustomText(
                         text: descreption,
-                        fontSize: 12.5,
+                        fontSize: Responsive.isDesktop(context)
+                            ? 3.5
+                            : Responsive.isTablet(context)
+                                ? 8.5
+                                : 12.5,
                         color: ColorConstants.greyColor,
                         weight: FontWeight.w400,
                       ),
@@ -86,7 +95,11 @@ class CouponItemWidget extends StatelessWidget {
                           ),
                           CustomText(
                             text: amount,
-                            fontSize: 14,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 4
+                                : Responsive.isTablet(context)
+                                    ? 10
+                                    : 14,
                             color: ColorConstants.blackColor,
                             weight: FontWeight.w500,
                           ),
@@ -106,8 +119,16 @@ class CouponItemWidget extends StatelessWidget {
                   },
                   child: Container(
                     alignment: AlignmentDirectional.center,
-                    height: 6.h,
-                    width: 100.w,
+                    height: Responsive.isDesktop(context)
+                        ? 6.h
+                        : Responsive.isTablet(context)
+                            ? 6.h
+                            : 6.h,
+                    width: Responsive.isDesktop(context)
+                        ? 50.w
+                        : Responsive.isTablet(context)
+                            ? 70.w
+                            : 100.w,
                     decoration: const BoxDecoration(
                       color: ColorConstants.background,
                       borderRadius: BorderRadius.only(
@@ -117,7 +138,11 @@ class CouponItemWidget extends StatelessWidget {
                     ),
                     child: CustomText(
                       text: copy,
-                      fontSize: 16,
+                      fontSize: Responsive.isDesktop(context)
+                          ? 5
+                          : Responsive.isTablet(context)
+                              ? 12
+                              : 16,
                       weight: FontWeight.w500,
                       color: ColorConstants.rich,
                     ),

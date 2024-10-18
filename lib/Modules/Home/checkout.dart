@@ -5,6 +5,7 @@ import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/home_controller.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,42 +28,48 @@ class Checkout extends StatelessWidget {
         surfaceTintColor: ColorConstants.whiteColor,
         toolbarHeight: 10.h,
         leadingWidth: 15.w,
-        title: const CustomText(
-          text: StringConstants.payment,
-          weight: FontWeight.w500,
-          fontSize: 13,
+        title: FittedBox(
+          child: CustomText(
+            text: StringConstants.payment,
+            weight: FontWeight.w500,
+            fontSize: Responsive.isDesktop(context) ? 4 : 13,
+          ),
         ),
         centerTitle: true,
         leading: Container(
           alignment: Alignment.centerLeft,
           margin: EdgeInsets.only(
-            left: 4.w,
+            left: Responsive.isDesktop(context) ? 0.2.w : 4.w,
           ),
           padding: EdgeInsets.all(
-            0.6.w,
+            Responsive.isDesktop(context) ? 0.2.w : 0.6.w,
           ),
           decoration: BoxDecoration(
             border: Border.all(color: ColorConstants.lightGrayColor, width: 1),
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            iconSize: 24,
+            iconSize: Responsive.isDesktop(context) ? 20 : 24,
             icon: const Icon(
               Bootstrap.arrow_left,
               color: ColorConstants.blackColor,
             ),
             onPressed: () {
-              Get.back();
+              if (Responsive.isDesktop(context)) {
+                Get.toNamed(AppRoutes.homewebScreen);
+              } else {
+                Get.back();
+              }
             },
           ),
         ),
       ),
       body: Padding(
         padding: EdgeInsets.only(
-          left: 6.w,
-          right: 6.w,
-          bottom: 10.h,
-          top: 25.h,
+          top: Responsive.isDesktop(context) ? 10.h : 25.h,
+          left: Responsive.isDesktop(context) ? 35.w : 6.w,
+          right: Responsive.isDesktop(context) ? 35.w : 6.w,
+          bottom: Responsive.isDesktop(context) ? 20.h : 10.h,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,38 +77,62 @@ class Checkout extends StatelessWidget {
             Icon(
               Bootstrap.check_circle_fill,
               color: ColorConstants.rich,
-              size: 12.h,
+              size: Responsive.isDesktop(context) ? 12.h : 12.h,
             ),
             SizedBox(
               height: 2.h,
             ),
-            const CustomText(
-              text: StringConstants.success,
-              color: ColorConstants.blackColor,
-              fontSize: 16,
-              weight: FontWeight.w500,
+            FittedBox(
+              child: CustomText(
+                text: StringConstants.success,
+                color: ColorConstants.blackColor,
+                fontSize: Responsive.isDesktop(context)
+                    ? 20
+                    : Responsive.isDesktop(context)
+                        ? 18
+                        : 16,
+                weight: FontWeight.w500,
+              ),
             ),
             SizedBox(
               height: 1.5.h,
             ),
-            const CustomText(
-              text: StringConstants.thankyounote,
-              color: ColorConstants.greyColor,
-              fontSize: 12,
-              weight: FontWeight.w400,
+            FittedBox(
+              child: CustomText(
+                text: StringConstants.thankyounote,
+                color: ColorConstants.greyColor,
+                fontSize: Responsive.isDesktop(context)
+                    ? 18
+                    : Responsive.isDesktop(context)
+                        ? 16
+                        : 12,
+                weight: FontWeight.w400,
+              ),
             ),
             const Spacer(),
             CustomButton(
               label: StringConstants.home,
               btnColor: ColorConstants.rich,
               isSelected: true,
-              fontSize: 16,
+              fontSize: Responsive.isDesktop(context)
+                  ? 3
+                  : Responsive.isDesktop(context)
+                      ? 3
+                      : 16,
               labelColor: ColorConstants.whiteColor,
-              height: 6.h,
+              height: Responsive.isDesktop(context)
+                  ? 6.h
+                  : Responsive.isDesktop(context)
+                      ? 6.h
+                      : 6.h,
               weight: FontWeight.w500,
               action: () {
                 log("final tap::::${_controller.selectedIndex.value}");
-                Get.offNamed(AppRoutes.navbarScreen);
+                if (Responsive.isDesktop(context)) {
+                  Get.toNamed(AppRoutes.homewebScreen);
+                } else {
+                  Get.offNamed(AppRoutes.navbarScreen);
+                }
               },
             )
           ],
