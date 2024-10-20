@@ -156,31 +156,36 @@ class _HomewebState extends State<Homeweb> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: SizedBox(
-                            height: Responsive.isDesktop(context) ? 5.h : 5.h,
-                            width: Responsive.isDesktop(context) ? 3.w : 3.w,
-                            child: Image.network(
-                              imageUrl,
-                              fit: BoxFit.cover,
+                    GestureDetector(
+                      onDoubleTap: () {
+                        showLogoutDialog(context);
+                      },
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: SizedBox(
+                              height: Responsive.isDesktop(context) ? 5.h : 5.h,
+                              width: Responsive.isDesktop(context) ? 3.w : 3.w,
+                              child: Image.network(
+                                imageUrl,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: Responsive.isDesktop(context) ? 1.w : 1.w,
-                        ),
-                        FittedBox(
-                          child: CustomText(
-                            text: 'Hello, $userName',
-                            color: ColorConstants.whiteColor,
-                            fontSize: Responsive.isDesktop(context) ? 4 : 11,
-                            weight: FontWeight.w500,
+                          SizedBox(
+                            width: Responsive.isDesktop(context) ? 1.w : 1.w,
                           ),
-                        ),
-                      ],
+                          FittedBox(
+                            child: CustomText(
+                              text: 'Hello, $userName',
+                              color: ColorConstants.whiteColor,
+                              fontSize: Responsive.isDesktop(context) ? 4 : 11,
+                              weight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -616,5 +621,170 @@ class _HomewebState extends State<Homeweb> {
         ),
       ),
     );
+  }
+
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ColorConstants.whiteColor,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(22.0)),
+          ),
+          content: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      const Divider(
+                        color: ColorConstants.background,
+                        thickness: 4,
+                        endIndent: 30.0,
+                        indent: 30.0,
+                      ),
+                      SizedBox(height: 1.h),
+                      FittedBox(
+                        child: CustomText(
+                          text: StringConstants.logout1,
+                          fontSize: Responsive.isDesktop(context)
+                              ? 4
+                              : Responsive.isTablet(context)
+                                  ? 7
+                                  : 14,
+                          weight: FontWeight.w500,
+                          color: ColorConstants.blackColor,
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                      Divider(
+                        color: ColorConstants.background,
+                        height: 1.h,
+                        thickness: 2,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                FittedBox(
+                  child: CustomText(
+                    text: StringConstants.confirm,
+                    color: ColorConstants.greyColor,
+                    fontSize: Responsive.isDesktop(context)
+                        ? 4
+                        : Responsive.isTablet(context)
+                            ? 7
+                            : 14,
+                    textAlign: TextAlign.center,
+                    weight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: Responsive.isDesktop(context)
+                          ? 6.h
+                          : Responsive.isTablet(context)
+                              ? 6.h
+                              : 6.h,
+                      width: Responsive.isDesktop(context)
+                          ? 12.w
+                          : Responsive.isTablet(context)
+                              ? 20.w
+                              : 20.w,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: ColorConstants.rich,
+                          width: 2,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(100),
+                        ),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorConstants.whiteColor,
+                        ),
+                        child: FittedBox(
+                          child: CustomText(
+                            text: StringConstants.cancel,
+                            color: ColorConstants.rich,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 4
+                                : Responsive.isTablet(context)
+                                    ? 7
+                                    : 14,
+                            weight: FontWeight.w500,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close dialog
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 4.w),
+                    Container(
+                      height: Responsive.isDesktop(context)
+                          ? 6.h
+                          : Responsive.isTablet(context)
+                              ? 6.h
+                              : 6.h,
+                      width: Responsive.isDesktop(context)
+                          ? 12.w
+                          : Responsive.isTablet(context)
+                              ? 20.w
+                              : 20.w,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(100),
+                        ),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorConstants.rich,
+                        ),
+                        child: FittedBox(
+                          child: CustomText(
+                            text: StringConstants.confirmLogout,
+                            color: ColorConstants.whiteColor,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 4
+                                : Responsive.isTablet(context)
+                                    ? 7
+                                    : 14,
+                            weight: FontWeight.w500,
+                          ),
+                        ),
+                        onPressed: () {
+                          _logout();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4.h), // Add some space at the bottom
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _logout() async {
+    try {
+      GetStorage().remove('user_data');
+      GetStorage().remove('token');
+      GetStorage().write('isLoggedIn', false); // Set login status to false
+      // Navigate to the login screen
+      Get.offAllNamed(AppRoutes.signInScreen);
+    } catch (e) {
+      log("Error signing out: $e");
+    }
   }
 }
