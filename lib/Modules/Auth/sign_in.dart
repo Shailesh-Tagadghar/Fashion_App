@@ -10,7 +10,6 @@ import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,55 +32,77 @@ class SignIn extends StatelessWidget {
       backgroundColor: ColorConstants.whiteColor,
       body: Padding(
         padding: EdgeInsets.only(
-          top: kIsWeb ? 8.h : 16.h,
-          left: kIsWeb ? 4.w : 4.w,
-          right: kIsWeb ? 4.w : 4.w,
-          bottom: kIsWeb ? 4.h : 2.h,
+          top: Responsive.isDesktop(context) ? 8.h : 16.h,
+          left: Responsive.isDesktop(context) ? 4.w : 4.w,
+          right: Responsive.isDesktop(context) ? 4.w : 4.w,
+          bottom: Responsive.isDesktop(context) ? 4.h : 2.h,
         ),
         child: SingleChildScrollView(
           child: Align(
             child: SizedBox(
-              width: kIsWeb ? 40.w : 100.w,
+              width: Responsive.isDesktop(context) ? 40.w : 100.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Align(
-                    child: CustomText(
-                      text: StringConstants.signIn,
-                      color: ColorConstants.blackColor,
-                      fontSize: kIsWeb ? 8 : 18,
-                      weight: FontWeight.w600,
+                  Align(
+                    child: FittedBox(
+                      child: CustomText(
+                        text: StringConstants.signIn,
+                        color: ColorConstants.blackColor,
+                        fontSize: Responsive.isDesktop(context)
+                            ? 7
+                            : Responsive.isDesktop(context)
+                                ? 10
+                                : 18,
+                        weight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   SizedBox(height: 1.5.h),
-                  const Center(
-                    child: CustomText(
-                      text: StringConstants.welcome,
-                      color: ColorConstants.greyColor,
-                      fontSize: kIsWeb ? 6 : 11,
-                      weight: FontWeight.w400,
-                      textAlign: TextAlign.center,
+                  Center(
+                    child: FittedBox(
+                      child: CustomText(
+                        text: StringConstants.welcome,
+                        color: ColorConstants.greyColor,
+                        fontSize: Responsive.isDesktop(context)
+                            ? 4
+                            : Responsive.isDesktop(context)
+                                ? 7
+                                : 11,
+                        weight: FontWeight.w400,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                   SizedBox(
-                    height: kIsWeb ? 3.h : 6.h,
+                    height: Responsive.isDesktop(context) ? 3.h : 6.h,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CustomText(
-                        text: StringConstants.emaillabel,
-                        color: ColorConstants.blackColor,
-                        fontSize: kIsWeb ? 4 : 11,
-                        weight: FontWeight.w400,
+                      FittedBox(
+                        child: CustomText(
+                          text: StringConstants.emaillabel,
+                          color: ColorConstants.blackColor,
+                          fontSize: Responsive.isDesktop(context)
+                              ? 4
+                              : Responsive.isDesktop(context)
+                                  ? 7
+                                  : 11,
+                          weight: FontWeight.w400,
+                        ),
                       ),
                       SizedBox(
-                        height: kIsWeb ? 0.8.h : 0.2.h,
+                        height: Responsive.isDesktop(context) ? 0.8.h : 0.2.h,
                       ),
                       CustomField(
                         controller: emailController,
                         hintText: StringConstants.email,
-                        fontSize: kIsWeb ? 3 : 11,
+                        fontSize: Responsive.isDesktop(context)
+                            ? 3
+                            : Responsive.isDesktop(context)
+                                ? 7
+                                : 11,
                         hintTextColor: ColorConstants.greyColor,
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -90,22 +111,32 @@ class SignIn extends StatelessWidget {
                             ? CustomText(
                                 text: validationController.emailError.value,
                                 color: Colors.red,
-                                fontSize: kIsWeb ? 3 : 10,
+                                fontSize: Responsive.isDesktop(context)
+                                    ? 3
+                                    : Responsive.isDesktop(context)
+                                        ? 7
+                                        : 10,
                                 weight: FontWeight.w400,
                               )
                             : Container(),
                       ),
                       SizedBox(
-                        height: kIsWeb ? 2.h : 2.h,
+                        height: Responsive.isDesktop(context) ? 2.h : 2.h,
                       ),
-                      const CustomText(
-                        text: StringConstants.passwordlabel,
-                        color: ColorConstants.blackColor,
-                        fontSize: kIsWeb ? 4 : 11,
-                        weight: FontWeight.w400,
+                      FittedBox(
+                        child: CustomText(
+                          text: StringConstants.passwordlabel,
+                          color: ColorConstants.blackColor,
+                          fontSize: Responsive.isDesktop(context)
+                              ? 4
+                              : Responsive.isDesktop(context)
+                                  ? 7
+                                  : 11,
+                          weight: FontWeight.w400,
+                        ),
                       ),
                       SizedBox(
-                        height: kIsWeb ? 0.8.h : 0.2.h,
+                        height: Responsive.isDesktop(context) ? 0.8.h : 0.2.h,
                       ),
                       Obx(
                         () => CustomField(
@@ -114,7 +145,11 @@ class SignIn extends StatelessWidget {
                           obscuringCharacter: '*',
                           showPasswordIcon: true,
                           hintText: StringConstants.password,
-                          fontSize: kIsWeb ? 3 : 11,
+                          fontSize: Responsive.isDesktop(context)
+                              ? 4
+                              : Responsive.isDesktop(context)
+                                  ? 7
+                                  : 11,
                           hintTextColor: ColorConstants.greyColor,
                           onIconPressed:
                               authController.togglePasswordVisibility,
@@ -124,36 +159,54 @@ class SignIn extends StatelessWidget {
                           ? CustomText(
                               text: validationController.passwordError.value,
                               color: Colors.red,
-                              fontSize: kIsWeb ? 3 : 11,
+                              fontSize: Responsive.isDesktop(context)
+                                  ? 3
+                                  : Responsive.isDesktop(context)
+                                      ? 7
+                                      : 10,
                               weight: FontWeight.w400,
                             )
                           : Container()),
                       SizedBox(
-                        height: kIsWeb ? 2.h : 2.h,
+                        height: Responsive.isDesktop(context) ? 2.h : 2.h,
                       ),
                       GestureDetector(
                         onTap: () {
                           Get.toNamed(AppRoutes.forgotPassScreen);
                         },
-                        child: const Align(
+                        child: Align(
                           alignment: Alignment.topRight,
-                          child: CustomText(
-                            text: StringConstants.forgotpass,
-                            color: ColorConstants.rich,
-                            fontSize: kIsWeb ? 4 : 12,
-                            weight: FontWeight.w400,
-                            decoration: TextDecoration.underline,
-                            textAlign: TextAlign.right,
+                          child: FittedBox(
+                            child: CustomText(
+                              text: StringConstants.forgotpass,
+                              color: ColorConstants.rich,
+                              fontSize: Responsive.isDesktop(context)
+                                  ? 4
+                                  : Responsive.isDesktop(context)
+                                      ? 7
+                                      : 12,
+                              weight: FontWeight.w400,
+                              decoration: TextDecoration.underline,
+                              textAlign: TextAlign.right,
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: kIsWeb ? 4.h : 4.h,
+                        height: Responsive.isDesktop(context) ? 4.h : 4.h,
                       ),
                       CustomButton(
                         label: StringConstants.signIn,
-                        height: kIsWeb ? 6.h : 6.h,
-                        fontSize: kIsWeb ? 4 : 14,
+                        height: Responsive.isDesktop(context)
+                            ? 6.h
+                            : Responsive.isTablet(context)
+                                ? 6.h
+                                : 6.h,
+                        fontSize: Responsive.isDesktop(context)
+                            ? 4
+                            : Responsive.isDesktop(context)
+                                ? 7
+                                : 14,
                         weight: FontWeight.w500,
                         labelColor: ColorConstants.whiteColor,
                         btnColor: ColorConstants.rich,
@@ -192,33 +245,41 @@ class SignIn extends StatelessWidget {
                         },
                       ),
                       SizedBox(
-                        height: kIsWeb ? 4.h : 5.h,
+                        height: Responsive.isDesktop(context) ? 4.h : 5.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            height: kIsWeb ? 0.05.h : 0.05.h,
-                            width: kIsWeb ? 3.w : 20.w,
+                            height:
+                                Responsive.isDesktop(context) ? 0.05.h : 0.05.h,
+                            width: Responsive.isDesktop(context) ? 3.w : 20.w,
                             decoration: const BoxDecoration(
                               color: ColorConstants.greyColor,
                             ),
                           ),
                           SizedBox(
-                            width: kIsWeb ? 1.w : 2.5.w,
+                            width: Responsive.isDesktop(context) ? 1.w : 2.5.w,
                           ),
-                          const CustomText(
-                            text: StringConstants.diffsigninmethod2,
-                            color: ColorConstants.greyColor,
-                            fontSize: kIsWeb ? 3 : 10,
-                            weight: FontWeight.w400,
+                          FittedBox(
+                            child: CustomText(
+                              text: StringConstants.diffsigninmethod2,
+                              color: ColorConstants.greyColor,
+                              fontSize: Responsive.isDesktop(context)
+                                  ? 3
+                                  : Responsive.isDesktop(context)
+                                      ? 7
+                                      : 10,
+                              weight: FontWeight.w400,
+                            ),
                           ),
                           SizedBox(
-                            width: kIsWeb ? 1.w : 2.5.w,
+                            width: Responsive.isDesktop(context) ? 1.w : 2.5.w,
                           ),
                           Container(
-                            height: kIsWeb ? 0.05.h : 0.05.h,
-                            width: kIsWeb ? 3.w : 20.w,
+                            height:
+                                Responsive.isDesktop(context) ? 0.05.h : 0.05.h,
+                            width: Responsive.isDesktop(context) ? 3.w : 20.w,
                             decoration: const BoxDecoration(
                               color: ColorConstants.greyColor,
                             ),
@@ -226,14 +287,18 @@ class SignIn extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: kIsWeb ? 4.h : 4.h,
+                        height: Responsive.isDesktop(context) ? 4.h : 4.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: kIsWeb ? 0.5.w : 3.w),
-                            padding: const EdgeInsets.all(kIsWeb ? 5 : 8),
+                            margin: EdgeInsets.only(
+                                left: Responsive.isDesktop(context)
+                                    ? 0.5.w
+                                    : 3.w),
+                            padding: EdgeInsets.all(
+                                Responsive.isDesktop(context) ? 5 : 8),
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: ColorConstants.lightGrayColor,
@@ -241,20 +306,26 @@ class SignIn extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             child: IconButton(
-                              padding: const EdgeInsets.all(kIsWeb ? 5 : 1),
+                              padding: EdgeInsets.all(
+                                  Responsive.isDesktop(context) ? 5 : 1),
                               iconSize: 24,
                               icon: Image(
                                 image: const AssetImage(
                                   AssetConstant.appleLogo,
                                 ),
-                                width: kIsWeb ? 2.w : 6.w,
+                                width:
+                                    Responsive.isDesktop(context) ? 2.w : 6.w,
                               ),
                               onPressed: () {},
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: kIsWeb ? 0.5.w : 3.w),
-                            padding: const EdgeInsets.all(kIsWeb ? 5 : 8),
+                            margin: EdgeInsets.only(
+                                left: Responsive.isDesktop(context)
+                                    ? 0.5.w
+                                    : 3.w),
+                            padding: EdgeInsets.all(
+                                Responsive.isDesktop(context) ? 5 : 8),
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: ColorConstants.lightGrayColor,
@@ -262,20 +333,26 @@ class SignIn extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             child: IconButton(
-                              padding: const EdgeInsets.all(kIsWeb ? 5 : 1),
+                              padding: EdgeInsets.all(
+                                  Responsive.isDesktop(context) ? 5 : 1),
                               iconSize: 24,
                               icon: Image(
                                 image: const AssetImage(
                                   AssetConstant.googleLogo,
                                 ),
-                                width: kIsWeb ? 2.w : 6.w,
+                                width:
+                                    Responsive.isDesktop(context) ? 2.w : 6.w,
                               ),
                               onPressed: () {},
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: kIsWeb ? 0.5.w : 3.w),
-                            padding: const EdgeInsets.all(kIsWeb ? 5 : 8),
+                            margin: EdgeInsets.only(
+                                left: Responsive.isDesktop(context)
+                                    ? 0.5.w
+                                    : 3.w),
+                            padding: EdgeInsets.all(
+                                Responsive.isDesktop(context) ? 5 : 8),
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: ColorConstants.lightGrayColor,
@@ -283,13 +360,15 @@ class SignIn extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             child: IconButton(
-                              padding: const EdgeInsets.all(kIsWeb ? 5 : 1),
+                              padding: EdgeInsets.all(
+                                  Responsive.isDesktop(context) ? 5 : 1),
                               iconSize: 24,
                               icon: Image(
                                 image: const AssetImage(
                                   AssetConstant.faceBookLogo,
                                 ),
-                                width: kIsWeb ? 2.w : 6.w,
+                                width:
+                                    Responsive.isDesktop(context) ? 2.w : 6.w,
                               ),
                               onPressed: () {},
                             ),
@@ -297,30 +376,42 @@ class SignIn extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: kIsWeb ? 3.h : 3.5.h,
+                        height: Responsive.isDesktop(context) ? 3.h : 3.5.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const CustomText(
-                            text: StringConstants.account1,
-                            color: ColorConstants.blackColor,
-                            fontSize: kIsWeb ? 3 : 11,
-                            weight: FontWeight.w400,
+                          FittedBox(
+                            child: CustomText(
+                              text: StringConstants.account1,
+                              color: ColorConstants.blackColor,
+                              fontSize: Responsive.isDesktop(context)
+                                  ? 3
+                                  : Responsive.isDesktop(context)
+                                      ? 7
+                                      : 11,
+                              weight: FontWeight.w400,
+                            ),
                           ),
                           SizedBox(
-                            width: kIsWeb ? 0.5.w : 1.w,
+                            width: Responsive.isDesktop(context) ? 0.5.w : 1.w,
                           ),
                           GestureDetector(
                             onTap: () {
                               Get.toNamed(AppRoutes.signUpScreen);
                             },
-                            child: const CustomText(
-                              text: StringConstants.signUp,
-                              color: ColorConstants.rich,
-                              fontSize: kIsWeb ? 3 : 12,
-                              weight: FontWeight.w500,
-                              decoration: TextDecoration.underline,
+                            child: FittedBox(
+                              child: CustomText(
+                                text: StringConstants.signUp,
+                                color: ColorConstants.rich,
+                                fontSize: Responsive.isDesktop(context)
+                                    ? 4
+                                    : Responsive.isDesktop(context)
+                                        ? 7
+                                        : 12,
+                                weight: FontWeight.w500,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           ),
                         ],
