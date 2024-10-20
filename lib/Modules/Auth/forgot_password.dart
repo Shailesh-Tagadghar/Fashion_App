@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:fashion/Modules/Auth/Widget/custom_button.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_field.dart';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
@@ -7,8 +6,8 @@ import 'package:fashion/Modules/Auth/controllers/auth_controller.dart';
 import 'package:fashion/Modules/Auth/controllers/validation.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
+import 'package:fashion/Utils/Constants/responsive.dart';
 import 'package:fashion/Utils/Constants/string_constant.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -58,21 +57,27 @@ class ForgotPassword extends StatelessWidget {
         backgroundColor: ColorConstants.whiteColor,
         body: Padding(
           padding: EdgeInsets.only(
-            top: kIsWeb ? 2.h : 2.h,
-            left: kIsWeb ? 4.w : 4.w,
-            right: kIsWeb ? 4.w : 4.w,
-            bottom: kIsWeb ? 4.h : 2.h,
+            top: Responsive.isDesktop(context) ? 2.h : 2.h,
+            left: Responsive.isDesktop(context) ? 4.w : 4.w,
+            right: Responsive.isDesktop(context) ? 4.w : 4.w,
+            bottom: Responsive.isDesktop(context) ? 4.h : 2.h,
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Align(
-                  child: CustomText(
-                    text: StringConstants.newPass,
-                    color: ColorConstants.blackColor,
-                    fontSize: kIsWeb ? 7 : 18,
-                    weight: FontWeight.w600,
+                Align(
+                  child: FittedBox(
+                    child: CustomText(
+                      text: StringConstants.newPass,
+                      color: ColorConstants.blackColor,
+                      fontSize: Responsive.isDesktop(context)
+                          ? 7
+                          : Responsive.isDesktop(context)
+                              ? 7
+                              : 18,
+                      weight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -80,13 +85,19 @@ class ForgotPassword extends StatelessWidget {
                 ),
                 Align(
                   child: SizedBox(
-                    width: kIsWeb ? 40.w : 70.w,
-                    child: const CustomText(
-                      text: StringConstants.forgotdisplaytext,
-                      color: ColorConstants.greyColor,
-                      fontSize: kIsWeb ? 5 : 11,
-                      weight: FontWeight.w400,
-                      textAlign: TextAlign.center,
+                    width: Responsive.isDesktop(context) ? 30.w : 100.w,
+                    child: FittedBox(
+                      child: CustomText(
+                        text: StringConstants.forgotdisplaytext,
+                        color: ColorConstants.greyColor,
+                        fontSize: Responsive.isDesktop(context)
+                            ? 6
+                            : Responsive.isDesktop(context)
+                                ? 7
+                                : 11,
+                        weight: FontWeight.w400,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
@@ -95,15 +106,21 @@ class ForgotPassword extends StatelessWidget {
                 ),
                 Align(
                   child: SizedBox(
-                    width: kIsWeb ? 40.w : 100.w,
+                    width: Responsive.isDesktop(context) ? 30.w : 100.w,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const CustomText(
-                          text: StringConstants.emaillabel,
-                          color: ColorConstants.blackColor,
-                          fontSize: kIsWeb ? 4 : 11,
-                          weight: FontWeight.w400,
+                        FittedBox(
+                          child: CustomText(
+                            text: StringConstants.emaillabel,
+                            color: ColorConstants.blackColor,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 3
+                                : Responsive.isDesktop(context)
+                                    ? 7
+                                    : 11,
+                            weight: FontWeight.w400,
+                          ),
                         ),
                         SizedBox(
                           height: 0.2.h,
@@ -111,7 +128,11 @@ class ForgotPassword extends StatelessWidget {
                         CustomField(
                           controller: emailController,
                           hintText: StringConstants.email,
-                          fontSize: kIsWeb ? 3 : 11,
+                          fontSize: Responsive.isDesktop(context)
+                              ? 3
+                              : Responsive.isDesktop(context)
+                                  ? 7
+                                  : 11,
                           hintTextColor: ColorConstants.greyColor,
                           keyboardType: TextInputType.emailAddress,
                           // onChanged: (value) => validationController.validateEmail(value),
@@ -119,11 +140,17 @@ class ForgotPassword extends StatelessWidget {
                         SizedBox(
                           height: 2.h,
                         ),
-                        const CustomText(
-                          text: StringConstants.oldPass,
-                          color: ColorConstants.blackColor,
-                          fontSize: kIsWeb ? 4 : 11,
-                          weight: FontWeight.w400,
+                        FittedBox(
+                          child: CustomText(
+                            text: StringConstants.oldPass,
+                            color: ColorConstants.blackColor,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 3
+                                : Responsive.isDesktop(context)
+                                    ? 7
+                                    : 11,
+                            weight: FontWeight.w400,
+                          ),
                         ),
                         SizedBox(
                           height: 0.2.h,
@@ -135,7 +162,11 @@ class ForgotPassword extends StatelessWidget {
                             obscuringCharacter: '*',
                             showPasswordIcon: true,
                             hintText: StringConstants.password,
-                            fontSize: kIsWeb ? 3 : 11,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 3
+                                : Responsive.isDesktop(context)
+                                    ? 7
+                                    : 11,
                             hintTextColor: ColorConstants.greyColor,
                             onIconPressed:
                                 authController.togglePasswordVisibility,
@@ -144,11 +175,17 @@ class ForgotPassword extends StatelessWidget {
                         SizedBox(
                           height: 2.h,
                         ),
-                        const CustomText(
-                          text: StringConstants.newPass,
-                          color: ColorConstants.blackColor,
-                          fontSize: kIsWeb ? 4 : 11,
-                          weight: FontWeight.w400,
+                        FittedBox(
+                          child: CustomText(
+                            text: StringConstants.newPass,
+                            color: ColorConstants.blackColor,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 3
+                                : Responsive.isDesktop(context)
+                                    ? 7
+                                    : 11,
+                            weight: FontWeight.w400,
+                          ),
                         ),
                         SizedBox(
                           height: 0.2.h,
@@ -161,7 +198,11 @@ class ForgotPassword extends StatelessWidget {
                             obscuringCharacter: '*',
                             showPasswordIcon: true,
                             hintText: StringConstants.password,
-                            fontSize: kIsWeb ? 3 : 11,
+                            fontSize: Responsive.isDesktop(context)
+                                ? 4
+                                : Responsive.isDesktop(context)
+                                    ? 7
+                                    : 11,
                             hintTextColor: ColorConstants.greyColor,
                             onIconPressed:
                                 authController.toggleCnfPasswordVisibility,
@@ -175,8 +216,16 @@ class ForgotPassword extends StatelessWidget {
                           btnColor: ColorConstants.rich,
                           labelColor: ColorConstants.whiteColor,
                           isSelected: true,
-                          height: kIsWeb ? 6.h : 6.h,
-                          fontSize: kIsWeb ? 4 : 14,
+                          height: Responsive.isDesktop(context)
+                              ? 6.h
+                              : Responsive.isTablet(context)
+                                  ? 6.h
+                                  : 6.h,
+                          fontSize: Responsive.isDesktop(context)
+                              ? 4
+                              : Responsive.isDesktop(context)
+                                  ? 7
+                                  : 14,
                           weight: FontWeight.w500,
                           action: () async {
                             // Retrieve passwords from controllers

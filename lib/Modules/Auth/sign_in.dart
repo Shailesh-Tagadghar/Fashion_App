@@ -40,7 +40,7 @@ class SignIn extends StatelessWidget {
         child: SingleChildScrollView(
           child: Align(
             child: SizedBox(
-              width: Responsive.isDesktop(context) ? 40.w : 100.w,
+              width: Responsive.isDesktop(context) ? 30.w : 100.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,7 +85,7 @@ class SignIn extends StatelessWidget {
                           text: StringConstants.emaillabel,
                           color: ColorConstants.blackColor,
                           fontSize: Responsive.isDesktop(context)
-                              ? 4
+                              ? 3
                               : Responsive.isDesktop(context)
                                   ? 7
                                   : 11,
@@ -128,7 +128,7 @@ class SignIn extends StatelessWidget {
                           text: StringConstants.passwordlabel,
                           color: ColorConstants.blackColor,
                           fontSize: Responsive.isDesktop(context)
-                              ? 4
+                              ? 3
                               : Responsive.isDesktop(context)
                                   ? 7
                                   : 11,
@@ -146,7 +146,7 @@ class SignIn extends StatelessWidget {
                           showPasswordIcon: true,
                           hintText: StringConstants.password,
                           fontSize: Responsive.isDesktop(context)
-                              ? 4
+                              ? 3
                               : Responsive.isDesktop(context)
                                   ? 7
                                   : 11,

@@ -56,13 +56,13 @@ class Signup extends StatelessWidget {
               SizedBox(height: 1.5.h),
               Align(
                 child: SizedBox(
-                  width: Responsive.isDesktop(context) ? 40.w : 70.w,
+                  width: Responsive.isDesktop(context) ? 30.w : 100.w,
                   child: FittedBox(
                     child: CustomText(
                       text: StringConstants.smalldisplay,
                       color: ColorConstants.greyColor,
                       fontSize: Responsive.isDesktop(context)
-                          ? 6
+                          ? 4
                           : Responsive.isDesktop(context)
                               ? 7
                               : 12,
@@ -77,7 +77,7 @@ class Signup extends StatelessWidget {
               ),
               Align(
                 child: SizedBox(
-                  width: Responsive.isDesktop(context) ? 40.w : 100.w,
+                  width: Responsive.isDesktop(context) ? 30.w : 100.w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -86,7 +86,7 @@ class Signup extends StatelessWidget {
                           text: StringConstants.namelabel,
                           color: ColorConstants.blackColor,
                           fontSize: Responsive.isDesktop(context)
-                              ? 4
+                              ? 3
                               : Responsive.isDesktop(context)
                                   ? 7
                                   : 11,
@@ -131,7 +131,7 @@ class Signup extends StatelessWidget {
                           text: StringConstants.emaillabel,
                           color: ColorConstants.blackColor,
                           fontSize: Responsive.isDesktop(context)
-                              ? 4
+                              ? 3
                               : Responsive.isDesktop(context)
                                   ? 7
                                   : 11,
@@ -176,7 +176,7 @@ class Signup extends StatelessWidget {
                           text: StringConstants.passwordlabel,
                           color: ColorConstants.blackColor,
                           fontSize: Responsive.isDesktop(context)
-                              ? 4
+                              ? 3
                               : Responsive.isDesktop(context)
                                   ? 7
                                   : 11,
@@ -192,7 +192,7 @@ class Signup extends StatelessWidget {
                           obscureText: authController.isPasswordVisible.value,
                           obscuringCharacter: '*',
                           fontSize: Responsive.isDesktop(context)
-                              ? 4
+                              ? 3
                               : Responsive.isDesktop(context)
                                   ? 7
                                   : 11,
