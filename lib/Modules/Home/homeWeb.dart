@@ -317,9 +317,9 @@ class _HomewebState extends State<Homeweb> {
                             height: Responsive.isDesktop(context) ? 60 : 60,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
-                                padding: EdgeInsets.all(
-                                  Responsive.isDesktop(context) ? 5 : 6,
-                                ),
+                                padding: EdgeInsets.only(
+                                    left:
+                                        Responsive.isDesktop(context) ? 10 : 6),
                                 value: isValidValue ? selectedValue : null,
                                 hint: Text(
                                   'Select Category',
