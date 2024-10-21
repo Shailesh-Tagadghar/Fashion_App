@@ -156,10 +156,53 @@ class _HomewebState extends State<Homeweb> {
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onDoubleTap: () {
+                    // GestureDetector(
+                    //   onDoubleTap: () {
+                    //     showLogoutDialog(context);
+                    //   },
+                    //   child: Row(
+                    //     children: [
+                    //       ClipRRect(
+                    //         borderRadius: BorderRadius.circular(50),
+                    //         child: SizedBox(
+                    //           height: Responsive.isDesktop(context) ? 5.h : 5.h,
+                    //           width: Responsive.isDesktop(context) ? 3.w : 3.w,
+                    //           child: Image.network(
+                    //             imageUrl,
+                    //             fit: BoxFit.cover,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         width: Responsive.isDesktop(context) ? 1.w : 1.w,
+                    //       ),
+                    //       FittedBox(
+                    //         child: CustomText(
+                    //           text: 'Hello, $userName',
+                    //           color: ColorConstants.whiteColor,
+                    //           fontSize: Responsive.isDesktop(context) ? 4 : 11,
+                    //           weight: FontWeight.w500,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    PopupMenuButton<int>(
+                      onSelected: (value) {
                         showLogoutDialog(context);
                       },
+                      itemBuilder: (context) => [
+                        const PopupMenuItem<int>(
+                          value: 1,
+                          child: Row(
+                            children: [
+                              Icon(Icons.logout, color: Colors.black),
+                              SizedBox(width: 8),
+                              Text("Logout"),
+                            ],
+                          ),
+                        ),
+                      ],
                       child: Row(
                         children: [
                           ClipRRect(
@@ -174,8 +217,7 @@ class _HomewebState extends State<Homeweb> {
                             ),
                           ),
                           SizedBox(
-                            width: Responsive.isDesktop(context) ? 1.w : 1.w,
-                          ),
+                              width: Responsive.isDesktop(context) ? 1.w : 1.w),
                           FittedBox(
                             child: CustomText(
                               text: 'Hello, $userName',
@@ -184,6 +226,8 @@ class _HomewebState extends State<Homeweb> {
                               weight: FontWeight.w500,
                             ),
                           ),
+                          const Icon(Icons.arrow_drop_down,
+                              color: Colors.white), // Add a dropdown icon
                         ],
                       ),
                     ),
@@ -191,6 +235,7 @@ class _HomewebState extends State<Homeweb> {
                 ),
               ),
             ),
+
             SizedBox(
               height: Responsive.isDesktop(context) ? 2.h : 2.h,
             ),

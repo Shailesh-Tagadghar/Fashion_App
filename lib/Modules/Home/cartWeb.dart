@@ -255,6 +255,7 @@ class _CartwebState extends State<Cartweb> {
                             quantity: quantity,
                             cartIdP: cartIdP,
                           );
+                           
                         },
                       );
                     },
@@ -267,6 +268,7 @@ class _CartwebState extends State<Cartweb> {
                           ? 2.w
                           : 2.w,
                 ),
+                
                 //checkout
                 Container(
                   height: Responsive.isDesktop(context)

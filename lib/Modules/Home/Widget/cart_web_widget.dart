@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
+import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/responsive.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-class CartWebWidget extends StatelessWidget {
+class CartWebWidget extends StatefulWidget {
   final String image;
   final String title;
   final String size;
@@ -29,6 +30,11 @@ class CartWebWidget extends StatelessWidget {
   });
 
   @override
+  State<CartWebWidget> createState() => _CartWebWidgetState();
+}
+
+class _CartWebWidgetState extends State<CartWebWidget> {
+  @override
   Widget build(BuildContext context) {
     final DataContoller dataContoller = Get.find<DataContoller>();
     final products = dataContoller.cartsItems['product'] ?? [];
@@ -36,8 +42,10 @@ class CartWebWidget extends StatelessWidget {
     // final products = carts['product'] ?? [];
 
     final removeProduct = products.firstWhere(
-        (element) => element['_id'] == cartIdP,
+        (element) => element['_id'] == widget.cartIdP,
         orElse: () => null)?['_id'];
+
+    setState(() {});
 
     return Padding(
       padding: EdgeInsets.only(
@@ -53,7 +61,7 @@ class CartWebWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                '${ApiConstants.imageBaseUrl}$image',
+                '${ApiConstants.imageBaseUrl}${widget.image}',
                 // image,
                 width: Responsive.isDesktop(context)
                     ? 8.w
@@ -79,7 +87,7 @@ class CartWebWidget extends StatelessWidget {
           //title
           FittedBox(
             child: CustomText(
-              text: title,
+              text: widget.title,
               fontSize: Responsive.isDesktop(context)
                   ? 3
                   : Responsive.isTablet(context)
@@ -117,7 +125,7 @@ class CartWebWidget extends StatelessWidget {
                 ),
                 FittedBox(
                   child: CustomText(
-                    text: "\$$price",
+                    text: "\$${widget.price}",
                     fontSize: Responsive.isDesktop(context)
                         ? 3
                         : Responsive.isTablet(context)
@@ -174,11 +182,13 @@ class CartWebWidget extends StatelessWidget {
                       ),
                       // onPressed: controller.decrement,
                       onPressed: () {
-                        if (quantity.value > 1) {
-                          quantity.value -= 1; // Decrease quantity
-                          ApiService()
-                              .addQuantity(quantity.value, cartIdP ?? '');
+                        if (widget.quantity.value > 1) {
+                          widget.quantity.value -= 1; // Decrease quantity
+                          ApiService().addQuantity(
+                              widget.quantity.value, widget.cartIdP ?? '');
                         }
+                        dataContoller.fetchCheckout();
+                        Get.toNamed(AppRoutes.cartwebScreen);
                       },
                     ),
                   ),
@@ -193,7 +203,7 @@ class CartWebWidget extends StatelessWidget {
                     () => FittedBox(
                       child: CustomText(
                         // text: controller.quantity.value.toString(),
-                        text: quantity.value.toString(),
+                        text: widget.quantity.value.toString(),
                         fontSize: Responsive.isDesktop(context)
                             ? 3
                             : Responsive.isTablet(context)
@@ -241,9 +251,12 @@ class CartWebWidget extends StatelessWidget {
                       ),
                       // onPressed: controller.increment,
                       onPressed: () {
-                        quantity.value += 1; // Increase quantity
-                        ApiService().addQuantity(quantity.value, cartIdP ?? '');
-                        log('on tap increase cart id in cart screen : $cartIdP');
+                        widget.quantity.value += 1; // Increase quantity
+                        ApiService().addQuantity(
+                            widget.quantity.value, widget.cartIdP ?? '');
+                        dataContoller.fetchCheckout();
+                        Get.toNamed(AppRoutes.cartwebScreen);
+                        log('on tap increase cart id in cart screen : ${widget.cartIdP}');
                       },
                     ),
                   ),
@@ -280,7 +293,7 @@ class CartWebWidget extends StatelessWidget {
                 ),
                 FittedBox(
                   child: CustomText(
-                    text: "\$$price",
+                    text: "\$${widget.price}",
                     fontSize: Responsive.isDesktop(context)
                         ? 3
                         : Responsive.isTablet(context)
@@ -322,35 +335,34 @@ class CartWebWidget extends StatelessWidget {
               FittedBox(
                 child: GestureDetector(
                   onTap: () async {
-                    // try {
-                    //   log('Product Cart id for remove : $removeProduct');
+                    try {
+                      log('Product Cart id for remove : $removeProduct');
 
-                    //   // Call the API to remove the product
-                    //   await ApiService.removeProduct(removeProduct);
+                      // Call the API to remove the product
+                      await ApiService.removeProduct(removeProduct);
+                      // Remove the item from the cartsItems map
+                      dataContoller.cartsItems.removeWhere((key, value) =>
+                          value['_id'].toString() == removeProduct.toString());
 
-                    //   // Remove the item from the cartsItems map
+                      await dataContoller.fetchCarts();
 
-                    //   dataContoller.cartsItems.removeWhere((key, value) =>
-                    //       value['_id'].toString() == removeProduct.toString());
+                      Get.toNamed(AppRoutes.cartwebScreen);
 
-                    //   // After removing, update the UI
-                    //   Get.back(result: true);
-
-                    //   log('Product successfully removed.');
-                    // } catch (e) {
-                    //   log('Error removing product: $e');
-                    // }
-                    if (removeProduct != null) {
-                      try {
-                        await ApiService.removeProduct(removeProduct);
-                        dataContoller.cartsItems.removeWhere((key, value) =>
-                            value['_id'] == removeProduct.toString());
-                        dataContoller.update();
-                        log('Product successfully removed.');
-                      } catch (e) {
-                        log('Error removing product: $e');
-                      }
+                      log('Product successfully removed.');
+                    } catch (e) {
+                      log('Error removing product: $e');
                     }
+                    // if (removeProduct != null) {
+                    //   try {
+                    //     await ApiService.removeProduct(removeProduct);
+                    //     dataContoller.cartsItems.removeWhere((key, value) =>
+                    //         value['_id'] == removeProduct.toString());
+                    //     dataContoller.update();
+                    //     log('Product successfully removed.');
+                    //   } catch (e) {
+                    //     log('Error removing product: $e');
+                    //   }
+                    // }
                   },
                   child: CustomText(
                     decoration: TextDecoration.underline,
