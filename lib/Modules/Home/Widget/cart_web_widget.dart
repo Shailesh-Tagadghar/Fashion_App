@@ -352,17 +352,6 @@ class _CartWebWidgetState extends State<CartWebWidget> {
                     } catch (e) {
                       log('Error removing product: $e');
                     }
-                    // if (removeProduct != null) {
-                    //   try {
-                    //     await ApiService.removeProduct(removeProduct);
-                    //     dataContoller.cartsItems.removeWhere((key, value) =>
-                    //         value['_id'] == removeProduct.toString());
-                    //     dataContoller.update();
-                    //     log('Product successfully removed.');
-                    //   } catch (e) {
-                    //     log('Error removing product: $e');
-                    //   }
-                    // }
                   },
                   child: CustomText(
                     decoration: TextDecoration.underline,

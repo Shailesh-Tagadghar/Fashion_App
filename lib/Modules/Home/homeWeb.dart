@@ -156,37 +156,6 @@ class _HomewebState extends State<Homeweb> {
                         ),
                       ],
                     ),
-                    // GestureDetector(
-                    //   onDoubleTap: () {
-                    //     showLogoutDialog(context);
-                    //   },
-                    //   child: Row(
-                    //     children: [
-                    //       ClipRRect(
-                    //         borderRadius: BorderRadius.circular(50),
-                    //         child: SizedBox(
-                    //           height: Responsive.isDesktop(context) ? 5.h : 5.h,
-                    //           width: Responsive.isDesktop(context) ? 3.w : 3.w,
-                    //           child: Image.network(
-                    //             imageUrl,
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       SizedBox(
-                    //         width: Responsive.isDesktop(context) ? 1.w : 1.w,
-                    //       ),
-                    //       FittedBox(
-                    //         child: CustomText(
-                    //           text: 'Hello, $userName',
-                    //           color: ColorConstants.whiteColor,
-                    //           fontSize: Responsive.isDesktop(context) ? 4 : 11,
-                    //           weight: FontWeight.w500,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                     PopupMenuButton<int>(
                       onSelected: (value) {
                         showLogoutDialog(context);
@@ -295,11 +264,6 @@ class _HomewebState extends State<Homeweb> {
                   right: Responsive.isDesktop(context) ? 4.w : 4.w,
                   bottom: Responsive.isDesktop(context) ? 2.h : 2.h,
                 ),
-                // padding: EdgeInsets.symmetric(
-                //   vertical: Responsive.isDesktop(context)
-                //       ? 2.h
-                //       : 1.5.h, // Adjusted padding for mobile
-                //   horizontal: Responsive.isDesktop(context) ? 4.w : 3.w,
                 // ),
                 child: Row(
                   children: [
@@ -356,12 +320,7 @@ class _HomewebState extends State<Homeweb> {
                                 padding: EdgeInsets.all(
                                   Responsive.isDesktop(context) ? 5 : 6,
                                 ),
-                                // value: dataContoller
-                                //         .selectedCategoryId.value.isNotEmpty
-                                //     ? dataContoller.selectedCategoryId.value
-                                //     : null,
                                 value: isValidValue ? selectedValue : null,
-
                                 hint: Text(
                                   'Select Category',
                                   style: TextStyle(
