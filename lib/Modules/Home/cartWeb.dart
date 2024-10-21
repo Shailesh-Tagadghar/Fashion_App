@@ -255,7 +255,6 @@ class _CartwebState extends State<Cartweb> {
                             quantity: quantity,
                             cartIdP: cartIdP,
                           );
-                           
                         },
                       );
                     },

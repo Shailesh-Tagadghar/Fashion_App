@@ -478,13 +478,13 @@ class ApiService {
 
       if (response.statusCode == 200) {
         log("Removed From Cart successfully");
+        DataContoller().fetchCarts();
       } else {
         log("Failed to Remove from cart");
       }
     } catch (e) {
       log("Error Removing From Cart: $e");
     }
-    DataContoller().fetchCarts();
   }
 
   //fetch Carts

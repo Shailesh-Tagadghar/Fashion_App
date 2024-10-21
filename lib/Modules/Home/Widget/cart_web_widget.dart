@@ -186,6 +186,7 @@ class _CartWebWidgetState extends State<CartWebWidget> {
                               widget.quantity.value, widget.cartIdP ?? '');
                         }
                         dataContoller.fetchCheckout();
+                        setState(() {});
                         Get.toNamed(AppRoutes.cartwebScreen);
                       },
                     ),
@@ -253,6 +254,7 @@ class _CartWebWidgetState extends State<CartWebWidget> {
                         ApiService().addQuantity(
                             widget.quantity.value, widget.cartIdP ?? '');
                         dataContoller.fetchCheckout();
+                        setState(() {});
                         Get.toNamed(AppRoutes.cartwebScreen);
                         log('on tap increase cart id in cart screen : ${widget.cartIdP}');
                       },
@@ -334,8 +336,8 @@ class _CartWebWidgetState extends State<CartWebWidget> {
                 child: GestureDetector(
                   onTap: () {
                     ApiService.removeProduct(removeProduct);
-                    Get.toNamed(AppRoutes.cartwebScreen);
                     setState(() {});
+                    Get.toNamed(AppRoutes.cartwebScreen);
                   },
                   child: CustomText(
                     decoration: TextDecoration.underline,
