@@ -484,6 +484,7 @@ class ApiService {
     } catch (e) {
       log("Error Removing From Cart: $e");
     }
+    DataContoller().fetchCarts();
   }
 
   //fetch Carts

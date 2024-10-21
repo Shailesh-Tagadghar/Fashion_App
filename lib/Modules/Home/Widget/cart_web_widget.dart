@@ -45,8 +45,6 @@ class _CartWebWidgetState extends State<CartWebWidget> {
         (element) => element['_id'] == widget.cartIdP,
         orElse: () => null)?['_id'];
 
-    setState(() {});
-
     return Padding(
       padding: EdgeInsets.only(
         top: Responsive.isDesktop(context) ? 4.h : 2.h,
@@ -334,24 +332,29 @@ class _CartWebWidgetState extends State<CartWebWidget> {
               ),
               FittedBox(
                 child: GestureDetector(
-                  onTap: () async {
-                    try {
-                      log('Product Cart id for remove : $removeProduct');
+                  onTap: () {
+                    // async {
+                    //   try {
+                    //     log('Product Cart id for remove : $removeProduct');
 
-                      // Call the API to remove the product
-                      await ApiService.removeProduct(removeProduct);
-                      // Remove the item from the cartsItems map
-                      dataContoller.cartsItems.removeWhere((key, value) =>
-                          value['_id'].toString() == removeProduct.toString());
+                    //     // Call the API to remove the product
+                    //     await ApiService.removeProduct(removeProduct);
+                    //     // Remove the item from the cartsItems map
+                    //     dataContoller.cartsItems.removeWhere((key, value) =>
+                    //         value['_id'].toString() == removeProduct.toString());
 
-                      await dataContoller.fetchCarts();
+                    //     await dataContoller.fetchCarts();
 
-                      Get.toNamed(AppRoutes.cartwebScreen);
+                    //     Get.toNamed(AppRoutes.cartwebScreen);
 
-                      log('Product successfully removed.');
-                    } catch (e) {
-                      log('Error removing product: $e');
-                    }
+                    //     log('Product successfully removed.');
+                    //   } catch (e) {
+                    //     log('Error removing product: $e');
+                    //   }
+                    //   Get.toNamed(AppRoutes.cartwebScreen);
+                    ApiService.removeProduct(removeProduct);
+                    Get.toNamed(AppRoutes.cartwebScreen);
+                    setState(() {});
                   },
                   child: CustomText(
                     decoration: TextDecoration.underline,
