@@ -333,25 +333,6 @@ class _CartWebWidgetState extends State<CartWebWidget> {
               FittedBox(
                 child: GestureDetector(
                   onTap: () {
-                    // async {
-                    //   try {
-                    //     log('Product Cart id for remove : $removeProduct');
-
-                    //     // Call the API to remove the product
-                    //     await ApiService.removeProduct(removeProduct);
-                    //     // Remove the item from the cartsItems map
-                    //     dataContoller.cartsItems.removeWhere((key, value) =>
-                    //         value['_id'].toString() == removeProduct.toString());
-
-                    //     await dataContoller.fetchCarts();
-
-                    //     Get.toNamed(AppRoutes.cartwebScreen);
-
-                    //     log('Product successfully removed.');
-                    //   } catch (e) {
-                    //     log('Error removing product: $e');
-                    //   }
-                    //   Get.toNamed(AppRoutes.cartwebScreen);
                     ApiService.removeProduct(removeProduct);
                     Get.toNamed(AppRoutes.cartwebScreen);
                     setState(() {});
