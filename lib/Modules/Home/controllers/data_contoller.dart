@@ -35,7 +35,7 @@ class DataContoller extends GetxController {
     fetchProducts();
     fetchCarts();
     fetchCheckout();
-    fetchCoupons();
+    // fetchCoupons();
   }
 
   //Coupon copy value
@@ -133,16 +133,16 @@ class DataContoller extends GetxController {
     }
   }
 
-  Future<void> fetchCoupons() async {
-    try {
-      final coupons = await ApiService.fetchCoupons();
-      couponItems.assignAll(coupons); // Update the observable list
-    } catch (e) {
-      log('Error fetching coupons: $e');
-    } finally {
-      isLoading.value = false; // Stop loading regardless of success or failure
-    }
-  }
+  // Future<void> fetchCoupons() async {
+  //   try {
+  //     final coupons = await ApiService.fetchCoupons();
+  //     couponItems.assignAll(coupons); // Update the observable list
+  //   } catch (e) {
+  //     log('Error fetching coupons: $e');
+  //   } finally {
+  //     isLoading.value = false; // Stop loading regardless of success or failure
+  //   }
+  // }
 
   Future<void> verifyCoupon() async {
     final couponCode = selectedCoupon.value;

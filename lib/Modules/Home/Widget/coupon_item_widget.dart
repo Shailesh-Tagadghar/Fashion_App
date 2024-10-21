@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
+import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/asset_constant.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
 import 'package:fashion/Utils/Constants/responsive.dart';
@@ -115,7 +116,12 @@ class CouponItemWidget extends StatelessWidget {
                   onTap: () {
                     dataController.setCoupon(title);
                     log('Coupon Value : $title');
-                    Get.back();
+                    if (Responsive.isDesktop(context) &&
+                        Responsive.isTablet(context)) {
+                      Get.toNamed(AppRoutes.cartwebScreen);
+                    } else {
+                      Get.back();
+                    }
                   },
                   child: Container(
                     alignment: AlignmentDirectional.center,

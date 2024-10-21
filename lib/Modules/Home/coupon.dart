@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:fashion/Modules/Auth/Widget/custom_text.dart';
 import 'package:fashion/Modules/Auth/services/api_service.dart';
+// import 'package:fashion/Modules/Home/Model/coupon_model.dart';
 import 'package:fashion/Modules/Home/Widget/coupon_item_widget.dart';
 import 'package:fashion/Routes/app_routes.dart';
 import 'package:fashion/Utils/Constants/color_constant.dart';
@@ -127,10 +128,31 @@ class Coupon extends StatelessWidget {
     );
   }
 
+  // Future<void> _fetchCoupons() async {
+  //   try {
+  //     final coupons = await ApiService.fetchCoupons();
+  //     couponItems.assignAll(coupons); // Update the observable list
+  //     isLoading.value = false; // Update loading state
+  //   } catch (e) {
+  //     log('Error fetching coupons: $e');
+  //     isLoading.value = false; // Stop loading even on error
+  //   }
+  // }
   Future<void> _fetchCoupons() async {
     try {
-      final coupons = await ApiService.fetchCoupons();
-      couponItems.assignAll(coupons); // Update the observable list
+      // Call fetchCoupons which now returns a CouponModel instance
+      final couponModel = await ApiService.fetchCoupons();
+
+      // Update the observable list with coupon data
+      couponItems.assignAll(couponModel.data
+          .map((datum) => {
+                'id': datum.id,
+                'title': datum.title,
+                'descreption': datum.descreption,
+                'amount': datum.amount,
+              })
+          .toList());
+
       isLoading.value = false; // Update loading state
     } catch (e) {
       log('Error fetching coupons: $e');

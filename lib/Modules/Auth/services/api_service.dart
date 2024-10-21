@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:fashion/Modules/Home/Model/coupon_model.dart';
 import 'package:fashion/Modules/Home/controllers/data_contoller.dart';
 import 'package:fashion/Utils/Constants/api_constants.dart';
 import 'package:flutter/material.dart';
@@ -183,7 +184,51 @@ class ApiService {
   }
 
   // Fetch coupons
-  static Future<List<Map<String, dynamic>>> fetchCoupons() async {
+  // static Future<List<Map<String, dynamic>>> fetchCoupons() async {
+  //   const String url =
+  //       '${ApiConstants.baseUrl}${ApiConstants.getCoupons}'; // Adjust endpoint as necessary
+
+  //   final token = GetStorage().read('token');
+  //   log('Bearer Token : $token');
+  //   final headers = {
+  //     'Authorization': 'Bearer $token',
+  //   };
+
+  //   try {
+  //     var request = http.Request('GET', Uri.parse(url));
+  //     request.headers.addAll(headers);
+
+  //     http.StreamedResponse response = await request.send();
+
+  //     if (response.statusCode == 200) {
+  //       final responseBody = await response.stream.bytesToString();
+  //       final data = jsonDecode(responseBody);
+  //       // log('Coupon DATA : $data');
+
+  //       if (data is Map && data.containsKey('data')) {
+  //         List<dynamic> coupons = data['data'];
+  //         return coupons
+  //             .map((coupon) => coupon as Map<String, dynamic>)
+  //             .toList();
+  //       } else {
+  //         log('Unexpected response format');
+  //         throw Exception('Unexpected response format');
+  //       }
+  //     } else {
+  //       log('Error response: ${response.reasonPhrase}');
+  //       throw Exception('Failed to fetch coupons: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     log('Error fetching coupons: $e');
+  //     // Get.snackbar("Error", "Failed to fetch coupons: $e",
+  //     //     snackPosition: SnackPosition.BOTTOM,
+  //     //     backgroundColor: Colors.red,
+  //     //     colorText: Colors.white);
+  //     throw Exception('Failed to fetch coupons');
+  //   }
+  // }
+
+  static Future<CouponModel> fetchCoupons() async {
     const String url =
         '${ApiConstants.baseUrl}${ApiConstants.getCoupons}'; // Adjust endpoint as necessary
 
@@ -202,13 +247,10 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final data = jsonDecode(responseBody);
-        // log('Coupon DATA : $data');
 
-        if (data is Map && data.containsKey('data')) {
-          List<dynamic> coupons = data['data'];
-          return coupons
-              .map((coupon) => coupon as Map<String, dynamic>)
-              .toList();
+        // Ensure the data has a Map structure
+        if (data is Map<String, dynamic>) {
+          return CouponModel.fromJson(data); // Deserialize to CouponModel
         } else {
           log('Unexpected response format');
           throw Exception('Unexpected response format');
@@ -219,10 +261,6 @@ class ApiService {
       }
     } catch (e) {
       log('Error fetching coupons: $e');
-      // Get.snackbar("Error", "Failed to fetch coupons: $e",
-      //     snackPosition: SnackPosition.BOTTOM,
-      //     backgroundColor: Colors.red,
-      //     colorText: Colors.white);
       throw Exception('Failed to fetch coupons');
     }
   }
